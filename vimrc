@@ -1,14 +1,15 @@
 syntax on			" Syntax highlighting
+colorscheme desert		" Nice colorscheme on dark background
 
 set mouse=a
-set number
-set backspace=indent,eol,start
-set autoread
-set nowrap
-set clipboard=unnamedplus
-set noswapfile
-set modeline
-set smartcase
+set number			" Show line numbers
+set backspace=indent,eol,start	" Don't remember what this does...
+set autoread			" Don't remember what this does
+set nowrap			" Don't wrap long lines
+set clipboard=unnamedplus	" Use the system clipboard
+set noswapfile			" Don't create swap files
+set modeline			" Read the modeline at the beginning of the file
+set smartcase			" Don't remember what this does
 set incsearch                   " Search as you type
 
 filetype plugin indent on

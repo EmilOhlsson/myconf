@@ -23,7 +23,9 @@ function csym() {
 function todo() {
 	find  \( -name '*.c' -or -name '*.cpp' -or -name '*.h' \) -print0 | xargs -0 grep -ne 'TODO\|FIXME'
 }
-alias rs232='minicom -c on -o -b 115200 -D'
+
+alias rs232='minicom --color=on --noinit -b 115200 -D'
+
 alias vim='gvim -v'
 
 export TFTPBOOT=/srv/tftp/tftpboot
