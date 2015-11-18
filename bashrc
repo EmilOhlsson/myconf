@@ -17,7 +17,7 @@ function reset_prompt()
 }
 
 function csym() {
-	find  \( -name "*.cpp" -o -name "*.java" -o -name "*.[chS]" \) -print0 | xargs -0 grep -ne "$1"
+	find  \( -name "*.cpp" -o -name "*.java" -o -name "*.php" -o -name "*.[chS]" \) -print0 | xargs -0 grep -ne "$1"
 }
 
 function todo() {

@@ -15,6 +15,11 @@ set incsearch                   " Search as you type
 filetype plugin indent on
 set ofu=syntaxcomplete#Complete
 
+" Enable clang-format wih Ctrl+k
+map <C-K> :pyf ~/.vim/clang-format.py<cr>
+imap <C-K> <c-o>:pyf ~/.vim/clang-format.py<cr>
+
+" Add some extra inforamtion to the status line
 set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
 set laststatus=2
 
