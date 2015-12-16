@@ -28,6 +28,8 @@ alias rs232='minicom --color=on --noinit -b 115200 -D'
 
 alias vim='gvim -v'
 
+alias todo='vim ~/.todo.txt'
+
 export TFTPBOOT=/srv/tftp/tftpboot
 export NFSROOT=/srv/nfs/rootfs
 
