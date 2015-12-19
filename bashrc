@@ -24,6 +24,13 @@ function todo() {
 	find  \( -name '*.c' -or -name '*.cpp' -or -name '*.h' \) -print0 | xargs -0 grep -ne 'TODO\|FIXME'
 }
 
+function trash() {
+	DATE=$(date "+%Y-%m-%d")
+	TRASH_DIR="$HOME/trash/$DATE"
+	[ -d "$TRASH_DIR" ] || mkdir "$TRASH_DIR"
+	mv $* "$TRASH_DIR"
+}
+
 alias rs232='minicom --color=on --noinit -b 115200 -D'
 
 alias vim='gvim -v'
