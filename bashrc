@@ -46,6 +46,8 @@ export EDITOR="gvim -v"
 export LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s"
 export LESS=' -R '
 
+eval $(dircolors -b $HOME/myconf/LS_COLORS/LS_COLORS)
+
 case $- in
 	*i*)
 		# Interactive shell
