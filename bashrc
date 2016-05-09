@@ -46,4 +46,9 @@ export EDITOR="gvim -v"
 export LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s"
 export LESS=' -R '
 
-reset_prompt
+case $- in
+	*i*)
+		# Interactive shell
+		reset_prompt
+		;;
+esac
