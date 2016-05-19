@@ -54,3 +54,5 @@ case $- in
 		reset_prompt
 		;;
 esac
+
+set -o vi
