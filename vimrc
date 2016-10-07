@@ -1,5 +1,5 @@
 syntax on			" Syntax highlighting
-colorscheme desert		" Nice colorscheme on dark background
+colorscheme elflord		" Nice colorscheme on dark background
 
 set mouse=a
 set number			" Show line numbers
