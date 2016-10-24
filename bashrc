@@ -12,7 +12,7 @@ function reset_prompt()
 }
 
 function list-code-files() {
-	find \( \
+	find -type f \( \
 		-name '*.cpp' -o \
 		-name '*.java' -o \
 		-name '*.php' -o \
@@ -27,7 +27,7 @@ function csym() {
 }
 
 function quick-review() {
-	git diff master | grep -e '^+' | grep \
+	git diff master | grep -e '^+' | grep -n \
 		-e '//' \
 		-e '/\*' \
 		-e '#\s*if\s*0'
@@ -37,7 +37,8 @@ alias rs232='minicom --color=on --noinit -b 115200 -D'
 
 alias vim='gvim -v'
 
-alias todo='vim ~/.todo.txt'
+alias todo='vim ~/.todo.md'
+alias notes='vim ~/.notes.md'
 
 export TFTPBOOT=/srv/tftp/tftpboot
 export NFSROOT=/srv/nfs/rootfs
