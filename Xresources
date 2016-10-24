@@ -1,0 +1,7 @@
+URxvt.font: xft:Monospace:size=10
+*foreground:    white
+*background:    black
+*cursoColor:	yellow
+*cursorBlink:	true
+*scrollBar:	false
+*scrollKey:	true
