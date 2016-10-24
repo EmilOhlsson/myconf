@@ -1,7 +1,10 @@
-URxvt.font: xft:Monospace:size=10
-*foreground:    white
-*background:    black
-*cursoColor:	yellow
-*cursorBlink:	true
-*scrollBar:	false
-*scrollKey:	true
+! vim:set et ts=4 sw=4 ss=4:
+URxvt.font:         xft:Monospace:size=8
+*foreground:        white
+*background:        black
+*cursorColor:       yellow
+*cursorBlink:       true
+*rightScrollBar:    false
+*scrollBar:         false
+*scrollKey:         true
+*transparent:       false
