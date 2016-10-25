@@ -1,10 +1,11 @@
 ! vim:set et ts=4 sw=4 ss=4:
-URxvt.font:         xft:Monospace:size=8
-*foreground:        white
-*background:        black
-*cursorColor:       yellow
-*cursorBlink:       true
-*rightScrollBar:    false
-*scrollBar:         false
-*scrollKey:         true
-*transparent:       false
+*.background:       #222222
+*.foreground:       #ccbbb0
+*.cursorColor:      yellow
+*.cursorBlink:      true
+*.rightScrollBar:   false
+*.scrollBar:        false
+*.scrollKey:        true
+*.transparent:      false
+*.secondaryScreen:  1
+*.secondaryScroll:  0
