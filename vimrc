@@ -1,19 +1,41 @@
+" Vundle setup
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+
+" Rust plugins
+Plugin 'rust-lang/rust.vim'
+Plugin 'racer-rust/vim-racer'
+
+" C/C++ plugins
+Plugin 'rip-rip/clang_complete'
+
+call vundle#end()
+
+filetype plugin indent on
+
 syntax on			" Syntax highlighting
 colorscheme elflord		" Nice colorscheme on dark background
 
 set mouse=a
-set number			" Show line numbers
-set backspace=indent,eol,start	" Don't remember what this does...
-set autoread			" Don't remember what this does
-set nowrap			" Don't wrap long lines
-set clipboard=unnamedplus	" Use the system clipboard
-set noswapfile			" Don't create swap files
-set modeline			" Read the modeline at the beginning of the file
-set smartcase			" Don't remember what this does
+set number                      " Show line numbers
+set backspace=indent,eol,start  " Don't remember what this does...
+set autoread                    " Don't remember what this does
+set nowrap                      " Don't wrap long lines
+set clipboard=unnamedplus       " Use the system clipboard
+set noswapfile                  " Don't create swap files
+set modeline                    " Read the modeline at the beginning of the file
+set smartcase                   " Don't remember what this does
 set incsearch                   " Search as you type
 
-filetype plugin indent on
-set ofu=syntaxcomplete#Complete
+" vim-racer configuration
+set hidden
+let g:racer_cmd = "racer"
+let g:racer_experimental_completer = 1
+let $RUST_SRC_PATH = "~/workspace/rust/src/"
 
 " Enable clang-format wih Ctrl+k
 map <C-K> :pyf ~/.vim/clang-format.py<cr>

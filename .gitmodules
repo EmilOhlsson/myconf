@@ -1,3 +1,6 @@
 [submodule "LS_COLORS"]
 	path = LS_COLORS
 	url = git@github.com:ElektroKotte/LS_COLORS.git
+[submodule "vim/bundle/Vundle.vim"]
+	path = vim/bundle/Vundle.vim
+	url = https://github.com/VundleVim/Vundle.vim.git
