@@ -1,6 +1,4 @@
 ! vim:set et ts=4 sw=4 ss=4:
-*.background:       #222222
-*.foreground:       #ccbbb0
 *.cursorColor:      yellow
 *.cursorBlink:      true
 *.rightScrollBar:   false
@@ -9,3 +7,22 @@
 *.transparent:      false
 *.secondaryScreen:  1
 *.secondaryScroll:  0
+
+*.background:       #222222
+*.foreground:       #ccbbb0
+*color0:            rgb:00/00/00
+*color1:            rgb:9e/18/28
+*color2:            rgb:ae/ce/92
+*color3:            rgb:96/8a/38
+*color4:            rgb:41/41/71
+*color5:            rgb:96/3c/59
+*color6:            rgb:41/81/79
+*color7:            rgb:be/be/be
+*color8:            rgb:66/66/66
+*color9:            rgb:cf/61/71
+*color10:           rgb:c5/f7/79
+*color11:           rgb:ff/f7/96
+*color12:           rgb:41/86/be
+*color13:           rgb:cf/9e/be
+*color14:           rgb:71/be/be
+*color15:           rgb:ff/ff/ff
