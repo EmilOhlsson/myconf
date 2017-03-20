@@ -1,9 +1,9 @@
 " Vundle setup
-set nocompatible
 filetype off
+set nocompatible
 set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
 
+call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 " Rust plugins
@@ -17,11 +17,11 @@ Plugin 'rip-rip/clang_complete'
 Plugin 'vim-scripts/argtextobj.vim'
 
 call vundle#end()
-
 filetype plugin indent on
 
+" My setup
 syntax on			" Syntax highlighting
-colorscheme elflord		" Nice color scheme on dark background
+colorscheme elflord		" Nice colorscheme on dark background
 
 set mouse=a
 set number                      " Show line numbers
