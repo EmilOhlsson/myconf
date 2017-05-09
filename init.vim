@@ -16,32 +16,38 @@ Plugin 'rip-rip/clang_complete'
 " Additional text object
 Plugin 'vim-scripts/argtextobj.vim'
 
+" Syntax highlight
+Plugin 'glensc/vim-syntax-lighttpd'
+
+" Align text
+Plugin 'godlygeek/tabular'
+
 call vundle#end()
 
 filetype plugin indent on
 
-syntax on			" Syntax highlighting
-colorscheme elflord		" Nice color scheme on dark background
+syntax on               " Syntax highlighting
+colorscheme elflord     " Nice color scheme on dark background
 
-set mouse=a
+set autoread                        " Don't remember what this does
+set backspace=indent,eol,start      " Don't remember what this does...
+set clipboard=unnamedplus           " Use the system clipboard
+set completeopt+=longest,preview    " Only complete common match, display extra information
+set incsearch                       " Search as you type
+set modeline                        " Read the mode line at the beginning of the file
+set mouse=a                         " Activate mouse support
+set noswapfile                      " Don't create swap files
+set nowrap                          " Don't wrap long lines
 set number                          " Show line numbers
 set relativenumber                  " Show relative numbers
-set backspace=indent,eol,start      " Don't remember what this does...
-set autoread                        " Don't remember what this does
-set nowrap                          " Don't wrap long lines
-set clipboard=unnamedplus           " Use the system clipboard
-set noswapfile                      " Don't create swap files
-set modeline                        " Read the mode line at the beginning of the file
-set smartcase                       " Don't remember what this does
-set incsearch                       " Search as you type
-set spell                           " Enable spellchecking
-set showmatch                       " Show matching <([{
 set showcmd                         " Let last executed command linger for reference
-set foldenable                      " Enable folding
-set foldmethod=syntax               " Fold based on syntax
+set showmatch                       " Show matching <([{
+set smartcase                       " smart case when searching
 set wildmenu                        " Show possible matches
 set wildmode=longest,list,full      " Order of matching
-set completeopt+=longest,preview    " Only complete common match, display extra information
+
+" Check if file has been modified outside of NeoVim
+autocmd CursorHold * checktime
 
 " vim-racer configuration
 set hidden
