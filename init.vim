@@ -22,6 +22,9 @@ Plugin 'glensc/vim-syntax-lighttpd'
 " Align text
 Plugin 'godlygeek/tabular'
 
+" Git stuff
+Plugin 'tpope/vim-fugitive'
+
 call vundle#end()
 
 filetype plugin indent on
