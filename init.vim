@@ -30,7 +30,7 @@ call vundle#end()
 filetype plugin indent on
 
 syntax on               " Syntax highlighting
-colorscheme elflord     " Nice color scheme on dark background
+colorscheme koehler
 
 set autoread                        " Don't remember what this does
 set backspace=indent,eol,start      " Don't remember what this does...
