@@ -30,6 +30,9 @@ Plugin 'tpope/vim-fugitive'
 " Linting
 Plugin 'vim-syntastic/syntastic'
 
+" File handling
+Plugin 'scrooloose/nerdtree'
+
 call vundle#end()
 
 filetype plugin indent on
