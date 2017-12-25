@@ -12,6 +12,8 @@ alias vim='gvim -v'
 
 export TFTPBOOT=/srv/tftp/tftpboot
 export NFSROOT=/srv/nfs/rootfs
+export VISUAL=vim
+export EDITOR=vim
 
 eval $(dircolors -b $HOME/myconf/LS_COLORS/LS_COLORS)
 
