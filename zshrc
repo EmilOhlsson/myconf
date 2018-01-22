@@ -52,7 +52,7 @@ function csymdb() {
 unsetopt sharehistory
 
 # If not running tmux, then start tmux
-if [ "$TMUX" = "" ]
+if [ "$TMUX" = "" ] && [ "$SSH_CLIENT" = "" ]
 then
     tmux new-session
 fi
