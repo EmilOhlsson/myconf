@@ -7,6 +7,7 @@ HIST_STAMPS="yyyy-mm-dd"
 plugins=(git cargo tmux docker fedora rust)
 
 source $ZSH/oh-my-zsh.sh
+source $HOME/myconf/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 alias vim='gvim -v'
 alias rs232='minicom --color=on --noinit -b 115200 -D'
@@ -18,6 +19,7 @@ export NFSROOT=/srv/nfs/rootfs
 export VISUAL=vim
 export EDITOR="gvim -v"
 export TERMINAL="xfce4-terminal"
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=6"
 
 eval $(dircolors -b $HOME/myconf/LS_COLORS/LS_COLORS)
 
@@ -50,7 +52,7 @@ function csymdb() {
 unsetopt sharehistory
 
 # If not running tmux, then start tmux
-if [ "$TMUX" = "" ]
+if [ "$TMUX" = "" ] && [ "$SSH_CLIENT" = "" ]
 then
     tmux new-session
 fi
