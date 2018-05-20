@@ -65,12 +65,20 @@ set hidden
 let g:racer_cmd = "racer"
 let g:racer_experimental_completer = 1
 
+" Syntastic configuration
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_rust_checkers = ['cargo']
+
 " Enable clang-format wih Ctrl+k
 map <C-K> :pyf ~/.vim/clang-format.py<cr>
 imap <C-K> <c-o>:pyf ~/.vim/clang-format.py<cr>
 
 inoremap <C-Space> <C-x><C-o>
 inoremap <C-@> <C-Space>
+noremap <leader>cr :pyf /usr/share/clang/clang-rename.py<cr>
 
 " Add some extra inforamtion to the status line
 set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
