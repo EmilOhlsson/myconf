@@ -6,38 +6,42 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 
-" Rust plugins
+""" Rust plugins
 Plugin 'rust-lang/rust.vim'
-Plugin 'racer-rust/vim-racer'
 
-" C/C++ plugins
-Plugin 'rip-rip/clang_complete'
+""" Language servers
+Plugin 'prabirshrestha/async.vim'
+Plugin 'prabirshrestha/vim-lsp'
+
+""" C/C++ plugins
+" List symbols from tagfiles with :TagbarToggle
 Plugin 'majutsushi/tagbar'
+
+" Callgraph explorer
 Plugin 'vim-scripts/CCTree'
 
-" Additional text object
+""" Additional text object
+" Support for argument manipulation (cia -> Change inne argument)
 Plugin 'vim-scripts/argtextobj.vim'
 
 " Syntax highlight
 Plugin 'glensc/vim-syntax-lighttpd'
 
-" Align text
+""" Align text
+" Crate tables by :Tab /<symbol> to tabularize based on symbol
 Plugin 'godlygeek/tabular'
 
 " Git stuff
 Plugin 'tpope/vim-fugitive'
 
-" Linting
-Plugin 'vim-syntastic/syntastic'
-
 " File handling
-Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdtree'        " Support for nicer file browsing
 
 call vundle#end()
 
 filetype plugin indent on
 
-syntax on               " Syntax highlighting
+syntax on                           " Syntax highlighting
 colorscheme koehler
 
 set autoread                        " Don't remember what this does
@@ -57,8 +61,39 @@ set smartcase                       " smart case when searching
 set wildmenu                        " Show possible matches
 set wildmode=longest,list,full      " Order of matching
 
-" Check if file has been modified outside of NeoVim
+" Check if file has been modified outside of Vim
 autocmd CursorHold * checktime
+
+" LSP configuration
+" Check configure found language servers, 
+if executable('clangd')
+    let g:vimrc_found_lsp = 1
+    augroup lsp_clangd
+        autocmd!    
+        autocmd User lsp_setup call lsp#register_server({
+            \ 'name': 'clangd',
+            \ 'cmd': {server_info->['clangd']},
+            \ 'whitelist': ['c', 'cpp'],
+            \ })
+    augroup end
+endif
+if executable('rls')
+    let g:vimrc_found_lsp = 1
+    augroup lsp_rls
+        autocmd!    
+        autocmd User lsp_setup call lsp#register_server({
+            \ 'name': 'rls',
+            \ 'cmd': {server_info->['rls']},
+            \ 'whitelist': ['rust'],
+            \ })
+    augroup end
+endif
+if g:vimrc_found_lsp
+    autocmd FileType c,cpp,rust nnoremap <leader>lr :LspRename<cr>
+    autocmd FileType c,cpp,rust setlocal omnifunc=lsp#complete
+    autocmd FileType c,cpp,rust setlocal omnifunc=lsp#complete
+endif
+
 
 " vim-racer configuration
 set hidden
@@ -98,3 +133,4 @@ function DevMode()
     set ss=4
     set cin
 endfunction
+
