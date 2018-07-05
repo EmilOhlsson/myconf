@@ -80,6 +80,11 @@ inoremap <C-Space> <C-x><C-o>
 inoremap <C-@> <C-Space>
 noremap <leader>cr :pyf /usr/share/clang/clang-rename.py<cr>
 
+" Map alt+d to delete word forward and alt+b to delete word backwar
+" in insertion mode
+inoremap <M-d> <C-o>de
+inoremap <M-b> <C-o>db
+
 " Add some extra inforamtion to the status line
 set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
 set laststatus=2
