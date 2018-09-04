@@ -66,6 +66,7 @@ autocmd CursorHold * checktime
 
 " LSP configuration
 " Check configure found language servers, 
+let g:vimrc_found_lsp = 0
 if executable('clangd')
     let g:vimrc_found_lsp = 1
     augroup lsp_clangd
