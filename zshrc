@@ -1,10 +1,11 @@
 # Path to oh-my-zsh installation.
 export ZSH=$HOME/myconf/oh-my-zsh
+export ZSH_CUSTOM=$HOME/myconf/zsh-custom
 
-ZSH_THEME="bira"
+ZSH_THEME="bira-nogit"
 HIST_STAMPS="yyyy-mm-dd"
 
-plugins=(git cargo tmux docker fedora rust)
+plugins=(tmux docker rust)
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/myconf/zsh-autosuggestions/zsh-autosuggestions.zsh

@@ -16,6 +16,7 @@ Plugin 'prabirshrestha/vim-lsp'
 """ C/C++ plugins
 " List symbols from tagfiles with :TagbarToggle
 Plugin 'majutsushi/tagbar'
+Plugin 'Rip-Rip/clang_complete'
 
 " Callgraph explorer
 Plugin 'vim-scripts/CCTree'
@@ -66,35 +67,36 @@ autocmd CursorHold * checktime
 
 " LSP configuration
 " Check configure found language servers, 
-let g:vimrc_found_lsp = 0
-if executable('clangd')
-    let g:vimrc_found_lsp = 1
-    augroup lsp_clangd
-        autocmd!    
-        autocmd User lsp_setup call lsp#register_server({
-            \ 'name': 'clangd',
-            \ 'cmd': {server_info->['clangd']},
-            \ 'whitelist': ['c', 'cpp'],
-            \ })
-    augroup end
+if v:version > 800
+    let g:vimrc_found_lsp = 0
+    if executable('clangd')
+        let g:vimrc_found_lsp = 1
+        augroup lsp_clangd
+            autocmd!    
+            autocmd User lsp_setup call lsp#register_server({
+                \ 'name': 'clangd',
+                \ 'cmd': {server_info->['clangd']},
+                \ 'whitelist': ['c', 'cpp'],
+                \ })
+        augroup end
+    endif
+    if executable('rls')
+        let g:vimrc_found_lsp = 1
+        augroup lsp_rls
+            autocmd!    
+            autocmd User lsp_setup call lsp#register_server({
+                \ 'name': 'rls',
+                \ 'cmd': {server_info->['rls']},
+                \ 'whitelist': ['rust'],
+                \ })
+        augroup end
+    endif
+    if g:vimrc_found_lsp
+        autocmd FileType c,cpp,rust nnoremap <leader>lr :LspRename<cr>
+        autocmd FileType c,cpp,rust setlocal omnifunc=lsp#complete
+        autocmd FileType c,cpp,rust setlocal omnifunc=lsp#complete
+    endif
 endif
-if executable('rls')
-    let g:vimrc_found_lsp = 1
-    augroup lsp_rls
-        autocmd!    
-        autocmd User lsp_setup call lsp#register_server({
-            \ 'name': 'rls',
-            \ 'cmd': {server_info->['rls']},
-            \ 'whitelist': ['rust'],
-            \ })
-    augroup end
-endif
-if g:vimrc_found_lsp
-    autocmd FileType c,cpp,rust nnoremap <leader>lr :LspRename<cr>
-    autocmd FileType c,cpp,rust setlocal omnifunc=lsp#complete
-    autocmd FileType c,cpp,rust setlocal omnifunc=lsp#complete
-endif
-
 
 " vim-racer configuration
 set hidden
@@ -107,6 +109,8 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_rust_checkers = ['cargo']
+
+let g:clang_library_path = '/usr/lib/llvm-6.0/lib/libclang.so'
 
 " Enable clang-format wih Ctrl+k
 map <C-K> :pyf ~/.vim/clang-format.py<cr>
@@ -127,6 +131,16 @@ function DevMode()
     set tw=100
     set sw=4
     set ss=4
+    set cin
+endfunction
+
+function LinuxDevMode()
+    set noexpandtab
+    set smarttab
+    set ts=8
+    set tw=100
+    set sw=8
+    set ss=8
     set cin
 endfunction
 
