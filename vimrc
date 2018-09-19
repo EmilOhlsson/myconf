@@ -1,6 +1,7 @@
 " Vundle setup
 set nocompatible
 filetype off
+set shell=/bin/bash
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
@@ -11,12 +12,18 @@ Plugin 'rust-lang/rust.vim'
 
 """ Language servers
 Plugin 'prabirshrestha/async.vim'
+Plugin 'prabirshrestha/asyncomplete-lsp.vim'
+Plugin 'prabirshrestha/asyncomplete.vim'
 Plugin 'prabirshrestha/vim-lsp'
 
 """ C/C++ plugins
 " List symbols from tagfiles with :TagbarToggle
 Plugin 'majutsushi/tagbar'
 Plugin 'Rip-Rip/clang_complete'
+
+""" Python
+" lsp support for python
+Plugin 'ryanolsonx/vim-lsp-python'
 
 " Callgraph explorer
 Plugin 'vim-scripts/CCTree'
@@ -91,10 +98,23 @@ if v:version > 800
                 \ })
         augroup end
     endif
+    if executable('pyls')
+        let g:vimrc_found_lsp = 1
+        augroup lsp_pyls
+            autocmd!
+            autocmd User lsp_setup call lsp#register_server({
+                \ 'name': 'pyls',
+                \ 'cmd': {server_info->['pyls']},
+                \ 'whitelist': ['python'],
+                \ })
+        augroup end
+    endif
     if g:vimrc_found_lsp
-        autocmd FileType c,cpp,rust nnoremap <leader>lr :LspRename<cr>
-        autocmd FileType c,cpp,rust setlocal omnifunc=lsp#complete
-        autocmd FileType c,cpp,rust setlocal omnifunc=lsp#complete
+        autocmd FileType c,cpp,rust,python nnoremap <leader>lr :LspRename<cr>
+        autocmd FileType c,cpp,rust,python nnoremap <leader>ld :LspDefinition<cr>
+        autocmd FileType c,cpp,rust,python nnoremap <C-H> :LspHover<cr>
+        autocmd FileType c,cpp,rust,python inoremap <C-H> <c-o>:LspHover<cr>
+        autocmd FileType c,cpp,rust,python setlocal omnifunc=lsp#complete
     endif
 endif
 
