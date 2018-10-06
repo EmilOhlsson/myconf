@@ -74,7 +74,7 @@ autocmd CursorHold * checktime
 
 " LSP configuration
 " Check configure found language servers, 
-if v:version > 800
+if v:version >= 800
     let g:vimrc_found_lsp = 0
     if executable('clangd')
         let g:vimrc_found_lsp = 1
