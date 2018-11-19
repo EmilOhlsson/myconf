@@ -56,6 +56,8 @@ set autoread                        " Don't remember what this does
 set backspace=indent,eol,start      " Don't remember what this does...
 set clipboard=unnamedplus           " Use the system clipboard
 set completeopt+=longest,preview    " Only complete common match, display extra information
+set encoding=utf-8                  " Assume utf-8 support of terminal
+set hlsearch                        " Highlight search result
 set incsearch                       " Search as you type
 set modeline                        " Read the mode line at the beginning of the file
 set mouse=a                         " Activate mouse support
@@ -129,6 +131,10 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_rust_checkers = ['cargo']
+
+let g:asyncomplete_remove_duplicates = 1
+let g:asyncomplete_smart_completion = 1
+let g:asyncomplete_auto_popup = 0
 
 let g:clang_library_path = '/usr/lib/llvm-6.0/lib/libclang.so'
 

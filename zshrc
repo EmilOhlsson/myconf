@@ -1,3 +1,9 @@
+# If not running tmux, then start tmux
+if [ "$TMUX" = "" ] && [ "$SSH_CLIENT" = "" ]
+then
+    exec tmux new-session
+fi
+
 # Path to oh-my-zsh installation.
 export ZSH=$HOME/myconf/oh-my-zsh
 export ZSH_CUSTOM=$HOME/myconf/zsh-custom
@@ -22,8 +28,3 @@ eval $(dircolors -b $HOME/myconf/LS_COLORS/LS_COLORS)
 
 unsetopt sharehistory
 
-# If not running tmux, then start tmux
-if [ "$TMUX" = "" ] && [ "$SSH_CLIENT" = "" ]
-then
-    tmux new-session
-fi
