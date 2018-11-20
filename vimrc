@@ -57,7 +57,7 @@ set backspace=indent,eol,start      " Don't remember what this does...
 set clipboard=unnamedplus           " Use the system clipboard
 set completeopt+=longest,preview    " Only complete common match, display extra information
 set encoding=utf-8                  " Assume utf-8 support of terminal
-set hlsearch                        " Highlight search result
+set hlsearch                        " Highlight search results
 set incsearch                       " Search as you type
 set modeline                        " Read the mode line at the beginning of the file
 set mouse=a                         " Activate mouse support
@@ -132,6 +132,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_rust_checkers = ['cargo']
 
+" asyncomplete configuration
 let g:asyncomplete_remove_duplicates = 1
 let g:asyncomplete_smart_completion = 1
 let g:asyncomplete_auto_popup = 0

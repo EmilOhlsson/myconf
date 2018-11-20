@@ -3,6 +3,7 @@
 function list-code-files() {
     find -type f \( \
         -name '*.cpp' -o \
+        -name '*.hpp' -o \
         -name '*.java' -o \
         -name '*.rs' -o \
         -name '*.json' -o \
@@ -15,7 +16,7 @@ function list-code-files() {
 }
 
 function csym() {
-    list-code-files | xargs -0 grep -ne "$1"
+    list-code-files | xargs -0 grep -ne "$1" | sed -e 's/:/ +/'
 }
 
 function csed() {
