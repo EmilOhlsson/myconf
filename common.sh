@@ -2,6 +2,8 @@
 
 function list-code-files() {
     find -type f \( \
+        -name 'SConstruct' -o \
+        -name 'SConscript' -o \
         -name '*.cpp' -o \
         -name '*.hpp' -o \
         -name '*.java' -o \
@@ -15,12 +17,32 @@ function list-code-files() {
         \) -print0
 }
 
+function list-c-code-files() {
+    find -type f \( \
+        -name '*.cpp' -o \
+        -name '*.hpp' -o \
+        -name '*.[ch]' \
+        \) -print0
+}
+
 function csym() {
     list-code-files | xargs -0 grep -ne "$1" | sed -e 's/:/ +/'
 }
 
+function ctodo() {
+    csym 'TODO\|FIXME'
+}
+
 function csed() {
     list-code-files | xargs -0 sed -i -e "$1"
+}
+
+function cgadd() {
+    list-code-files | xargs -0 git add
+}
+
+function cfmt() {
+    list-c-code-files | xargs -0 clang-format -i
 }
 
 function csymdb() {
@@ -31,6 +53,8 @@ function csymdb() {
 
 alias vim='gvim -v'
 alias rs232='minicom --color=on --noinit -b 115200 -D'
+alias arm-dump='arm-none-eabi-objdump -xwdlSC'
+alias native-dump='objdump -xwdlSC'
 
 export PATH=${HOME}/.cargo/bin:$PATH
 export PATH=${HOME}/.local/bin:$PATH

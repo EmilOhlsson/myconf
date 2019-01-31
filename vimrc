@@ -45,6 +45,9 @@ Plugin 'tpope/vim-fugitive'
 " File handling
 Plugin 'scrooloose/nerdtree'        " Support for nicer file browsing
 
+" Fuzzy searching
+Plugin 'kien/ctrlp.vim'
+
 call vundle#end()
 
 filetype plugin indent on
@@ -70,6 +73,7 @@ set showmatch                       " Show matching <([{
 set smartcase                       " smart case when searching
 set wildmenu                        " Show possible matches
 set wildmode=longest,list,full      " Order of matching
+set hidden                          " Buffers are hidden instead of closed
 
 " Check if file has been modified outside of Vim
 autocmd CursorHold * checktime
@@ -78,14 +82,15 @@ autocmd CursorHold * checktime
 " Check configure found language servers, 
 if v:version >= 800
     let g:vimrc_found_lsp = 0
-    if executable('clangd')
+    if executable('cquery')
         let g:vimrc_found_lsp = 1
         augroup lsp_clangd
             autocmd!    
             autocmd User lsp_setup call lsp#register_server({
-                \ 'name': 'clangd',
-                \ 'cmd': {server_info->['clangd']},
-                \ 'whitelist': ['c', 'cpp'],
+                \ 'name': 'cquery',
+                \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
+                \ 'initialization_options': { 'cacheDirectory': '/tmp/cquery/cache' }, 'cmd': {server_info->['cquery']},
+                \ 'whitelist': ['c', 'cc', 'cpp'],
                 \ })
         augroup end
     endif
@@ -112,8 +117,9 @@ if v:version >= 800
         augroup end
     endif
     if g:vimrc_found_lsp
-        autocmd FileType c,cpp,rust,python nnoremap <leader>lr :LspRename<cr>
+        autocmd FileType c,cpp,rust,python nnoremap <leader>lr :LspReferences<cr>
         autocmd FileType c,cpp,rust,python nnoremap <leader>ld :LspDefinition<cr>
+        autocmd FileType c,cpp,rust,python nnoremap <leader>ln :LspRename<cr>
         autocmd FileType c,cpp,rust,python nnoremap <C-H> :LspHover<cr>
         autocmd FileType c,cpp,rust,python inoremap <C-H> <c-o>:LspHover<cr>
         autocmd FileType c,cpp,rust,python setlocal omnifunc=lsp#complete
@@ -121,7 +127,6 @@ if v:version >= 800
 endif
 
 " vim-racer configuration
-set hidden
 let g:racer_cmd = "racer"
 let g:racer_experimental_completer = 1
 
@@ -142,6 +147,8 @@ let g:clang_library_path = '/usr/lib/llvm-6.0/lib/libclang.so'
 " Enable clang-format wih Ctrl+k
 map <C-K> :pyf ~/.vim/clang-format.py<cr>
 imap <C-K> <c-o>:pyf ~/.vim/clang-format.py<cr>
+
+map <leader>p :CtrlP<cr>
 
 inoremap <C-Space> <C-x><C-o>
 inoremap <C-@> <C-Space>
