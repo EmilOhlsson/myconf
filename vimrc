@@ -48,6 +48,11 @@ Plugin 'scrooloose/nerdtree'        " Support for nicer file browsing
 " Fuzzy searching
 Plugin 'kien/ctrlp.vim'
 
+" Bookmarks
+Plugin 'MattesGroeger/vim-bookmarks'    " mm - toggle bookmark on line
+                                        " mi - add/edit/remove annotation
+                                        " ma - show all bookmarks
+
 call vundle#end()
 
 filetype plugin indent on
@@ -70,7 +75,8 @@ set number                          " Show line numbers
 set relativenumber                  " Show relative numbers
 set showcmd                         " Let last executed command linger for reference
 set showmatch                       " Show matching <([{
-set smartcase                       " smart case when searching
+set ignorecase                      " Ignore casing when searching
+set smartcase                       " Do not ignore case if upper case is used
 set wildmenu                        " Show possible matches
 set wildmode=longest,list,full      " Order of matching
 set hidden                          " Buffers are hidden instead of closed
@@ -88,8 +94,15 @@ if v:version >= 800
             autocmd!    
             autocmd User lsp_setup call lsp#register_server({
                 \ 'name': 'cquery',
-                \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
-                \ 'initialization_options': { 'cacheDirectory': '/tmp/cquery/cache' }, 'cmd': {server_info->['cquery']},
+                \ 'root_uri': {
+                \   server_info->lsp#utils#path_to_uri(
+                \       lsp#utils#find_nearest_parent_file_directory(
+                \           lsp#utils#get_buffer_path(), 'compile_commands.json'
+                \       )
+                \   )
+                \ },
+                \ 'initialization_options': { 'cacheDirectory': '/tmp/cquery/cache' },
+                \ 'cmd': {server_info->['cquery']},
                 \ 'whitelist': ['c', 'cc', 'cpp'],
                 \ })
         augroup end
@@ -120,6 +133,8 @@ if v:version >= 800
         autocmd FileType c,cpp,rust,python nnoremap <leader>lr :LspReferences<cr>
         autocmd FileType c,cpp,rust,python nnoremap <leader>ld :LspDefinition<cr>
         autocmd FileType c,cpp,rust,python nnoremap <leader>ln :LspRename<cr>
+        autocmd FileType c,cpp,rust,python nnoremap <leader>le :LspNextError<cr>
+        autocmd FileType c,cpp,rust,python nnoremap <leader>ls :LspNextReference<cr>
         autocmd FileType c,cpp,rust,python nnoremap <C-H> :LspHover<cr>
         autocmd FileType c,cpp,rust,python inoremap <C-H> <c-o>:LspHover<cr>
         autocmd FileType c,cpp,rust,python setlocal omnifunc=lsp#complete
@@ -142,6 +157,15 @@ let g:asyncomplete_remove_duplicates = 1
 let g:asyncomplete_smart_completion = 1
 let g:asyncomplete_auto_popup = 0
 
+" LSP configuration
+let g:lsp_diagnostics_enabled = 1
+let g:lsp_signs_enabled = 1
+let g:lsp_diagnostics_echo_cursor = 1
+let g:lsp_highlights_enabled = 1
+let g:lsp_textprop_enabled = 1
+let g:lsp_highlight_references_enabled = 1
+highlight lspReference ctermfg=white ctermbg=green
+
 let g:clang_library_path = '/usr/lib/llvm-6.0/lib/libclang.so'
 
 " Enable clang-format wih Ctrl+k
@@ -153,6 +177,8 @@ map <leader>p :CtrlP<cr>
 inoremap <C-Space> <C-x><C-o>
 inoremap <C-@> <C-Space>
 noremap <leader>cr :pyf /usr/share/clang/clang-rename.py<cr>
+
+noremap <leader>uc :%s/\[\d\+\(;\d\+\)*m//g<cr>
 
 " Add some extra inforamtion to the status line
 set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
@@ -166,6 +192,7 @@ function DevMode()
     set sw=4
     set ss=4
     set cin
+    set cursorline
 endfunction
 
 function LinuxDevMode()
@@ -176,5 +203,6 @@ function LinuxDevMode()
     set sw=8
     set ss=8
     set cin
+    set colorcolumn=80
 endfunction
 

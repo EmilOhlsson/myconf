@@ -2,18 +2,19 @@
 
 function list-code-files() {
     find -type f \( \
-        -name 'SConstruct' -o \
-        -name 'SConscript' -o \
-        -name '*.cpp' -o \
-        -name '*.hpp' -o \
-        -name '*.java' -o \
-        -name '*.rs' -o \
-        -name '*.json' -o \
-        -name '*.php' -o \
-        -name '*.py' -o \
-        -name '*.[chS]' -o \
-        -name 'Makefile' -o \
-        -name '*.mk' \
+        -iname 'sconstruct' -o \
+        -iname 'sconscript' -o \
+        -iname '*.cmake' -o \
+        -iname '*.cpp' -o \
+        -iname '*.hpp' -o \
+        -iname '*.java' -o \
+        -iname '*.rs' -o \
+        -iname '*.json' -o \
+        -iname '*.php' -o \
+        -iname '*.py' -o \
+        -iname '*.[chS]' -o \
+        -iname 'Makefile' -o \
+        -iname '*.mk' \
         \) -print0
 }
 
