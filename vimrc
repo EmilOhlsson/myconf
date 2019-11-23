@@ -19,7 +19,6 @@ Plugin 'prabirshrestha/vim-lsp'
 """ C/C++ plugins
 " List symbols from tagfiles with :TagbarToggle
 Plugin 'majutsushi/tagbar'
-Plugin 'Rip-Rip/clang_complete'
 
 """ Python
 " lsp support for python
@@ -58,7 +57,6 @@ call vundle#end()
 filetype plugin indent on
 
 syntax on                           " Syntax highlighting
-colorscheme koehler
 
 set autoread                        " Don't remember what this does
 set backspace=indent,eol,start      " Don't remember what this does...
@@ -165,8 +163,6 @@ let g:lsp_highlights_enabled = 1
 let g:lsp_textprop_enabled = 1
 let g:lsp_highlight_references_enabled = 1
 highlight lspReference ctermfg=white ctermbg=green
-
-let g:clang_library_path = '/usr/lib/llvm-6.0/lib/libclang.so'
 
 " Enable clang-format wih Ctrl+k
 map <C-K> :pyf ~/.vim/clang-format.py<cr>

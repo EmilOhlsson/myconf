@@ -10,3 +10,6 @@
 [submodule "zsh-autosuggestions"]
 	path = zsh-autosuggestions
 	url = git@github.com:zsh-users/zsh-autosuggestions.git
+[submodule "neovim"]
+	path = neovim
+	url = https://github.com/neovim/neovim.git
