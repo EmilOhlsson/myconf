@@ -8,7 +8,7 @@ fi
 export ZSH=$HOME/myconf/oh-my-zsh
 export ZSH_CUSTOM=$HOME/myconf/zsh-custom
 
-ZSH_THEME="bira-nogit"
+ZSH_THEME="candy"
 HIST_STAMPS="yyyy-mm-dd"
 
 plugins=(tmux docker rust)

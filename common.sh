@@ -56,6 +56,7 @@ alias vim='gvim -v'
 alias rs232='minicom --color=on --noinit -b 115200 -D'
 alias arm-dump='arm-none-eabi-objdump -xwdlSC'
 alias native-dump='objdump -xwdlSC'
+alias glog='git log --oneline --graph --decorate'
 
 export PATH=${HOME}/.cargo/bin:$PATH
 export PATH=${HOME}/.local/bin:$PATH

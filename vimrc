@@ -57,6 +57,7 @@ call vundle#end()
 filetype plugin indent on
 
 syntax on                           " Syntax highlighting
+colorscheme industry
 
 set autoread                        " Don't remember what this does
 set backspace=indent,eol,start      " Don't remember what this does...
@@ -78,6 +79,12 @@ set smartcase                       " Do not ignore case if upper case is used
 set wildmenu                        " Show possible matches
 set wildmode=longest,list,full      " Order of matching
 set hidden                          " Buffers are hidden instead of closed
+
+set wrap                                 " Wrap long lines
+set linebreak                            " break long lines at words
+set showbreak=>>                         " Prefix wrapped lines with >>
+set breakindent                          " Indent wrapped lines
+set breakindentopt=shift:40,sbr          " indent with 32 chars, ShowBReak before indent
 
 " Check if file has been modified outside of Vim
 autocmd CursorHold * checktime
