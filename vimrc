@@ -93,12 +93,12 @@ autocmd CursorHold * checktime
 " Check configure found language servers, 
 if v:version >= 800
     let g:vimrc_found_lsp = 0
-    if executable('cquery')
+    if executable('ccls')
         let g:vimrc_found_lsp = 1
-        augroup lsp_clangd
+        augroup lsp_ccls
             autocmd!    
             autocmd User lsp_setup call lsp#register_server({
-                \ 'name': 'cquery',
+                \ 'name': 'ccls',
                 \ 'root_uri': {
                 \   server_info->lsp#utils#path_to_uri(
                 \       lsp#utils#find_nearest_parent_file_directory(
@@ -106,8 +106,7 @@ if v:version >= 800
                 \       )
                 \   )
                 \ },
-                \ 'initialization_options': { 'cacheDirectory': '/tmp/cquery/cache' },
-                \ 'cmd': {server_info->['cquery']},
+                \ 'cmd': {server_info->['ccls']},
                 \ 'whitelist': ['c', 'cc', 'cpp'],
                 \ })
         augroup end
@@ -145,10 +144,6 @@ if v:version >= 800
         autocmd FileType c,cpp,rust,python setlocal omnifunc=lsp#complete
     endif
 endif
-
-" vim-racer configuration
-let g:racer_cmd = "racer"
-let g:racer_experimental_completer = 1
 
 " Syntastic configuration
 let g:syntastic_always_populate_loc_list = 1
