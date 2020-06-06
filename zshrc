@@ -11,8 +11,6 @@ export ZSH_CUSTOM=$HOME/myconf/zsh-custom
 ZSH_THEME="candy"
 HIST_STAMPS="yyyy-mm-dd"
 
-plugins=(tmux docker rust)
-
 source $ZSH/oh-my-zsh.sh
 source $HOME/myconf/zsh-autosuggestions/zsh-autosuggestions.zsh
 
@@ -20,7 +18,6 @@ source $HOME/myconf/common.sh
 
 export VISUAL=vim
 export EDITOR="gvim -v"
-export TERMINAL="xfce4-terminal"
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=6"
 export RUST_SRC_PATH=$HOME/.multirust/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src/
 
