@@ -33,6 +33,7 @@ Plugin 'vim-scripts/argtextobj.vim'
 
 " Syntax highlight
 Plugin 'glensc/vim-syntax-lighttpd'
+Plugin 'tikhomirov/vim-glsl'
 
 """ Align text
 " Crate tables by :Tab /<symbol> to tabularize based on symbol
@@ -57,8 +58,10 @@ call vundle#end()
 filetype plugin indent on
 
 syntax on                           " Syntax highlighting
-colorscheme industry
 
+if has('nvim')
+  set inccommand=split                " Use Neovim search/replace
+endif
 set autoread                        " Don't remember what this does
 set backspace=indent,eol,start      " Don't remember what this does...
 set clipboard=unnamedplus           " Use the system clipboard
