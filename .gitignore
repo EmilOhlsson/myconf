@@ -2,3 +2,4 @@ vim/bundle/
 *.pyc
 vim/.netrwhist
 local.vim
+local.sh

@@ -1,0 +1,4 @@
+function setup-environment() {
+	export PATH="<extra>:$PATH"
+	echo 'did something'
+}

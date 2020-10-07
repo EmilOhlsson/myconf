@@ -1,1 +1,2 @@
 colorscheme industry
+hi Cursorline term=bold cterm=bold ctermbg=4

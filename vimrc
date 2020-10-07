@@ -52,6 +52,8 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'MattesGroeger/vim-bookmarks'    " mm - toggle bookmark on line
                                         " mi - add/edit/remove annotation
                                         " ma - show all bookmarks
+" Local vimrc
+Plugin 'embear/vim-localvimrc'      " Local vimrc
 
 call vundle#end()
 
@@ -168,6 +170,10 @@ let g:lsp_highlights_enabled = 1
 let g:lsp_textprop_enabled = 1
 let g:lsp_highlight_references_enabled = 1
 highlight lspReference ctermfg=white ctermbg=green
+
+" Local vimrc configuration
+let g:localvimrc_ask=0
+let g:localvimrc_count=1
 
 " Enable clang-format wih Ctrl+k
 map <C-K> :pyf ~/.vim/clang-format.py<cr>
