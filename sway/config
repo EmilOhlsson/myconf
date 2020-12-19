@@ -1,0 +1,45 @@
+# Read `man 5 sway` for a complete reference.
+# Read `man 5 sway-bar` for more information on status bar
+
+### Variables
+set $mod Mod4
+
+# Home row direction keys, like vim
+set $left h
+set $down j
+set $up k
+set $right l
+
+# Preferred terminal emulator
+set $term alacritty
+
+# Preferred application launcher
+set $menu dmenu_path | dmenu | xargs swaymsg exec --
+
+# Output configuration
+output * bg /usr/share/backgrounds/default.png fill
+
+# Idle configuration
+exec swayidle -w \
+         timeout 300 'swaylock -f -c 000000' \
+         timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+         before-sleep 'swaylock -f -c 000000'
+
+# Status Bar:
+bar {
+    position top
+
+    status_command while ~/local/bin/hugmin; do sleep 1; done
+
+    colors {
+        statusline #ffffff
+        background #323232
+        inactive_workspace #32323200 #32323200 #5c5c5c
+    }
+}
+
+smart_borders on
+smart_gaps on:w
+
+# Load other specific configurations
+include ~/myconf/sway/config.d/*
