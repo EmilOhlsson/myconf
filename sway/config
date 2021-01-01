@@ -39,7 +39,8 @@ bar {
 }
 
 smart_borders on
-smart_gaps on:w
+smart_gaps on
+default_border pixel 2
 
 # Load other specific configurations
 include ~/myconf/sway/config.d/*
