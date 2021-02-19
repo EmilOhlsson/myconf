@@ -62,7 +62,4 @@ export PATH=${HOME}/.cargo/bin:$PATH
 export PATH=${HOME}/.local/bin:$PATH
 export PATH=${HOME}/local/bin:$PATH
 
-if [ -f "${HOME}/myconf/local.sh" ]
-then
-	source "${HOME}/myconf/local.sh"
-fi
+[ -f ~/myconf/local.sh ] && source ~/myconf/local.sh
