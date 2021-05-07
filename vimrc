@@ -213,3 +213,6 @@ function LinuxDevMode()
     set colorcolumn=80
 endfunction
 
+if filereadable(expand('$HOME/myconf/local.vim'))
+    source ~/myconf/local.vim
+endif
