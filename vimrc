@@ -5,55 +5,24 @@ set shell=/bin/bash
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+" Plugins
 Plugin 'VundleVim/Vundle.vim'
 
-""" Rust plugins
-Plugin 'rust-lang/rust.vim'
-
-""" Language servers
-Plugin 'prabirshrestha/async.vim'
-Plugin 'prabirshrestha/asyncomplete-lsp.vim'
-Plugin 'prabirshrestha/asyncomplete.vim'
-Plugin 'prabirshrestha/vim-lsp'
-
-""" C/C++ plugins
-" List symbols from tagfiles with :TagbarToggle
-Plugin 'majutsushi/tagbar'
-
-""" Python
-" lsp support for python
-Plugin 'ryanolsonx/vim-lsp-python'
-
-" Callgraph explorer
-Plugin 'vim-scripts/CCTree'
-
-""" Additional text object
-" Support for argument manipulation (cia -> Change inner argument)
-Plugin 'vim-scripts/argtextobj.vim'
-
-" Syntax highlight
-Plugin 'glensc/vim-syntax-lighttpd'
-Plugin 'tikhomirov/vim-glsl'
-
-""" Align text
-" Crate tables by :Tab /<symbol> to tabularize based on symbol
-Plugin 'godlygeek/tabular'
-
-" Git stuff
-Plugin 'tpope/vim-fugitive'
-
-" File handling
-Plugin 'scrooloose/nerdtree'        " Support for nicer file browsing
-
-" Fuzzy searching
-Plugin 'kien/ctrlp.vim'
-
-" Bookmarks
+Plugin 'rust-lang/rust.vim'             " Rust support
+Plugin 'neoclide/coc.nvim'              " LSP support
+                                        " :CocInstall coc-clangd
+                                        " :CocInstall coc-rls
+Plugin 'majutsushi/tagbar'              " File overview for C/C++
+Plugin 'vim-scripts/argtextobj.vim'     " Argument manipulation (cia -> change inner argument)
+Plugin 'tikhomirov/vim-glsl'            " GLSL syntax highlighting
+Plugin 'godlygeek/tabular'              " Crate tables by :Tab /<symbol> to tabularize based on symbol
+Plugin 'tpope/vim-fugitive'             " Git stuff
+Plugin 'scrooloose/nerdtree'            " Support for nicer file browsing
+Plugin 'kien/ctrlp.vim'                 " Fuzzy searching
 Plugin 'MattesGroeger/vim-bookmarks'    " mm - toggle bookmark on line
                                         " mi - add/edit/remove annotation
                                         " ma - show all bookmarks
-" Local vimrc
-Plugin 'embear/vim-localvimrc'      " Local vimrc
+Plugin 'embear/vim-localvimrc'          " Local vimrc
 
 call vundle#end()
 
@@ -69,12 +38,15 @@ set backspace=indent,eol,start      " Don't remember what this does...
 set clipboard=unnamedplus           " Use the system clipboard
 set completeopt+=longest,preview    " Only complete common match, display extra information
 set encoding=utf-8                  " Assume utf-8 support of terminal
+set cmdheight=2
+set signcolumn=yes
 set hlsearch                        " Highlight search results
 set incsearch                       " Search as you type
 set modeline                        " Read the mode line at the beginning of the file
 set mouse=a                         " Activate mouse support
 set noswapfile                      " Don't create swap files
 set nowrap                          " Don't wrap long lines
+set shortmess+=c
 set number                          " Show line numbers
 set relativenumber                  " Show relative numbers
 set showcmd                         " Let last executed command linger for reference
@@ -90,86 +62,24 @@ set linebreak                            " break long lines at words
 set showbreak=>>                         " Prefix wrapped lines with >>
 set breakindent                          " Indent wrapped lines
 set breakindentopt=shift:40,sbr          " indent with 32 chars, ShowBReak before indent
+set updatetime=300
 
+nmap <leader>rn <plug>(coc-rename)
+nmap <leader>lsi :CocCommand clangd.symbolInfo
+nmap <leader>lsh :CocCommand clangd.switchSourceHeader
+nmap <silent> <leader>lp <Plug>(coc-diagnostic-prev)
+nmap <silent> <leader>le <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> <leader>ld <Plug>(coc-definition)
+"nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> <leader>li <Plug>(coc-implementation)
+nmap <silent> <leader>lr <Plug>(coc-references)
+
+" Highlight symbol under cursor
+autocmd CursorHold * silent call CocActionAsync('highlight')
 " Check if file has been modified outside of Vim
 autocmd CursorHold * checktime
-
-" LSP configuration
-" Check configure found language servers, 
-if v:version >= 800 && $SKIP_LSP != 'y'
-    let g:vimrc_found_lsp = 0
-    if executable('ccls')
-        let g:vimrc_found_lsp = 1
-        augroup lsp_ccls
-            autocmd!    
-            autocmd User lsp_setup call lsp#register_server({
-                \ 'name': 'ccls',
-                \ 'root_uri': {
-                \   server_info->lsp#utils#path_to_uri(
-                \       lsp#utils#find_nearest_parent_file_directory(
-                \           lsp#utils#get_buffer_path(), 'compile_commands.json'
-                \       )
-                \   )
-                \ },
-                \ 'cmd': {server_info->['ccls']},
-                \ 'whitelist': ['c', 'cc', 'cpp'],
-                \ })
-        augroup end
-    endif
-    if executable('rls')
-        let g:vimrc_found_lsp = 1
-        augroup lsp_rls
-            autocmd!    
-            autocmd User lsp_setup call lsp#register_server({
-                \ 'name': 'rls',
-                \ 'cmd': {server_info->['rls']},
-                \ 'whitelist': ['rust'],
-                \ })
-        augroup end
-    endif
-    if executable('pyls')
-        let g:vimrc_found_lsp = 1
-        augroup lsp_pyls
-            autocmd!
-            autocmd User lsp_setup call lsp#register_server({
-                \ 'name': 'pyls',
-                \ 'cmd': {server_info->['pyls']},
-                \ 'whitelist': ['python'],
-                \ })
-        augroup end
-    endif
-    if g:vimrc_found_lsp
-        autocmd FileType c,cpp,rust,python nnoremap <leader>lr :LspReferences<cr>
-        autocmd FileType c,cpp,rust,python nnoremap <leader>ld :LspDefinition<cr>
-        autocmd FileType c,cpp,rust,python nnoremap <leader>ln :LspRename<cr>
-        autocmd FileType c,cpp,rust,python nnoremap <leader>le :LspNextError<cr>
-        autocmd FileType c,cpp,rust,python nnoremap <leader>ls :LspNextReference<cr>
-        autocmd FileType c,cpp,rust,python nnoremap <C-H> :LspHover<cr>
-        autocmd FileType c,cpp,rust,python inoremap <C-H> <c-o>:LspHover<cr>
-        autocmd FileType c,cpp,rust,python setlocal omnifunc=lsp#complete
-    endif
-endif
-
-" Syntastic configuration
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_rust_checkers = ['cargo']
-
-" asyncomplete configuration
-let g:asyncomplete_remove_duplicates = 1
-let g:asyncomplete_smart_completion = 1
-let g:asyncomplete_auto_popup = 0
-
-" LSP configuration
-let g:lsp_diagnostics_enabled = 1
-let g:lsp_signs_enabled = 1
-let g:lsp_diagnostics_echo_cursor = 1
-let g:lsp_highlights_enabled = 1
-let g:lsp_textprop_enabled = 1
-let g:lsp_highlight_references_enabled = 1
-highlight lspReference ctermfg=white ctermbg=green
 
 " Local vimrc configuration
 let g:localvimrc_ask=0
@@ -183,9 +93,7 @@ map <leader>p :CtrlP<cr>
 
 inoremap <C-Space> <C-x><C-o>
 inoremap <C-@> <C-Space>
-noremap <leader>cr :pyf /usr/share/clang/clang-rename.py<cr>
-
-noremap <leader>uc :%s/\[\d\+\(;\d\+\)*m//g<cr>
+" noremap <leader>cr :pyf /usr/share/clang/clang-rename.py<cr>
 
 " Add some extra inforamtion to the status line
 set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
