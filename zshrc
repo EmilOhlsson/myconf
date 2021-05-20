@@ -32,6 +32,8 @@ unsetopt sharehistory
 # Add support for searching backward in history based on prefix
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
+
+# Create user defined widet
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 
