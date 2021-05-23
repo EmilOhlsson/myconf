@@ -22,3 +22,5 @@
 [submodule "fzf"]
 	path = tools/fzf
 	url = https://github.com/junegunn/fzf.git
+[submodule "LS_COLORS/"]
+	url = https://github.com/trapd00r/LS_COLORS.git
