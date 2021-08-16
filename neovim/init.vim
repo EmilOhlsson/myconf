@@ -1,18 +1,21 @@
+if filereadable(expand('$HOME/myconf/local.vim'))
+    source ~/myconf/local.vim
+endif
+
 source ~/myconf/neovim/plugins.vim
 source ~/myconf/neovim/settings.vim
 source ~/myconf/neovim/helpers.vim
 
 if has('nvim')
-  lua require('my-init')
+  lua require('config')
 endif
 
-highlight LspReferenceText cterm=bold gui=bold ctermbg=4
-highlight LspReferenceRead cterm=bold gui=bold ctermbg=6
-highlight LspReferenceWrite cterm=bold gui=bold ctermbg=9
+highlight LspReferenceText cterm=bold gui=bold ctermbg=Blue ctermfg=White
+highlight LspReferenceRead cterm=bold gui=bold ctermbg=Green ctermfg=White
+highlight LspReferenceWrite cterm=bold gui=bold ctermbg=Red ctermfg=White
 
 autocmd CursorHold * lua vim.lsp.buf.document_highlight()
+autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
 autocmd CursorMoved * lua vim.lsp.buf.clear_references()
 
-if filereadable(expand('$HOME/myconf/local.vim'))
-    source ~/myconf/local.vim
-endif
+filetype plugin indent on

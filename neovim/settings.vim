@@ -7,7 +7,6 @@ set backspace=indent,eol,start      " Don't remember what this does...
 set clipboard=unnamedplus           " Use the system clipboard
 set completeopt=menuone,noselect    " Only complete common match, display extra information
 set encoding=utf-8                  " Assume utf-8 support of terminal
-set cmdheight=2
 set signcolumn=yes
 set hlsearch                        " Highlight search results
 set incsearch                       " Search as you type
