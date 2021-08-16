@@ -38,14 +38,12 @@ set backspace=indent,eol,start      " Don't remember what this does...
 set clipboard=unnamedplus           " Use the system clipboard
 set completeopt+=longest,preview    " Only complete common match, display extra information
 set encoding=utf-8                  " Assume utf-8 support of terminal
-set cmdheight=2
-set signcolumn=yes
+set signcolumn=yes                  " Always show the sign column
 set hlsearch                        " Highlight search results
 set incsearch                       " Search as you type
 set modeline                        " Read the mode line at the beginning of the file
 set mouse=a                         " Activate mouse support
 set noswapfile                      " Don't create swap files
-set nowrap                          " Don't wrap long lines
 set shortmess+=c
 set number                          " Show line numbers
 set relativenumber                  " Show relative numbers
@@ -57,22 +55,23 @@ set wildmenu                        " Show possible matches
 set wildmode=longest,list,full      " Order of matching
 set hidden                          " Buffers are hidden instead of closed
 
-set wrap                                 " Wrap long lines
-set linebreak                            " break long lines at words
-set showbreak=>>                         " Prefix wrapped lines with >>
-set breakindent                          " Indent wrapped lines
-set breakindentopt=shift:40,sbr          " indent with 32 chars, ShowBReak before indent
-set updatetime=300
+set wrap                            " Wrap long lines
+set linebreak                       " break long lines at words
+set showbreak=>>                    " Prefix wrapped lines with >>
+set breakindent                     " Indent wrapped lines
+set breakindentopt=shift:40,sbr     " indent with 32 chars, ShowBReak before indent
+set updatetime=300                  " Update every 300 ms. Useful for CoC symbol hover
 
 nmap <leader>rn <plug>(coc-rename)
-nmap <leader>lsi :CocCommand clangd.symbolInfo
-nmap <leader>lsh :CocCommand clangd.switchSourceHeader
+nmap <leader>lsi :CocCommand clangd.symbolInfo<cr>
+nmap <leader>lsh :CocCommand clangd.switchSourceHeader<cr>
+nmap <leader>lf :CocList -I symbols<cr>
 nmap <silent> <leader>lp <Plug>(coc-diagnostic-prev)
 nmap <silent> <leader>le <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
 nmap <silent> <leader>ld <Plug>(coc-definition)
-"nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> <leader>lD <Plug>(coc-type-definition)
 nmap <silent> <leader>li <Plug>(coc-implementation)
 nmap <silent> <leader>lr <Plug>(coc-references)
 
