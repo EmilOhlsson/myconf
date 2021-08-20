@@ -13,6 +13,7 @@ endif
 highlight LspReferenceText cterm=bold gui=bold ctermbg=Blue ctermfg=White
 highlight LspReferenceRead cterm=bold gui=bold ctermbg=Green ctermfg=White
 highlight LspReferenceWrite cterm=bold gui=bold ctermbg=Red ctermfg=White
+highlight CursorLine cterm=bold ctermbg=darkgrey
 
 autocmd CursorHold * lua vim.lsp.buf.document_highlight()
 autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
