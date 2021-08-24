@@ -45,3 +45,62 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 		virtual_text = false,
 	}
 )
+
+local function describe(symbol, lvl)
+    lvl = lvl or 0
+    if type(symbol) == 'table' then
+        for k, v in pairs(symbol) do
+            print(string.rep(' ', lvl * 2) .. '['..k..']=')
+            describe(v, lvl + 1)
+        end
+    elseif symbol == nil then
+        print(string.rep(' ', lvl * 2) .. '(nil)')
+    else
+        print(string.rep(' ', lvl * 2) .. symbol)
+    end
+end
+
+local function length(symbol)
+    local count = 0
+    for _ in pairs(symbol) do
+        count = count + 1
+    end
+    return count
+end
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = function(_, _, result, _)
+    local uri = result.uri
+    local bufnr = vim.uri_to_bufnr(uri)
+    local diagnostics = result.diagnostics
+    --if not bufnr then
+    --    print("LSP.publishDiagnostics: Couldn't find buffer for ", uri)
+    --    return
+    --end
+    --for _, v in ipairs(diagnostics) do
+    --    v.uri = v.uri or result.uri
+    --end
+    local filtered_diagnostics = {}
+    for k, v in pairs(diagnostics) do
+        if v.uri then
+            filtered_diagnostics[k] = v
+        end
+    end
+    print("Aaarh?")
+    print("Diagnostics")
+    describe(diagnostics)
+    print("done")
+    -- This line down here breaks because URI is not always set
+    local locations = vim.lsp.util.locations_to_items(filtered_diagnostics)
+    print("Locatinos")
+    describe(locations)
+    vim.lsp.util.set_loclist(locations)
+    describe(diagnostics)
+    if not diagnostics then
+        print("Diagnostics is nil")
+    else
+        print("Actually have diagnostics: %", length(diagnostics))
+    end
+    -- This doesn't seem to do anything
+    vim.lsp.diagnostic.clear(bufnr, nil, nil, nil)
+    vim.lsp.diagnostic.set_signs(diagnostics, bufnr, nil, nil, nil)
+end
