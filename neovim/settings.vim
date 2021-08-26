@@ -32,3 +32,4 @@ set breakindentopt=shift:40,sbr          " indent with 32 chars, ShowBReak befor
 set updatetime=300  " How often to check file, affects autoread, cursorhold etc
 set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
 set laststatus=2
+set exrc                            " Load local vimrc
