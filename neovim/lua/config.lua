@@ -17,6 +17,7 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<leader>le', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
     buf_set_keymap('n', '<leader>lp', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    require('completion').on_attach(client, bufnr)
 end
 
 -- When LSP starts, configure using table above
@@ -24,17 +25,28 @@ nvim_lsp.clangd.setup {
     on_attach = on_attach
 }
 
-require'nvim-treesitter.configs'.setup({
+require('nvim-treesitter.configs').setup({
     highlight = {
         enable = true,
         disable = {},
+        additional_vim_regex_highlighting = true,
     },
     indent = {
         enable = false,
         disable = {},
     },
+
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            init_selection = "gnn",
+            node_incremental = "grn",
+            scope_incremental = "grc",
+            node_decremental = "grm",
+        },
+    },
     ensure_installed = {
-        "c", "cpp", "rust",
+        "c", "cpp", "rust", "lua"
     },
 })
 

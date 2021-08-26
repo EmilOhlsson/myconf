@@ -10,13 +10,14 @@ if has('nvim')
   lua require('config')
 endif
 
-highlight LspReferenceText cterm=bold gui=bold ctermbg=Blue ctermfg=White
-highlight LspReferenceRead cterm=bold gui=bold ctermbg=Green ctermfg=White
-highlight LspReferenceWrite cterm=bold gui=bold ctermbg=Red ctermfg=White
-highlight CursorLine cterm=bold ctermbg=darkgrey
+highlight Cursorline term=bold cterm=bold ctermbg=darkgrey
+highlight LspReferenceText cterm=bold gui=bold ctermbg=darkcyan ctermfg=white
+highlight LspReferenceRead cterm=bold gui=bold ctermbg=darkgreen ctermfg=white
+highlight LspReferenceWrite cterm=bold gui=bold ctermbg=darkred ctermfg=white
 
 autocmd CursorHold * lua vim.lsp.buf.document_highlight()
 autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
 autocmd CursorMoved * lua vim.lsp.buf.clear_references()
+autocmd TextYankPost * lua vim.highlight.on_yank {on_visual = false}
 
 filetype plugin indent on

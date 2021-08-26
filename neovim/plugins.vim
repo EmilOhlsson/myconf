@@ -8,4 +8,6 @@ Plug 'scrooloose/nerdtree'            " Support for nicer file browsing
 Plug 'MattesGroeger/vim-bookmarks'    " mm - toggle bookmark on line
                                       " mi - add/edit/remove annotation
                                       " ma - show all bookmarks
+Plug 'nvim-lua/completion-nvim'
+Plug 'tpope/vim-fugitive'
 call plug#end()
