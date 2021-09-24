@@ -4,8 +4,6 @@ then
     exec tmux new-session
 fi
 
-setopt vi
-
 # Path to oh-my-zsh installation.
 export ZSH=$HOME/myconf/oh-my-zsh
 export ZSH_CUSTOM=$HOME/myconf/zsh-custom
@@ -18,14 +16,16 @@ source $HOME/myconf/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 source $HOME/myconf/common.sh
 
+setopt vi
+setopt append_history
+setopt hist_save_no_dups
+
 export VISUAL=nvim
 export EDITOR=nvim
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=6"
 export RUST_SRC_PATH=$HOME/.multirust/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src/
 
 eval $(dircolors -b $HOME/myconf/LS_COLORS/LS_COLORS)
-
-unsetopt sharehistory
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
