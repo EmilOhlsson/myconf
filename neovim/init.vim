@@ -16,7 +16,6 @@ highlight LspReferenceRead cterm=bold gui=bold ctermbg=darkgreen ctermfg=white
 highlight LspReferenceWrite cterm=bold gui=bold ctermbg=darkred ctermfg=white
 
 autocmd CursorHold * lua vim.lsp.buf.document_highlight()
-autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
 autocmd CursorMoved * lua vim.lsp.buf.clear_references()
 autocmd TextYankPost * lua vim.highlight.on_yank {on_visual = false}
 

@@ -16,6 +16,8 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<leader>lf', '<cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
     buf_set_keymap('n', '<leader>le', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
     buf_set_keymap('n', '<leader>lp', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+    buf_set_keymap('n', '<leader>ds', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
+    buf_set_keymap('n', '<leader>ws', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
     require('completion').on_attach(client, bufnr)
 end
@@ -28,7 +30,13 @@ nvim_lsp.clangd.setup {
 local servers = { 'clangd', 'pylsp' }
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
-        on_attach = on_attach
+        on_attach = on_attach,
+        handlers = {
+            ["textDocument/publishDiagnostics"] = vim.lsp.with(
+                vim.lsp.diagnostic.on_publish_diagnostics, {
+                    virtual_text = false
+                }),
+        }
     }
 end
 
@@ -57,44 +65,45 @@ require('nvim-treesitter.configs').setup({
     },
 })
 
--- Useful for inspecting tables
-local function describe(symbol, lvl)
-    lvl = lvl or 0
-    if type(symbol) == 'table' then
-        for k, v in pairs(symbol) do
-            print(string.rep(' ', lvl * 2) .. '['..k..']=')
-            describe(v, lvl + 1)
-        end
-    elseif symbol == nil then
-        print(string.rep(' ', lvl * 2) .. '(nil)')
-    else
-        print(string.rep(' ', lvl * 2) .. symbol)
-    end
-end
+---- Useful for inspecting tables
+--local function describe(symbol, lvl)
+--    lvl = lvl or 0
+--    if type(symbol) == 'table' then
+--        for k, v in pairs(symbol) do
+--            print(string.rep(' ', lvl * 2) .. '['..k..']=')
+--            describe(v, lvl + 1)
+--        end
+--    elseif symbol == nil then
+--        print(string.rep(' ', lvl * 2) .. '(nil)')
+--    else
+--        print(string.rep(' ', lvl * 2) .. symbol)
+--    end
+--end
+--
+---- Length of table
+--local function length(symbol)
+--    local count = 0
+--    for _ in pairs(symbol) do
+--        count = count + 1
+--    end
+--    return count
+--end
+--
+--local on_publish_diagnostics = vim.lsp.handlers["textDocument/publishDiagnostics"]
+--vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(function(err, method, result, client_id, _, config)
+--    local bufnr = vim.uri_to_bufnr(result.uri)
+--    local errors = {}
+--    for k, v in pairs(result.diagnostics) do
+--        errors[k] = {
+--            filename = vim.uri_to_fname(result.uri),
+--            text = v.message,
+--            col = v.range.start.character + 1,
+--            lnum = v.range.start.line + 1,
+--        }
+--    end
+--
+--    vim.lsp.diagnostic.clear(bufnr, client_id)
+--    vim.lsp.diagnostic.set_signs(result.diagnostics, bufnr, client_id)
+--    vim.lsp.util.set_loclist(errors)
+--end, {})
 
--- Length of table
-local function length(symbol)
-    local count = 0
-    for _ in pairs(symbol) do
-        count = count + 1
-    end
-    return count
-end
-
-local on_publish_diagnostics = vim.lsp.handlers["textDocument/publishDiagnostics"]
-vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(function(err, method, result, client_id, _, config)
-    local bufnr = vim.uri_to_bufnr(result.uri)
-    local errors = {}
-    for k, v in pairs(result.diagnostics) do
-        errors[k] = {
-            filename = vim.uri_to_fname(result.uri),
-            text = v.message,
-            col = v.range.start.character + 1,
-            lnum = v.range.start.line + 1,
-        }
-    end
-
-    vim.lsp.diagnostic.clear(bufnr, client_id)
-    vim.lsp.diagnostic.set_signs(result.diagnostics, bufnr, client_id)
-    vim.lsp.util.set_loclist(errors)
-end, {})
