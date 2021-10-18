@@ -27,7 +27,13 @@ export RUST_SRC_PATH=$HOME/.multirust/toolchains/stable-x86_64-unknown-linux-gnu
 
 eval $(dircolors -b $HOME/myconf/LS_COLORS/LS_COLORS)
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if [ -f ~/.fzf.zsh ]
+then
+    source ~/.fzf.zsh
+elif [ -f /usr/share/fzf/shell/key-bindings.zsh ]
+then
+    source /usr/share/fzf/shell/key-bindings.zsh
+fi
 
 # Add support for searching backward in history based on prefix
 autoload -U up-line-or-beginning-search
