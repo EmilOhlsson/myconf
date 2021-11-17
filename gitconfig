@@ -1,0 +1,25 @@
+[core]
+	editor = nvim
+	pager = less -F -X
+
+[push]
+	default = simple
+
+[pull]
+	rebase = true
+	ff = only
+
+[diff]
+	tool = vimdiff
+	algorithm = histogram
+	colorMoved = dimmed_zebra
+	renames = copies
+
+[difftool]
+	prompt = false
+
+[color]
+	ui = auto
+
+[merge]
+	conflictstyle = diff3
