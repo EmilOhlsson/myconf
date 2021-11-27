@@ -28,7 +28,7 @@ nvim_lsp.clangd.setup {
     on_attach = on_attach
 }
 
-local servers = { 'clangd', 'pylsp' }
+local servers = { 'clangd', 'pylsp' , 'rls' }
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
         on_attach = on_attach,
