@@ -1,12 +1,12 @@
 font:
     normal:
-        family: Source Code Pro
+        family: Fira Code
         style: Regular
     bold:
-        family: Source Code Pro
+        family: Fira Code
         style: Bold
     italic:
-        family: Source Code Pro
+        family: Fira Code
         style: italic
-    size: 9.0
+    size: 8.0
 background_opacity: 0.9

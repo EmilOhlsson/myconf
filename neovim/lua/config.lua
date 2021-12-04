@@ -55,11 +55,6 @@ require('nvim-treesitter.configs').setup({
         disable = {},
         additional_vim_regex_highlighting = true,
     },
-    indent = {
-        enable = false,
-        disable = {},
-    },
-
     incremental_selection = {
         enable = true,
         keymaps = {

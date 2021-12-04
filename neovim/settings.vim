@@ -33,3 +33,6 @@ set updatetime=300  " How often to check file, affects autoread, cursorhold etc
 set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
 set laststatus=2
 set exrc                            " Load local vimrc
+
+let g:slime_target = "tmux"
+let g:rainbow_active = 0
