@@ -10,4 +10,6 @@ Plug 'MattesGroeger/vim-bookmarks'    " mm - toggle bookmark on line
                                       " ma - show all bookmarks
 Plug 'nvim-lua/completion-nvim'
 Plug 'tpope/vim-fugitive'
+Plug 'jpalardy/vim-slime'
+Plug 'luochen1990/rainbow'
 call plug#end()
