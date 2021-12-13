@@ -36,3 +36,4 @@ set exrc                            " Load local vimrc
 
 let g:slime_target = "tmux"
 let g:rainbow_active = 0
+nnoremap <leader>mm :lua require('material.functions').toggle_style()<CR>

@@ -7,13 +7,13 @@ function DevMode()
     set ss=4
     set cin
     set cursorline
-    imap <C-l> λ
 endfunction
 
 function SchemeMode()
     set expandtab
     set tw=100
     RainbowToggle
+    imap <C-l> λ
 endfunction
 
 function LinuxDevMode()

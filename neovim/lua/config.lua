@@ -69,45 +69,21 @@ require('nvim-treesitter.configs').setup({
     },
 })
 
----- Useful for inspecting tables
---local function describe(symbol, lvl)
---    lvl = lvl or 0
---    if type(symbol) == 'table' then
---        for k, v in pairs(symbol) do
---            print(string.rep(' ', lvl * 2) .. '['..k..']=')
---            describe(v, lvl + 1)
---        end
---    elseif symbol == nil then
---        print(string.rep(' ', lvl * 2) .. '(nil)')
---    else
---        print(string.rep(' ', lvl * 2) .. symbol)
---    end
---end
---
----- Length of table
---local function length(symbol)
---    local count = 0
---    for _ in pairs(symbol) do
---        count = count + 1
---    end
---    return count
---end
---
---local on_publish_diagnostics = vim.lsp.handlers["textDocument/publishDiagnostics"]
---vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(function(err, method, result, client_id, _, config)
---    local bufnr = vim.uri_to_bufnr(result.uri)
---    local errors = {}
---    for k, v in pairs(result.diagnostics) do
---        errors[k] = {
---            filename = vim.uri_to_fname(result.uri),
---            text = v.message,
---            col = v.range.start.character + 1,
---            lnum = v.range.start.line + 1,
---        }
---    end
---
---    vim.lsp.diagnostic.clear(bufnr, client_id)
---    vim.lsp.diagnostic.set_signs(result.diagnostics, bufnr, client_id)
---    vim.lsp.util.set_loclist(errors)
---end, {})
+require('material').setup({
+    borders = true,
+    contrast = true,
+})
 
+require('lualine').setup({
+    theme = 'material-nvim'
+})
+
+require('gitsigns').setup({
+    keymaps = {
+        noremap = true,
+        ['n <leader>hs'] = '<cmd>Gitsigns stage_hunk<CR>',
+        ['v <leader>hs'] = ':Gitsigns stage_hunk<CR>',
+        ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line{full=true}<CR>',
+    },
+    current_line_blame = true
+})

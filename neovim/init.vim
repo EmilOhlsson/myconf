@@ -20,3 +20,5 @@ autocmd CursorMoved * lua vim.lsp.buf.clear_references()
 autocmd TextYankPost * lua vim.highlight.on_yank {on_visual = false}
 
 filetype plugin indent on
+
+colorscheme material
