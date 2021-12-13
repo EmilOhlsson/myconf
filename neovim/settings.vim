@@ -23,13 +23,14 @@ set smartcase                       " Do not ignore case if upper case is used
 set wildmenu                        " Show possible matches
 set wildmode=longest,list,full      " Order of matching
 set hidden                          " Buffers are hidden instead of closed
+set switchbuf="split"               " use new tab to open files from quickfix
 
 set wrap                                 " Wrap long lines
 set linebreak                            " break long lines at words
 set showbreak=>>                         " Prefix wrapped lines with >>
 set breakindent                          " Indent wrapped lines
 set breakindentopt=shift:40,sbr          " indent with 32 chars, ShowBReak before indent
-set updatetime=300  " How often to check file, affects autoread, cursorhold etc
+set updatetime=300    " How often to check file, affects autoread, cursorhold etc
 set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
 set laststatus=2
 set exrc                            " Load local vimrc
@@ -37,3 +38,13 @@ set exrc                            " Load local vimrc
 let g:slime_target = "tmux"
 let g:rainbow_active = 0
 nnoremap <leader>mm :lua require('material.functions').toggle_style()<CR>
+
+let termdebugger = "gdb-multiarch"
+map <leader>ds <cmd>Step<CR>
+map <leader>dn <cmd>Over<CR>
+map <leader>df <cmd>Finish<CR>
+map <leader>dc <cmd>Continue<CR>
+
+" Autocomple on ctrl+space
+inoremap <C-Space> <C-x><C-o>
+inoremap <C-@> <C-Space>

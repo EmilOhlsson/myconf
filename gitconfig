@@ -1,5 +1,6 @@
 [core]
 	editor = nvim
+	excludesfile = /home/<user>/.gitignore
 	pager = less -F -X
 
 [push]
@@ -20,6 +21,14 @@
 
 [color]
 	ui = auto
+
+[color "diff"]
+	meta = white bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+	oldMoved = blue bold
+	newMoved = blue bold
 
 [merge]
 	conflictstyle = diff3

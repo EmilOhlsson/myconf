@@ -16,7 +16,6 @@ source $HOME/myconf/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 source $HOME/myconf/common.sh
 
-setopt vi
 setopt append_history
 setopt hist_save_no_dups
 

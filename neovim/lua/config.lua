@@ -14,11 +14,13 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<leader>ls', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
     buf_set_keymap('n', '<leader>lh', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
     buf_set_keymap('v', '<leader>lf', '<cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
-    buf_set_keymap('n', '<leader>le', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-    buf_set_keymap('n', '<leader>lp', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-    buf_set_keymap('n', '<leader>ee', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+    buf_set_keymap('n', '<leader>lF', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    buf_set_keymap('n', '<leader>le', '<cmd>lua vim.diagnostic.goto_next({float = {border = "rounded"}})<CR>', opts)
+    buf_set_keymap('n', '<leader>lp', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+    buf_set_keymap('n', '<leader>ee', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
     buf_set_keymap('n', '<leader>ds', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
     buf_set_keymap('n', '<leader>ws', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
+    buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
     require('completion').on_attach(client, bufnr)
 end
@@ -37,6 +39,10 @@ for _, lsp in ipairs(servers) do
                 vim.lsp.diagnostic.on_publish_diagnostics, {
                     virtual_text = false
                 }),
+			["textDocument/hover"] = vim.lsp.with(
+				vim.lsp.handlers.hover, {
+					border = "rounded",
+				})
         }
     }
 end
@@ -55,27 +61,48 @@ require('nvim-treesitter.configs').setup({
         disable = {},
         additional_vim_regex_highlighting = true,
     },
-    incremental_selection = {
-        enable = true,
-        keymaps = {
-            init_selection = "gnn",
-            node_incremental = "grn",
-            scope_incremental = "grc",
-            node_decremental = "grm",
-        },
+    indent = {
+        enable = false,
+        disable = {},
     },
-    ensure_installed = {
-        "c", "cpp", "rust", "lua", "python"
-    },
-})
 
-require('material').setup({
-    borders = true,
-    contrast = true,
+    ensure_installed = {
+        "c", "cpp", "rust", "lua", "python", "vim"
+    },
 })
 
 require('lualine').setup({
-    theme = 'material-nvim'
+    theme = 'material-nvim',
+    options = {
+        section_separators = '',
+        component_separators = '',
+        icons_enabled = false,
+    },
+    sections = {
+        lualine_c = {{
+            'filename',
+            file_status = true,
+            path = 1,
+        }},
+    },
+})
+
+local material = require('material')
+material.setup({
+    contrast = {
+        sidebars = true,
+        floating = true,
+        line_numbers = true,
+        sign_column = true,
+        non_current_windows = false,
+        popup_menu = true,
+    },
+    custom_highlights = {
+        LspReferenceText = {bg = 'lightblue', fg='black'},
+        LspReferenceRead = {bg = 'lightgreen', fg='black'},
+        LspReferenceWrite = {bg = 'lightred', fg='black'},
+        Todo = {bg = 'yellow', fg='red'},
+    },
 })
 
 require('gitsigns').setup({
@@ -83,6 +110,7 @@ require('gitsigns').setup({
         noremap = true,
         ['n <leader>hs'] = '<cmd>Gitsigns stage_hunk<CR>',
         ['v <leader>hs'] = ':Gitsigns stage_hunk<CR>',
+        ['n <leader>hr'] = '<cmd>Gitsigns reset_hunk<CR>',
         ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line{full=true}<CR>',
     },
     current_line_blame = true
