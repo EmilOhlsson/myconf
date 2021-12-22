@@ -11,7 +11,7 @@ set $up k
 set $right l
 
 # Preferred terminal emulator
-set $term alacritty
+set $term kitty
 
 # Preferred application launcher
 set $menu dmenu_path | dmenu | xargs swaymsg exec --
