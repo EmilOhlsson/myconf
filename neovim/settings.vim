@@ -24,6 +24,8 @@ set wildmenu                        " Show possible matches
 set wildmode=longest,list,full      " Order of matching
 set hidden                          " Buffers are hidden instead of closed
 set switchbuf="split"               " use new tab to open files from quickfix
+set splitbelow                      " Open splits below
+set splitright                      " Open splits to the right
 
 set wrap                                 " Wrap long lines
 set linebreak                            " break long lines at words

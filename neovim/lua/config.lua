@@ -72,9 +72,11 @@ require('nvim-treesitter.configs').setup({
     },
 })
 
+local lualine_theme = require('lualine.themes.material-nvim')
+lualine_theme.inactive = {}
 require('lualine').setup({
-    theme = 'material-nvim',
     options = {
+        theme =  lualine_theme,
         section_separators = '',
         component_separators = '',
         icons_enabled = false,
@@ -102,7 +104,9 @@ material.setup({
         LspReferenceText = {bg = 'lightblue', fg='black'},
         LspReferenceRead = {bg = 'lightgreen', fg='black'},
         LspReferenceWrite = {bg = 'lightred', fg='black'},
-        Todo = {bg = 'yellow', fg='red'},
+        Todo = {bg = 'yellow', fg = 'red'},
+        -- StatusLineNC = {bg = 'green'},
+        -- StatusLine = {bg = 'yellow'},
     },
 })
 
