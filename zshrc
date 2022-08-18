@@ -10,6 +10,7 @@ export ZSH_CUSTOM=$HOME/myconf/zsh-custom
 
 ZSH_THEME="candy"
 HIST_STAMPS="yyyy-mm-dd"
+DISABLE_AUTO_TITLE="true"
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/myconf/zsh-autosuggestions/zsh-autosuggestions.zsh

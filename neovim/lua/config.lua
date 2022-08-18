@@ -120,3 +120,50 @@ require('gitsigns').setup({
     },
     current_line_blame = true
 })
+
+require('treesitter-context').setup({
+	enable = true,
+	patterns = {
+		default = {
+			'class',
+			'function',
+			'method',
+			'for',
+			'while',
+			'if',
+			'switch',
+			'case',
+		}
+	},
+	separator = '-',
+	mode = 'topline',
+})
+
+require('nvim-treesitter.configs').setup({
+	textobjects = {
+		select = {
+			enable = true,
+			lookahead = true,
+			keymaps = {
+				["af"] = "@function.outer",
+				["if"] = "@function.inner",
+				["ac"] = "@class.outer",
+				["ic"] = "@class.inner",
+				["aa"] = "@parameter.outer",
+				["ia"] = "@parameter.inner",
+				["ac"] = "@comment.outer",
+				["ai"] = "@conditional.outer",
+				["al"] = "@loop.outer",
+			},
+		},
+		move = {
+			enable = true,
+			goto_next_start = {
+				["]m"] = "@function.outer",
+			},
+			goto_previous_start = {
+				["[m"] = "@function.outer",
+			},
+		},
+	},
+})
