@@ -18,6 +18,3 @@ filetype plugin indent on
 colorscheme material
 
 highlight Cursorline term=bold cterm=bold ctermbg=darkgrey
-highlight LspReferenceText cterm=bold gui=bold ctermbg=darkcyan ctermfg=white
-highlight LspReferenceRead cterm=bold gui=bold ctermbg=darkgreen ctermfg=white
-highlight LspReferenceWrite cterm=bold gui=bold ctermbg=darkred ctermfg=white

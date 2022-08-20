@@ -1,2 +1,19 @@
 colorscheme industry
 hi Cursorline term=bold cterm=bold ctermbg=4
+highlight LspReferenceText cterm=bold gui=bold ctermbg=darkcyan ctermfg=white
+highlight LspReferenceRead cterm=bold gui=bold ctermbg=darkgreen ctermfg=white
+highlight LspReferenceWrite cterm=bold gui=bold ctermbg=darkred ctermfg=white
+
+" Local plugins
+Plug 'Olical/conjure'
+Plug 'Olical/aniseed'
+
+let termdebugger = "gdb-multiarch"
+let g:slime_target = "tmux"
+let g:rainbow_active = 0
+
+" Minimap settings
+let g:minimap_highlight_range = 1
+let g:minimap_highlight_search = 1
+let g:minimap_git_colors = 1
+let g:conjure#filetype#scheme = "conjure.client.guile.socket"

@@ -14,7 +14,7 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<leader>ls', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
     buf_set_keymap('n', '<leader>lh', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
     buf_set_keymap('v', '<leader>lf', '<cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
-    buf_set_keymap('n', '<leader>ee', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+    buf_set_keymap('n', '<leader>ee', '<cmd>lua vim.diagnostic.open_float({})<CR>', opts)
     buf_set_keymap('n', '<leader>lF', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
     buf_set_keymap('n', '<leader>le', '<cmd>lua vim.diagnostic.goto_next({float = {border = "rounded"}})<CR>', opts)
     buf_set_keymap('n', '<leader>lp', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
@@ -40,11 +40,12 @@ for _, lsp in ipairs(servers) do
                 vim.lsp.diagnostic.on_publish_diagnostics, {
                     virtual_text = false
                 }),
-			["textDocument/hover"] = vim.lsp.with(
-				vim.lsp.handlers.hover, {
-					border = "rounded",
-				})
-        }
+            ["textDocument/hover"] = vim.lsp.with(
+                vim.lsp.handlers.hover, {
+                    border = "rounded",
+                })
+        },
+        --root_dir = nvim_lsp.util.root_pattern("compile_commands.json", "builddir/compile_commands.json")
     }
 end
 
@@ -105,8 +106,8 @@ material.setup({
         LspReferenceRead = {bg = 'lightgreen', fg='black'},
         LspReferenceWrite = {bg = 'lightred', fg='black'},
         Todo = {bg = 'yellow', fg = 'red'},
-        -- StatusLineNC = {bg = 'green'},
-        -- StatusLine = {bg = 'yellow'},
+        -- StatusLineNC = {bg = 'green'}, -- Handled by lualine
+        -- StatusLine = {bg = 'yellow'},  -- Handled by lualine
     },
 })
 

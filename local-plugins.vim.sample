@@ -1,0 +1,2 @@
+Plug 'Olical/conjure'	" Interact with scheme REPL
+Plug 'Olical/aniseed'   " Interaction with Lua Fennel

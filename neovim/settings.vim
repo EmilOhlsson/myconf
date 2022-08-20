@@ -37,11 +37,8 @@ set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
 set laststatus=2
 set exrc                            " Load local vimrc
 
-let g:slime_target = "tmux"
-let g:rainbow_active = 0
 nnoremap <leader>mm :lua require('material.functions').toggle_style()<CR>
 
-let termdebugger = "gdb-multiarch"
 map <leader>ds <cmd>Step<CR>
 map <leader>dn <cmd>Over<CR>
 map <leader>df <cmd>Finish<CR>

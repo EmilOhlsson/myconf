@@ -3,3 +3,4 @@ vim/bundle/
 vim/.netrwhist
 local.vim
 local.sh
+local-plugins.vim
