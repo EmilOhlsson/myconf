@@ -4,3 +4,6 @@ vim/.netrwhist
 local.vim
 local.sh
 local-plugins.vim
+plug.vim.old
+neovim/spell
+local-kitty.conf

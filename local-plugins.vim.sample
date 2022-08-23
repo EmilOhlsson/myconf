@@ -1,2 +1,3 @@
-Plug 'Olical/conjure'	" Interact with scheme REPL
-Plug 'Olical/aniseed'   " Interaction with Lua Fennel
+Plug 'Olical/conjure'	   " Interact with scheme REPL
+Plug 'Olical/aniseed'      " Interaction with Lua Fennel
+Plug 'luochen1990/rainbow' " Colorful parenthesis

@@ -11,8 +11,6 @@ Plug 'MattesGroeger/vim-bookmarks'    " mm - toggle bookmark on line
                                       " ma - show all bookmarks
 Plug 'nvim-lua/completion-nvim'
 Plug 'tpope/vim-fugitive'
-Plug 'jpalardy/vim-slime'
-Plug 'luochen1990/rainbow'
 Plug 'marko-cerovac/material.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'lewis6991/gitsigns.nvim'
