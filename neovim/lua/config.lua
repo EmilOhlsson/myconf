@@ -51,120 +51,137 @@ end
 
 local on_references = vim.lsp.handlers["textDocument/references"]
 vim.lsp.handlers["textDocument/references"] = vim.lsp.with(
-  on_references, {
-    -- Use location list instead of quickfix list
-    loclist = true,
-  }
-)
+    on_references, {
+        -- Use location list instead of quickfix list
+        loclist = true,
+    })
 
 require('nvim-treesitter.configs').setup({
-    highlight = {
-        enable = true,
-        disable = {},
-        additional_vim_regex_highlighting = true,
-    },
-    indent = {
-        enable = false,
-        disable = {},
-    },
+        highlight = {
+            enable = true,
+            disable = {},
+            additional_vim_regex_highlighting = true,
+        },
+        indent = {
+            enable = false,
+            disable = {},
+        },
 
-    ensure_installed = {
-        "c", "cpp", "rust", "lua", "python", "vim"
-    },
-})
+        ensure_installed = {
+            "c", "cpp", "glsl", "rust", "lua", "python", "vim"
+        },
+    })
 
 local lualine_theme = require('lualine.themes.material-nvim')
 lualine_theme.inactive = {}
 require('lualine').setup({
-    options = {
-        theme =  lualine_theme,
-        section_separators = '',
-        component_separators = '',
-        icons_enabled = false,
-    },
-    sections = {
-        lualine_c = {{
-            'filename',
-            file_status = true,
-            path = 1,
-        }},
-    },
-})
+        options = {
+            theme =  lualine_theme,
+            section_separators = '',
+            component_separators = '',
+            icons_enabled = false,
+        },
+        sections = {
+            lualine_c = {{
+                    'filename',
+                    file_status = true,
+                    path = 1,
+            }},
+        },
+    })
 
 local material = require('material')
 material.setup({
-    contrast = {
-        sidebars = true,
-        floating = true,
-        line_numbers = true,
-        sign_column = true,
-        non_current_windows = false,
-        popup_menu = true,
-    },
-    custom_highlights = {
-        LspReferenceText = {bg = 'lightblue', fg='black'},
-        LspReferenceRead = {bg = 'lightgreen', fg='black'},
-        LspReferenceWrite = {bg = 'lightred', fg='black'},
-        Todo = {bg = 'yellow', fg = 'red'},
-        -- StatusLineNC = {bg = 'green'}, -- Handled by lualine
-        -- StatusLine = {bg = 'yellow'},  -- Handled by lualine
-    },
-})
+        contrast = {
+            sidebars = true,
+            floating = true,
+            line_numbers = true,
+            sign_column = true,
+            non_current_windows = false,
+            popup_menu = true,
+        },
+        custom_highlights = {
+            LspReferenceText = {bg = 'lightblue', fg='black'},
+            LspReferenceRead = {bg = 'lightgreen', fg='black'},
+            LspReferenceWrite = {bg = 'lightred', fg='black'},
+            Todo = {bg = 'yellow', fg = 'red'},
+            -- StatusLineNC = {bg = 'green'}, -- Handled by lualine
+            -- StatusLine = {bg = 'yellow'},  -- Handled by lualine
+        },
+    })
 
 require('gitsigns').setup({
-    keymaps = {
-        noremap = true,
-        ['n <leader>hs'] = '<cmd>Gitsigns stage_hunk<CR>',
-        ['v <leader>hs'] = ':Gitsigns stage_hunk<CR>',
-        ['n <leader>hr'] = '<cmd>Gitsigns reset_hunk<CR>',
-        ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line{full=true}<CR>',
-    },
-    current_line_blame = true
-})
+        keymaps = {
+            noremap = true,
+            ['n <leader>hs'] = '<cmd>Gitsigns stage_hunk<CR>',
+            ['v <leader>hs'] = '<cmd>Gitsigns stage_hunk<CR>',
+            ['n <leader>hr'] = '<cmd>Gitsigns reset_hunk<CR>',
+            ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line{full=true}<CR>',
+        },
+        current_line_blame = true
+    })
 
 require('treesitter-context').setup({
-	enable = true,
-	patterns = {
-		default = {
-			'class',
-			'function',
-			'method',
-			'for',
-			'while',
-			'if',
-			'switch',
-			'case',
-		}
-	},
-	separator = '-',
-	mode = 'topline',
-})
+        enable = true,
+        patterns = {
+            default = {
+                'class',
+                'function',
+                'method',
+                'for',
+                'while',
+                'if',
+                'switch',
+                'case',
+            }
+        },
+        separator = '-',
+        mode = 'topline',
+    })
 
 require('nvim-treesitter.configs').setup({
-	textobjects = {
-		select = {
-			enable = true,
-			lookahead = true,
-			keymaps = {
-				["af"] = "@function.outer",
-				["if"] = "@function.inner",
-				["ac"] = "@class.outer",
-				["ic"] = "@class.inner",
-				["aa"] = "@parameter.outer",
-				["ia"] = "@parameter.inner",
-				["ac"] = "@comment.outer",
-				["ai"] = "@conditional.outer",
-				["al"] = "@loop.outer",
-			},
-		},
-		move = {
-			enable = true,
-			goto_next_start = {
-				["]m"] = "@function.outer",
-			},
-			goto_previous_start = {
-				["[m"] = "@function.outer",
-			},
-		},
-	},
-})
+        textobjects = {
+            select = {
+                enable = true,
+                lookahead = true,
+                keymaps = {
+                    ["aa"] = "@parameter.outer",
+                    ["ac"] = "@comment.outer",
+                    ["af"] = "@function.outer",
+                    ["ai"] = "@conditional.outer",
+                    ["al"] = "@loop.outer",
+                    ["ao"] = "@class.outer",
+                    ["ia"] = "@parameter.inner",
+                    ["if"] = "@function.inner",
+                    ["io"] = "@class.inner",
+                },
+            },
+            move = {
+                enable = true,
+                goto_next_start = {
+                    ["]m"] = "@function.outer",
+                },
+                goto_previous_start = {
+                    ["[m"] = "@function.outer",
+                },
+            },
+        },
+        refactor = {
+            highlight_current_scope = {
+                -- TODO: This would be nice, but doesn't color entire lines
+                enable = false,
+            },
+            navigation = {
+                enable = true,
+                keymaps = {
+                    list_definitions = '<leader>tl',
+                    list_definitions_toc = '<leader>ta',
+                    goto_next_usage = '<leader>tn',
+                    goto_previous_usage = '<leader>tp',
+                    goto_definition = '<leader>td',
+                },
+            },
+        },
+    })
+
+-- vim: set et ts=4 sw=4 s=4 tw=100
