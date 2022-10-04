@@ -1,0 +1,7 @@
+- create
+  - ~/.config/nvim
+  - ~/workspace
+
+- link:
+  - ~/.tmux.conf: tmux.conf
+  - ~/.config/nvim/init.vim: neovim/init.vim

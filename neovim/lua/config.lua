@@ -33,7 +33,7 @@ nvim_lsp.clangd.setup {
 
 local servers = { 'clangd', 'pylsp' , 'rls' }
 for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup {
+    local conf = {
         on_attach = on_attach,
         handlers = {
             ["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -45,8 +45,25 @@ for _, lsp in ipairs(servers) do
                     border = "rounded",
                 })
         },
-        --root_dir = nvim_lsp.util.root_pattern("compile_commands.json", "builddir/compile_commands.json")
     }
+    if lsp == 'sumneko_lua' then -- Set up for NeoVim plugins
+        conf.settings = {
+            Lua = {
+                runtime = { version = 'LuaJIT' },
+                diagnostics = {
+                    globals = {'vim'},
+                },
+                workspace = {
+                    library = vim.api.nvim_get_runtime_file("", true),
+                },
+                telemetry = {
+                    enable = false,
+                },
+            },
+        }
+    end
+    --root_dir = nvim_lsp.util.root_pattern("compile_commands.json", "builddir/compile_commands.json")
+    nvim_lsp[lsp].setup(conf)
 end
 
 local on_references = vim.lsp.handlers["textDocument/references"]
@@ -105,8 +122,6 @@ material.setup({
             LspReferenceRead = {bg = 'lightgreen', fg='black'},
             LspReferenceWrite = {bg = 'lightred', fg='black'},
             Todo = {bg = 'yellow', fg = 'red'},
-            -- StatusLineNC = {bg = 'green'}, -- Handled by lualine
-            -- StatusLine = {bg = 'yellow'},  -- Handled by lualine
         },
     })
 

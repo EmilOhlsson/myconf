@@ -13,14 +13,11 @@
 [submodule "neovim"]
 	path = tools/neovim
 	url = https://github.com/neovim/neovim.git
-[submodule "ccls"]
-	path = tools/ccls
-	url = https://github.com/MaskRay/ccls.git
-[submodule "CMake"]
-	path = tools/CMake
-	url = https://github.com/Kitware/CMake.git
 [submodule "fzf"]
 	path = tools/fzf
 	url = https://github.com/junegunn/fzf.git
 [submodule "LS_COLORS/"]
 	url = https://github.com/trapd00r/LS_COLORS.git
+[submodule "dotbot"]
+	path = dotbot
+	url = https://github.com/anishathalye/dotbot
