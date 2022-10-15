@@ -22,6 +22,8 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<leader>ds', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
     buf_set_keymap('n', '<leader>ws', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
     buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    buf_set_keymap('n', '<leader>lI', '<cmd>lua vim.lsp.buf.incoming_calls()<CR>', opts)
+    buf_set_keymap('n', '<leader>lO', '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>', opts)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
     require('completion').on_attach(client, bufnr)
 end
@@ -31,7 +33,7 @@ nvim_lsp.clangd.setup {
     on_attach = on_attach
 }
 
-local servers = { 'clangd', 'pylsp' , 'rls' }
+local servers = { 'clangd', 'pylsp' , 'rust_analyzer' }
 for _, lsp in ipairs(servers) do
     local conf = {
         on_attach = on_attach,
@@ -62,7 +64,6 @@ for _, lsp in ipairs(servers) do
             },
         }
     end
-    --root_dir = nvim_lsp.util.root_pattern("compile_commands.json", "builddir/compile_commands.json")
     nvim_lsp[lsp].setup(conf)
 end
 
@@ -72,6 +73,19 @@ vim.lsp.handlers["textDocument/references"] = vim.lsp.with(
         -- Use location list instead of quickfix list
         loclist = true,
     })
+
+litee_tree_config = {
+        icon_set = "simple",
+        map_resize_keys = false,
+    }
+require('litee.lib').setup({
+        tree = litee_tree_config,
+        panel = {
+            panel_size = 30,
+        },
+    })
+require('litee.symboltree').setup(litee_tree_config)
+require('litee.calltree').setup(litee_tree_config)
 
 require('nvim-treesitter.configs').setup({
         highlight = {
@@ -86,42 +100,6 @@ require('nvim-treesitter.configs').setup({
 
         ensure_installed = {
             "c", "cpp", "glsl", "rust", "lua", "python", "vim"
-        },
-    })
-
-local lualine_theme = require('lualine.themes.material-nvim')
-lualine_theme.inactive = {}
-require('lualine').setup({
-        options = {
-            theme =  lualine_theme,
-            section_separators = '',
-            component_separators = '',
-            icons_enabled = false,
-        },
-        sections = {
-            lualine_c = {{
-                    'filename',
-                    file_status = true,
-                    path = 1,
-            }},
-        },
-    })
-
-local material = require('material')
-material.setup({
-        contrast = {
-            sidebars = true,
-            floating = true,
-            line_numbers = true,
-            sign_column = true,
-            non_current_windows = false,
-            popup_menu = true,
-        },
-        custom_highlights = {
-            LspReferenceText = {bg = 'lightblue', fg='black'},
-            LspReferenceRead = {bg = 'lightgreen', fg='black'},
-            LspReferenceWrite = {bg = 'lightred', fg='black'},
-            Todo = {bg = 'yellow', fg = 'red'},
         },
     })
 
@@ -183,7 +161,6 @@ require('nvim-treesitter.configs').setup({
         },
         refactor = {
             highlight_current_scope = {
-                -- TODO: This would be nice, but doesn't color entire lines
                 enable = false,
             },
             navigation = {
@@ -199,4 +176,4 @@ require('nvim-treesitter.configs').setup({
         },
     })
 
--- vim: set et ts=4 sw=4 s=4 tw=100
+-- vim: set et ts=4 sw=4 ss=4 tw=100 :
