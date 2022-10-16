@@ -77,6 +77,7 @@ vim.lsp.handlers["textDocument/references"] = vim.lsp.with(
 litee_tree_config = {
         icon_set = "simple",
         map_resize_keys = false,
+        auto_highlight = false,
     }
 require('litee.lib').setup({
         tree = litee_tree_config,
