@@ -2,6 +2,7 @@ if has('nvim')
   set inccommand=split                " Use Neovim search/replace
 endif
 
+set termguicolors                   " Enable RGB based colors, using f ex `guibg=#0123456`
 set autoread                        " Don't remember what this does
 set backspace=indent,eol,start      " Don't remember what this does...
 set clipboard=unnamedplus           " Use the system clipboard
@@ -37,7 +38,6 @@ set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
 set laststatus=2
 set exrc                            " Load local vimrc
 
-nnoremap <leader>mm :lua require('material.functions').toggle_style()<CR>
 
 map <leader>ds <cmd>Step<CR>
 map <leader>dn <cmd>Over<CR>
@@ -47,3 +47,5 @@ map <leader>dc <cmd>Continue<CR>
 " Autocomple on ctrl+space
 inoremap <C-Space> <C-x><C-o>
 inoremap <C-@> <C-Space>
+
+" vim: set et tw=80:

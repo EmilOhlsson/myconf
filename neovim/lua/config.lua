@@ -16,7 +16,7 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('v', '<leader>lf', '<cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
     buf_set_keymap('n', '<leader>ee', '<cmd>lua vim.diagnostic.open_float({})<CR>', opts)
     buf_set_keymap('n', '<leader>lF', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-    buf_set_keymap('n', '<leader>le', '<cmd>lua vim.diagnostic.goto_next({float = {border = "rounded"}})<CR>', opts)
+    buf_set_keymap('n', '<leader>le', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
     buf_set_keymap('n', '<leader>lp', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
     buf_set_keymap('n', '<leader>lp', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
     buf_set_keymap('n', '<leader>ds', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
@@ -44,7 +44,7 @@ for _, lsp in ipairs(servers) do
                 }),
             ["textDocument/hover"] = vim.lsp.with(
                 vim.lsp.handlers.hover, {
-                    border = "rounded",
+                    --border = "rounded",
                 })
         },
     }
@@ -134,47 +134,49 @@ require('treesitter-context').setup({
     })
 
 require('nvim-treesitter.configs').setup({
-        textobjects = {
-            select = {
-                enable = true,
-                lookahead = true,
-                keymaps = {
-                    ["aa"] = "@parameter.outer",
-                    ["ac"] = "@comment.outer",
-                    ["af"] = "@function.outer",
-                    ["ai"] = "@conditional.outer",
-                    ["al"] = "@loop.outer",
-                    ["ao"] = "@class.outer",
-                    ["ia"] = "@parameter.inner",
-                    ["if"] = "@function.inner",
-                    ["io"] = "@class.inner",
-                },
-            },
-            move = {
-                enable = true,
-                goto_next_start = {
-                    ["]m"] = "@function.outer",
-                },
-                goto_previous_start = {
-                    ["[m"] = "@function.outer",
-                },
+    textobjects = {
+        select = {
+            enable = true,
+            lookahead = true,
+            keymaps = {
+                ["aa"] = "@parameter.outer",
+                ["ac"] = "@comment.outer",
+                ["af"] = "@function.outer",
+                ["ai"] = "@conditional.outer",
+                ["al"] = "@loop.outer",
+                ["ao"] = "@class.outer",
+                ["ia"] = "@parameter.inner",
+                ["if"] = "@function.inner",
+                ["io"] = "@class.inner",
             },
         },
-        refactor = {
-            highlight_current_scope = {
-                enable = false,
+        move = {
+            enable = true,
+            goto_next_start = {
+                ["]m"] = "@function.outer",
+                ["]a"] = "@parameter.inner",
             },
-            navigation = {
-                enable = true,
-                keymaps = {
-                    list_definitions = '<leader>tl',
-                    list_definitions_toc = '<leader>ta',
-                    goto_next_usage = '<leader>tn',
-                    goto_previous_usage = '<leader>tp',
-                    goto_definition = '<leader>td',
-                },
+            goto_previous_start = {
+                ["[m"] = "@function.outer",
+                ["[a"] = "@parameter.inner",
             },
         },
-    })
+    },
+    refactor = {
+        highlight_current_scope = {
+            enable = false,
+        },
+        navigation = {
+            enable = true,
+            keymaps = {
+                list_definitions = '<leader>tl',
+                list_definitions_toc = '<leader>ta',
+                goto_next_usage = '<leader>tn',
+                goto_previous_usage = '<leader>tp',
+                goto_definition = '<leader>td',
+            },
+        },
+    },
+})
 
 -- vim: set et ts=4 sw=4 ss=4 tw=100 :

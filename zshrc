@@ -1,5 +1,5 @@
 # If not running tmux, then start tmux
-if [ "$TMUX" = "" ] && [ "$SSH_CLIENT" = "" ]
+if [ "$TMUX" = "" ] && [ "$SSH_CLIENT" = "" ] && [ "$TMUX_SKIP" = "" ]
 then
     exec tmux new-session
 fi
