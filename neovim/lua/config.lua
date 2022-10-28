@@ -76,6 +76,10 @@ vim.lsp.handlers["textDocument/references"] = vim.lsp.with(
 
 litee_tree_config = {
         icon_set = "simple",
+        icon_set_custom = {
+            Method = "mf",
+            Module = "mod",
+        },
         map_resize_keys = false,
         auto_highlight = false,
     }

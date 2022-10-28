@@ -22,15 +22,20 @@ colorscheme koehler
 set cursorline
 
 " TODO: This would probably be more convient with some kind of Lua table setup
+highlight CursorLine guibg=grey20
 highlight Cursorline gui=none cterm=none ctermbg=darkgrey
-highlight LspReferenceRead cterm=none gui=none ctermbg=darkgreen guibg=green ctermfg=white guifg=white
-highlight LspReferenceWrite cterm=none gui=none ctermbg=darkred guibg=darkred ctermfg=white guifg=white
-highlight LspReferenceText cterm=none gui=none ctermbg=darkcyan guibg=blue ctermfg=white guifg=white
+highlight DiffAdd cterm=none ctermbg=lightblue
 highlight DiffChange cterm=none ctermbg=LightMagenta
 highlight DiffText cterm=none ctermbg=LightCyan
-highlight DiffAdd cterm=none ctermbg=lightblue
-highlight Pmenu guibg=grey15
+highlight LspReferenceRead cterm=none gui=none ctermbg=darkgreen guibg=green ctermfg=white guifg=white
+highlight LspReferenceText cterm=none gui=none ctermbg=darkcyan guibg=blue ctermfg=white guifg=white
+highlight LspReferenceWrite cterm=none gui=none ctermbg=darkred guibg=darkred ctermfg=white guifg=white
 highlight NonText guifg=grey42
-highlight CursorLine guibg=grey20
+highlight Pmenu guibg=grey15
+highlight Search guibg=pink guifg=black
+" TODO: Maybe link with Identifier
+highlight LTSymbol guifg=orange gui=bold
+" TODO Maybe link with Comment
+highlight LTSymbolDetail guifg=lightblue
 
 " vim: set et tw=80:
