@@ -25,7 +25,6 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<leader>lI', '<cmd>lua vim.lsp.buf.incoming_calls()<CR>', opts)
     buf_set_keymap('n', '<leader>lO', '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>', opts)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-    require('completion').on_attach(client, bufnr)
 end
 
 -- When LSP starts, configure using table above
@@ -96,7 +95,7 @@ require('nvim-treesitter.configs').setup({
         highlight = {
             enable = true,
             disable = {},
-            additional_vim_regex_highlighting = true,
+            --additional_vim_regex_highlighting = true,
         },
         indent = {
             enable = false,

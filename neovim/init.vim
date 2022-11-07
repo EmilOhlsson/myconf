@@ -33,6 +33,8 @@ highlight LspReferenceWrite cterm=none gui=none ctermbg=darkred guibg=darkred ct
 highlight NonText guifg=grey42
 highlight Pmenu guibg=grey15
 highlight Search guibg=pink guifg=black
+highlight @function.call guibg=NavyBlue
+highlight @declaration.identifier guibg=DarkSlateGray
 " TODO: Maybe link with Identifier
 highlight LTSymbol guifg=orange gui=bold
 " TODO Maybe link with Comment
