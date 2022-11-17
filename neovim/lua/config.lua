@@ -32,7 +32,7 @@ nvim_lsp.clangd.setup {
     on_attach = on_attach
 }
 
-local servers = { 'clangd', 'pylsp' , 'rust_analyzer' }
+local servers = { 'clangd', 'pylsp' , 'rust_analyzer', 'julials', 'sumneko_lua' }
 for _, lsp in ipairs(servers) do
     local conf = {
         on_attach = on_attach,
@@ -95,7 +95,6 @@ require('nvim-treesitter.configs').setup({
         highlight = {
             enable = true,
             disable = {},
-            --additional_vim_regex_highlighting = true,
         },
         indent = {
             enable = false,
@@ -103,7 +102,7 @@ require('nvim-treesitter.configs').setup({
         },
 
         ensure_installed = {
-            "c", "cpp", "glsl", "rust", "lua", "python", "vim"
+            "c", "cpp", "glsl", "rust", "lua", "python", "vim", "julia"
         },
     })
 

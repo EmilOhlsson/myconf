@@ -13,3 +13,23 @@ to your X configuration file
 #include "myconf/Xresources"
 URxvt*font: xft:lime.se:size=8
 ```
+
+## Useful tree-sitter queries
+```scheme
+((comment) @todo
+ (#match? @todo "TODO"))
+
+; @declaration.identifier
+(declaration
+  declarator: (identifier) @declaration.identifier)
+(init_declarator
+  declarator: (identifier) @declaration.identifier)
+(reference_declarator 
+  (identifier) @declaration.identifier)
+
+; class.declaration
+(class_specifier
+  name: (type_identifier) @class.declaration)
+(struct_specifier
+  name: (type_identifier) @class.declaration)
+```
