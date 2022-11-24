@@ -52,7 +52,6 @@ function csymdb() {
     ctags -R ./
 }
 
-alias vim='gvim -v'
 alias rs232='minicom --color=on --noinit -b 115200 -D'
 alias arm-dump='arm-none-eabi-objdump -xwdlSC'
 alias native-dump='objdump -xwdlSC'

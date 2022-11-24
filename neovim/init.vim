@@ -25,9 +25,10 @@ set cursorline
 " TODO: This would probably be more convient with some kind of Lua table setup
 highlight @class.declaration guibg=Purple4
 highlight @declaration.identifier guibg=DarkSlateGray
-highlight @function guibg=Tomato
+highlight @function guibg=Maroon
 highlight @function.call guibg=NavyBlue
-highlight @method guibg=Tomato
+highlight @method guibg=Maroon
+highlight @note gui=bold
 highlight @todo guibg=orange guifg=blue
 highlight CursorLine guibg=grey20
 highlight DiffAdd cterm=none ctermbg=lightblue
@@ -42,4 +43,4 @@ highlight NonText guifg=grey42
 highlight Pmenu guibg=grey15
 highlight Search guibg=pink guifg=black
 
-" vim: set et tw=80:
+" vim: set et ts=4 sw=4 ss=4 tw=100 :
