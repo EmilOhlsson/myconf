@@ -14,7 +14,6 @@ DISABLE_AUTO_TITLE="true"
 plugins=(zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
-source $HOME/myconf/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 source $HOME/myconf/common.sh
 
