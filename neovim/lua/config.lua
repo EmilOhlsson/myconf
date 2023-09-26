@@ -34,7 +34,7 @@ nvim_lsp.clangd.setup {
     on_attach = on_attach
 }
 
-local servers = { 'clangd', 'pylsp' , 'rust_analyzer', 'julials', 'sumneko_lua' }
+local servers = { 'clangd', 'pylsp' , 'rust_analyzer', 'julials', 'lua_ls' }
 for _, lsp in ipairs(servers) do
     local conf = {
         on_attach = on_attach,
@@ -109,15 +109,6 @@ require('nvim-treesitter.configs').setup({
     })
 
 require('gitsigns').setup({
-        keymaps = {
-            noremap = true,
-            ['n <leader>hs'] = '<cmd>Gitsigns stage_hunk<CR>',
-            ['v <leader>hs'] = '<cmd>Gitsigns stage_hunk<CR>',
-            ['n <leader>hr'] = '<cmd>Gitsigns reset_hunk<CR>',
-            ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line{full=true}<CR>',
-            ['n <leader>hn'] = '<cmd>Gitsigns next_hunk<CR>',
-            ['n <leader>hp'] = '<cmd>Gitsigns preview_hunk<CR>',
-        },
         current_line_blame = true
     })
 

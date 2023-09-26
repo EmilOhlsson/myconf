@@ -44,6 +44,12 @@ map <leader>dn <cmd>Over<CR>
 map <leader>df <cmd>Finish<CR>
 map <leader>dc <cmd>Continue<CR>
 
+" Move lines up and down
+nnoremap <S-Up> :move -2<CR>==
+nnoremap <S-Down> :move +1<CR>==
+vnoremap <S-Up> :move '<-2<CR>gv=gv
+vnoremap <S-Down> :move '>+1<CR>gv=gv
+
 " Autocomple on ctrl+space
 inoremap <C-Space> <C-x><C-o>
 inoremap <C-@> <C-Space>

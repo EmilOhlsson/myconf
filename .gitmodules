@@ -1,20 +1,18 @@
 [submodule "LS_COLORS"]
 	path = LS_COLORS
-	url = git@github.com:ElektroKotte/LS_COLORS.git
+	url = https://github.com/trapd00r/LS_COLORS.git
 [submodule "vim/bundle/Vundle.vim"]
 	path = vim/bundle/Vundle.vim
 	url = https://github.com/VundleVim/Vundle.vim.git
 [submodule "oh-my-zsh"]
 	path = oh-my-zsh
-	url = git://github.com/robbyrussell/oh-my-zsh.git
+	url = https://github.com/robbyrussell/oh-my-zsh.git
 [submodule "neovim"]
 	path = tools/neovim
 	url = https://github.com/neovim/neovim.git
 [submodule "fzf"]
 	path = tools/fzf
 	url = https://github.com/junegunn/fzf.git
-[submodule "LS_COLORS/"]
-	url = https://github.com/trapd00r/LS_COLORS.git
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot

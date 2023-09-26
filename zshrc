@@ -50,3 +50,10 @@ bindkey "^A" beginning-of-line
 bindkey "^X^E" edit-command-line
 bindkey "^P" up-line-or-beginning-search
 bindkey "^N" down-line-or-beginning-search
+
+ZSH_HIGHLIGHT_STYLES[comment]='fg=magenta,bold'
+ZSH_HIGHLIGHT_STYLES[function]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[command-substitution]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[assign]='fg=magenta'
+ZSH_HIGHLIGHT_STYLES[named-fd]='fg=red'
+ZSH_HIGHLIGHT_STYLES[numeric-fd]='fg=red'
