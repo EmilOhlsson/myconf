@@ -44,3 +44,5 @@ default_border pixel 2
 
 # Load other specific configurations
 include ~/myconf/sway/config.d/*
+
+exec wlsunset -l 55.7 -L 13.2
