@@ -127,6 +127,7 @@ require('gitsigns').setup({
         end
         map('n', ']h', '<cmd>lua package.loaded.gitsigns.next_hunk()<CR>')
         map('n', '[h', '<cmd>lua package.loaded.gitsigns.prev_hunk()<CR>')
+        map('n', '<leader>hs', '<cmd>lua package.loaded.gitsigns.stage_hunk()<CR>')
         map('n', '<leader>hp', '<cmd>lua package.loaded.gitsigns.preview_hunk()<CR>')
     end,
     preview_config = {
