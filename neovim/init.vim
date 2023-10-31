@@ -1,4 +1,4 @@
-set rtp^=$HOME/myconf/neovim
+set rtp^=$HOME/myconf/neovim rtp+=$HOME/myconf/neovim/after
 
 if filereadable(expand('$HOME/myconf/local.vim'))
     source ~/myconf/local.vim
