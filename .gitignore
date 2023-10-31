@@ -2,6 +2,7 @@ vim/bundle/
 *.pyc
 vim/.netrwhist
 local.vim
+local.after.vim
 local.sh
 local-plugins.vim
 plug.vim.old

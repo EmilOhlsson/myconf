@@ -28,7 +28,7 @@ highlight @declaration.identifier guibg=DarkSlateGray
 highlight @function guibg=Maroon
 highlight @function.call guibg=NavyBlue
 highlight @method guibg=Maroon
-highlight @note gui=bold
+highlight @note guibg=blue guifg=orange
 highlight @todo guibg=orange guifg=blue
 highlight CursorLine guibg=grey20
 highlight DiffAdd cterm=none ctermbg=lightblue
@@ -42,5 +42,9 @@ highlight LspReferenceWrite cterm=none gui=none ctermbg=darkred guibg=darkred ct
 highlight NonText guifg=grey42
 highlight Pmenu guibg=grey15
 highlight Search guibg=pink guifg=black
+
+if filereadable(expand('$HOME/myconf/local.after.vim'))
+    source ~/myconf/local.after.vim
+endif
 
 " vim: set et ts=4 sw=4 ss=4 tw=100 :
