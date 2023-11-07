@@ -54,4 +54,7 @@ vnoremap <S-Down> :move '>+1<CR>gv=gv
 inoremap <C-Space> <C-x><C-o>
 inoremap <C-@> <C-Space>
 
+" Termdebug
+nnoremap <leader>de <cmd>Evaluate<CR>
+
 " vim: set et tw=80:

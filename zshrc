@@ -4,11 +4,14 @@ then
     exec tmux new-session
 fi
 
+# Make sure there is some form of background theme
+[ "$BACKGROUND" = "" ] && export BACKGROUND='dark'
+
 # Path to oh-my-zsh installation.
 export ZSH=$HOME/myconf/oh-my-zsh
 export ZSH_CUSTOM=$HOME/myconf/zsh-custom
 
-ZSH_THEME="candy"
+ZSH_THEME="candy-solarized"
 HIST_STAMPS="yyyy-mm-dd"
 DISABLE_AUTO_TITLE="true"
 plugins=(zsh-autosuggestions zsh-syntax-highlighting)
@@ -23,17 +26,8 @@ setopt hist_save_no_dups
 
 export VISUAL=nvim
 export EDITOR=nvim
-export RUST_SRC_PATH=$HOME/.multirust/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src/
 
-eval $(dircolors -b $HOME/myconf/LS_COLORS/LS_COLORS)
-
-if [ -f ~/.fzf.zsh ]
-then
-    source ~/.fzf.zsh
-elif [ -f /usr/share/fzf/shell/key-bindings.zsh ]
-then
-    source /usr/share/fzf/shell/key-bindings.zsh
-fi
+[ -f ~/.fzf/zsh ] && source ~/.fzf/zsh
 
 # Add support for searching backward in history based on prefix
 autoload -U up-line-or-beginning-search
@@ -57,3 +51,12 @@ ZSH_HIGHLIGHT_STYLES[command-substitution]='fg=cyan'
 ZSH_HIGHLIGHT_STYLES[assign]='fg=magenta'
 ZSH_HIGHLIGHT_STYLES[named-fd]='fg=red'
 ZSH_HIGHLIGHT_STYLES[numeric-fd]='fg=red'
+
+if [ "$BACKGROUND" = light ]
+then
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#d78700'
+else
+    eval $(dircolors -b $HOME/myconf/LS_COLORS/LS_COLORS)
+fi
+
+# vim: set et ts=4 sw=4 ss=4:
