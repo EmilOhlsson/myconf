@@ -6,4 +6,5 @@
 
 (declaration
   declarator: [(identifier) @declaration.identifier
-	       (_ (identifier) @declaration.identifier)])
+               (_ declarator: (identifier) @declaration.identifier)
+               (field_identifier) @declaration.identifier])

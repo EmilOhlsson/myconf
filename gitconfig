@@ -1,7 +1,12 @@
 [core]
 	editor = nvim
 	excludesfile = /home/<user>/.gitignore
-	pager = less -F -X
+	pager = delta
+
+[delta]
+	line-numbers = true
+	side-by-side = true
+	light = true
 
 [push]
 	default = simple

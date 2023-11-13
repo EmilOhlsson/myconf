@@ -1,7 +1,17 @@
 - create
   - ~/.config/nvim
+  - ~/.config/kitty
+  - ~/.config/sway
+  - ~/.config/sway/config.d
   - ~/workspace
 
 - link:
+  - ~/.config/sway/config: sway/config
+  - ~/.config/sway/config.d/input.config: sway/config.d/input.config
+  - ~/.config/sway/config.d/keybinding.config: sway/config.d/keybinding.config
+  - ~/.alacritty.yml: alacritty.yml
   - ~/.tmux.conf: tmux.conf
   - ~/.config/nvim/init.vim: neovim/init.vim
+  - ~/.config/kitty/kitty.conf: kitty.conf
+  - ~/.clang-format: clang-format
+  - ~/.guile: guile.scm
