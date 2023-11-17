@@ -106,7 +106,7 @@ if litee_lib ~= nil then
     litee_lib.setup {
         tree = litee_tree_config,
         panel = {
-            panel_size = 30,
+            panel_size = 60,
         },
     }
     local litee_symboltree = try_load('litee.symboltree').setup(litee_tree_config)
@@ -193,6 +193,8 @@ if treesitter_configs ~= nil then
         },
         --separator = '-',
         mode = 'topline',
+        min_window_height = 30,
+        max_lines = 10,
     }
 end
 
@@ -220,6 +222,7 @@ _ = gitsigns and gitsigns.setup {
 
 -- Symbol highlighting
 local highligts = {
+    -- Treesitter symbols
     ['@class.declaration']      = { both = { bg = 'Purple4' } },
     ['@declaration.identifier'] = { dark = { bg = 'DarkSlateGray' }, light = { bg = 'LightGoldenRod1' } },
     ['@function']               = { dark = { bg = 'Maroon' }, light = { bg = '#ffaf00' } },
@@ -227,20 +230,33 @@ local highligts = {
     ['@method']                 = { dark = { bg = 'Maroon' }, light = { bg = 'SkyBlue1' } },
     ['@note']                   = { light = { bg = 'blue', fg = 'orange' } },
     ['@todo']                   = { light = { bg = 'orange', fg = 'blue' } },
+    ['TreesitterContext']       = { light = { bg = '#ffffaf' } },
+    ['TreesitterContextBottom'] = { both = { underline = true } },
+    -- File diffing
     ['DiffAdd']                 = { light = { bg = 'lightblue' } },
     ['DiffChange']              = { light = { bg = 'LightMagenta' } },
     ['DiffText']                = {},
+    -- Litee UI
     ['LTSymbol']                = { both = { fg = 'orange', bold = true } },
     ['LTSymbolDetail']          = { light = { fg = 'lightblue' } },
+    -- LSP symbol references
     ['LspReferenceRead']        = { both = { bg = 'green', fg = 'white' } },
     ['LspReferenceText']        = { both = { bg = 'SkyBlue1', fg = 'black' } },
     ['LspReferenceWrite']       = { both = { bg = 'darkred', fg = 'white' } },
-    ['NonText']                 = { both = { fg = 'grey42' } },
-    ['Pmenu']                   = { both = { bg = 'grey15' } },
+    -- UI
+    ['NonText']                 = { both = { fg = '#bcbcbc', italic = true } },
+    ['Pmenu']                   = { dark = { bg = 'grey15' }, light = { bg = '#ffffaf' } },
     ['Search']                  = { both = { bg = 'pink', fg = 'black' } },
+    -- Misc
+    ['Constant']                = { light = { fg = 'brown', bold = true } },
+    ['Number']                  = { light = { fg = 'purple' } },
+    ['String']                  = { light = { fg = 'brown', bold = false, italic = true } },
+    ['Title']                   = { light = { fg = '#d70000', bold = true } },
 }
 
+-- Apply highlights based on value of g:background, which should be 'light' or 'dark'
 for sym, hl in pairs(highligts) do
+    -- merge 'both' with 'light' or 'dark' to create options, allowing background override
     local opt = vim.tbl_extend('force', hl['both'] or {}, hl[vim.g.background] or {})
     vim.api.nvim_set_hl(0, sym, opt)
 end

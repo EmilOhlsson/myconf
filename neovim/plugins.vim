@@ -15,6 +15,7 @@ Plug 'ldelossa/litee.nvim'
 Plug 'ldelossa/litee-calltree.nvim'
 Plug 'ldelossa/litee-symboltree.nvim'
 
+Plug 'godlygeek/tabular'
 Plug 'preservim/vim-markdown'
 
 if filereadable(expand('$HOME/myconf/local-plugins.vim'))

@@ -38,11 +38,12 @@ set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
 set laststatus=2
 set exrc                            " Load local vimrc
 
-
-map <leader>ds <cmd>Step<CR>
-map <leader>dn <cmd>Over<CR>
-map <leader>df <cmd>Finish<CR>
-map <leader>dc <cmd>Continue<CR>
+" Termdebug
+nnoremap <leader>ds <cmd>Step<CR>
+nnoremap <leader>dn <cmd>Over<CR>
+nnoremap <leader>df <cmd>Finish<CR>
+nnoremap <leader>dc <cmd>Continue<CR>
+nnoremap <leader>de <cmd>Evaluate<CR>
 
 " Move lines up and down
 nnoremap <S-Up> :move -2<CR>==
@@ -54,7 +55,8 @@ vnoremap <S-Down> :move '>+1<CR>gv=gv
 inoremap <C-Space> <C-x><C-o>
 inoremap <C-@> <C-Space>
 
-" Termdebug
-nnoremap <leader>de <cmd>Evaluate<CR>
+" vim-markdown
+let g:vim_markdown_new_list_item_indent = 2
+let g:vim_markdown_folding_disabled = 1
 
-" vim: set et tw=80:
+" vim: set et tw=80 ts=4 sw=4 ss=4:

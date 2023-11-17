@@ -27,7 +27,7 @@ setopt hist_save_no_dups
 export VISUAL=nvim
 export EDITOR=nvim
 
-[ -f ~/.fzf/zsh ] && source ~/.fzf/zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Add support for searching backward in history based on prefix
 autoload -U up-line-or-beginning-search
