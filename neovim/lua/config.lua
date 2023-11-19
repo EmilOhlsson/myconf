@@ -79,6 +79,11 @@ if nvim_lsp ~= nil then
                 return true
             end
         end
+        --[[ TODO: Check if server is available using
+        --if vim.fn.executable('lsp-server-command') then
+        --      set up server
+        --end
+        --]]
         nvim_lsp[lsp].setup(conf)
     end
 
@@ -109,6 +114,7 @@ if litee_lib ~= nil then
             panel_size = 60,
         },
     }
+    -- TODO: Configure colors, and make sure to expand incoming calls if there is space
     local litee_symboltree = try_load('litee.symboltree').setup(litee_tree_config)
     local litee_calltree = try_load('litee.calltree').setup(litee_tree_config)
     _ = litee_symboltree and litee_symboltree.setup(litee_tree_config)
@@ -220,6 +226,7 @@ _ = gitsigns and gitsigns.setup {
     },
 }
 
+-- TODO: Do we want to do this before setting up LSP, as that also affects highlights
 -- Symbol highlighting
 local highligts = {
     -- Treesitter symbols

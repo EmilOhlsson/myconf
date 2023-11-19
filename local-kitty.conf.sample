@@ -1,2 +1,9 @@
-font_family Fira Code
-font_size 9.0
+font_family Cascadia Code PL
+bold_font auto
+italic_font auto
+bold_italic_font auto
+font_size 10.0
+font_features CascadiaCodePL-Regular +ss19
+font_features CascadiaCodePL-Bold +ss19
+font_features CascadiaCodePL-Italic +ss19
+font_features CascadiaCodePL-BoldItalic +ss01 +ss19
