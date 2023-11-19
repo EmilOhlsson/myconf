@@ -86,6 +86,8 @@ def main():
             # For each image in the set of four images, resize and add a white border
             for file_name in file_set:
                 with wand.image.Image(filename=file_name) as img:
+                    if img.width() < img.height():
+                        img.rotate(90)
                     img.transform(resize=f'{width}x{height}')
                     img.border(wand.image.Color(color), width_border, height_border)
                     if args.annotate:
