@@ -8,3 +8,4 @@ local-plugins.vim
 plug.vim.old
 neovim/spell
 local-kitty.conf
+local-sway.conf

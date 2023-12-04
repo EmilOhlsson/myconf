@@ -228,13 +228,15 @@ _ = gitsigns and gitsigns.setup {
 
 -- TODO: Do we want to do this before setting up LSP, as that also affects highlights
 -- Symbol highlighting
+-- When setting backgrounds, consider looking at HSV color for current background, and only
+-- adjust hue, and slightly adjust saturation
 local highligts = {
     -- Treesitter symbols
     ['@class.declaration']      = { both = { bg = 'Purple4' } },
     ['@declaration.identifier'] = { dark = { bg = 'DarkSlateGray' }, light = { bg = 'LightGoldenRod1' } },
     ['@function']               = { dark = { bg = 'Maroon' }, light = { bg = '#ffaf00' } },
-    ['@function.call']          = { dark = { bg = 'NavyBlue' }, light = { bg = 'SkyBlue1' } },
-    ['@method']                 = { dark = { bg = 'Maroon' }, light = { bg = 'SkyBlue1' } },
+    ['@function.call']          = { dark = { bg = 'NavyBlue' }, light = { bg = '#e3fce7' } },
+    ['@method']                 = { dark = { bg = 'Maroon' }, light = { bg = '#e3e8fc' } },
     ['@note']                   = { light = { bg = 'blue', fg = 'orange' } },
     ['@todo']                   = { light = { bg = 'orange', fg = 'blue' } },
     ['TreesitterContext']       = { light = { bg = '#ffffaf' } },

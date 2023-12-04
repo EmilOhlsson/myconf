@@ -33,3 +33,16 @@ URxvt*font: xft:lime.se:size=8
 (struct_specifier
   name: (type_identifier) @class.declaration)
 ```
+
+## Packages
+```
+dnf groupinstall "Development tools"
+ssh-keygen -t ed25519
+dnf install kitty sway tmux git 
+```
+
+## CPU governors
+```
+cpupower frequency-info -o proc
+cpupower frequency-set -g performance
+```

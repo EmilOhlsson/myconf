@@ -16,9 +16,6 @@ set $term kitty
 # Preferred application launcher
 set $menu dmenu_path | dmenu | xargs swaymsg exec --
 
-# Output configuration
-output * bg /usr/share/backgrounds/default.png fill
-
 # Idle configuration
 exec swayidle -w \
          timeout 300 'swaylock -f -c 000000' \
@@ -44,5 +41,6 @@ default_border pixel 2
 
 # Load other specific configurations
 include ~/myconf/sway/config.d/*
+include ~/myconf/local-sway.conf
 
 exec wlsunset -l 55.7 -L 13.2

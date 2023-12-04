@@ -1,0 +1,15 @@
+# Output configuration
+output * bg /usr/share/backgrounds/f39/default/f39-01-night.png fill
+font Cascadia Code PL medium 12
+
+# Do not scale, even for high dpi screen
+output eDP-1 scale 1.0
+
+# Keyboard commands
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym XF86MonBrightnessUp exec brightnessctl set 5%+
+bindsym XF86Launch4 exec swaymsg input type:touchpad events toggle

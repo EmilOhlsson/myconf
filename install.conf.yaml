@@ -1,4 +1,4 @@
-- create
+- create:
   - ~/.config/nvim
   - ~/.config/kitty
   - ~/.config/sway
@@ -6,12 +6,15 @@
   - ~/workspace
 
 - link:
-  - ~/.config/sway/config: sway/config
-  - ~/.config/sway/config.d/input.config: sway/config.d/input.config
-  - ~/.config/sway/config.d/keybinding.config: sway/config.d/keybinding.config
-  - ~/.alacritty.yml: alacritty.yml
-  - ~/.tmux.conf: tmux.conf
-  - ~/.config/nvim/init.vim: neovim/init.vim
-  - ~/.config/kitty/kitty.conf: kitty.conf
-  - ~/.clang-format: clang-format
-  - ~/.guile: guile.scm
+    ~/.config/sway/config: sway/config
+    ~/.config/sway/config.d/input.config: sway/config.d/input.config
+    ~/.config/sway/config.d/keybinding.config: sway/config.d/keybinding.config
+    ~/.alacritty.yml: alacritty.yml
+    ~/.tmux.conf: tmux.conf
+    ~/.config/nvim/init.vim: neovim/init.vim
+    ~/.config/kitty/kitty.conf: kitty.conf
+    ~/.clang-format: clang-format
+    ~/.guile: guile.scm
+
+- shell:
+  - [echo "source $HOME/myconf/zshrc" >> $HOME/.zshrc]
