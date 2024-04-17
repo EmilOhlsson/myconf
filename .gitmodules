@@ -22,3 +22,6 @@
 [submodule "zsh-custom/plugins/zsh-autosuggestions"]
 	path = zsh-custom/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
+[submodule "dotbot-omnipkg"]
+	path = dotbot-omnipkg
+	url = https://github.com/Code-Maniac/dotbot-omnipkg.git

@@ -18,3 +18,8 @@
 
 - shell:
   - [echo "source $HOME/myconf/zshrc" >> $HOME/.zshrc]
+
+- omnipkg:
+  - install: [
+    { dnf: g++, wlsunset }
+  ]

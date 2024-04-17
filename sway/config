@@ -43,4 +43,5 @@ default_border pixel 2
 include ~/myconf/sway/config.d/*
 include ~/myconf/local-sway.conf
 
+# Red shift at night
 exec wlsunset -l 55.7 -L 13.2

@@ -230,6 +230,8 @@ _ = gitsigns and gitsigns.setup {
 -- Symbol highlighting
 -- When setting backgrounds, consider looking at HSV color for current background, and only
 -- adjust hue, and slightly adjust saturation
+-- The current color scheme is based on a background color of #fdf6e3, which would be 44.10.99 in
+-- HSV
 local highligts = {
     -- Treesitter symbols
     ['@class.declaration']      = { both = { bg = 'Purple4' } },
@@ -237,8 +239,8 @@ local highligts = {
     ['@function']               = { dark = { bg = 'Maroon' }, light = { bg = '#ffaf00' } },
     ['@function.call']          = { dark = { bg = 'NavyBlue' }, light = { bg = '#dcecf4' } },
     ['@method']                 = { dark = { bg = 'Maroon' }, light = { bg = '#dcf4e0' } },
-    ['@note']                   = { light = { bg = 'blue', fg = 'orange' } },
-    ['@todo']                   = { light = { bg = 'orange', fg = 'blue' } },
+    ['@note']                   = { light = { bg = '#e3e4fc'} },
+    ['@todo']                   = { light = { bg = '#fcdbb0', fg = 'blue' } },
     ['TreesitterContext']       = { light = { bg = '#ffffaf' } },
     ['TreesitterContextBottom'] = { both = { underline = true } },
     -- File diffing
