@@ -1,7 +1,3 @@
----
-title: "Repo overview"
----
-
 # My configuration
 A small collection of common useful settings
 
@@ -22,7 +18,7 @@ URxvt*font: xft:lime.se:size=8
 
 ### Neovim
 In case a recent enough Neovim version isn't available, then it's worth
-building your own, by following [building Neovim][building-neovim]
+building your own, by following [building Neovim][docs/building-neovim.md]
 
 - Set up `local.vim`
 
@@ -58,8 +54,5 @@ dnf install kitty sway tmux git
 cpupower frequency-info -o proc
 cpupower frequency-set -g performance
 ```
-
-<!-- Link table -->
-[building-nvim]: docs/building-nvim.md
 
 <!-- vim: set et ts=4 sw=4 ss=4 tw=100 : -->

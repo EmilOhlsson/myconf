@@ -21,8 +21,8 @@ def get_border_pixels(pixels: int, percentage: int):
 
 
 def main():
-    parser = argparse.ArgumentParser(prog = 'Collage builder',
-                                     description = 'join images into same sized montages')
+    parser = argparse.ArgumentParser(prog='Collage builder',
+                                     description='join images into same sized montages')
     parser.add_argument('--resolution',
                         help='Resolution of scaled images of the form WxH',
                         type=str, default='3120x2080')
@@ -65,10 +65,12 @@ def main():
                     # Resize image, without stretching, and pad extra to make sure en result
                     # is the correct resolution
                     img.transform(resize=f'{width}x{height}')
-                    img.border(wand.image.Color(color), width_border + (width - img.width) // 2, height_border + (height - img.height) // 2)
+                    img.border(wand.image.Color(color), width_border + (width -
+                               img.width) // 2, height_border + (height - img.height) // 2)
                     montage.image_add(img)
             montage.montage(mode='concatenate')
-            output_filename = os.path.join(directory, f'montage_{id:04d}.{args.format}')
+            output_filename = os.path.join(
+                directory, f'montage_{id:04d}.{args.format}')
             montage.save(filename=output_filename)
 
 
