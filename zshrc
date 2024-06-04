@@ -23,6 +23,7 @@ source $HOME/myconf/common.sh
 setopt emacs
 setopt inc_append_history
 setopt hist_save_no_dups
+setopt extendedglob
 
 export VISUAL=nvim
 export EDITOR=nvim

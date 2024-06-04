@@ -55,6 +55,7 @@ if nvim_lsp ~= nil then
                     })
             },
         }
+        -- TODO: merge with server specific config below
         if lsp == 'lua_ls' then -- Set up for NeoVim plugins
             conf.on_init = function(client)
                 local path = client.workspace_folders[1].name
@@ -67,9 +68,10 @@ if nvim_lsp ~= nil then
                             -- Make the server aware of Neovim runtime files
                             workspace = {
                                 checkThirdParty = false,
-                                library = {
-                                    vim.env.VIMRUNTIME
-                                }
+                                --library = {
+                                --    vim.env.VIMRUNTIME
+                                --}
+                                library = vim.api.nvim_get_runtime_file("", true)
                             }
                         }
                     })
@@ -84,6 +86,13 @@ if nvim_lsp ~= nil then
         --      set up server
         --end
         --]]
+        local server_configs = {
+            pylsp = {
+                pylsp = {
+                }
+            }
+        }
+        conf = vim.tbl_deep_extend('force', conf, server_configs[lsp] or {})
         nvim_lsp[lsp].setup(conf)
     end
 
@@ -178,7 +187,7 @@ if treesitter_configs ~= nil then
         },
 
         ensure_installed = {
-            "c", "cpp", "glsl", "rust", "lua", "python", "vim", "julia", "fennel"
+            "c", "cpp", "glsl", "rust", "lua", "python", "vim", "julia", "fennel", "markdown"
         },
     }
 
@@ -236,7 +245,7 @@ local highligts = {
     -- Treesitter symbols
     ['@class.declaration']      = { both = { bg = 'Purple4' } },
     ['@declaration.identifier'] = { dark = { bg = 'DarkSlateGray' }, light = { bg = 'LightGoldenRod1' } },
-    ['@function']               = { dark = { bg = 'Maroon' }, light = { bg = '#ffaf00' } },
+    ['@function']               = { dark = { bg = 'Maroon' }, light = { bg = '#fce3f2' } },
     ['@function.call']          = { dark = { bg = 'NavyBlue' }, light = { bg = '#dcecf4' } },
     ['@method']                 = { dark = { bg = 'Maroon' }, light = { bg = '#dcf4e0' } },
     ['@note']                   = { light = { bg = '#e3e4fc'} },
