@@ -18,7 +18,7 @@ URxvt*font: xft:lime.se:size=8
 
 ### Neovim
 In case a recent enough Neovim version isn't available, then it's worth
-building your own, by following [building Neovim][docs/building-neovim.md]
+building your own, by following [building Neovim](docs/building-neovim.md)
 
 - Set up `local.vim`
 
