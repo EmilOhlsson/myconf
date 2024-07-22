@@ -11,8 +11,9 @@ local orange = hsl(20, 100, 50)
 local brown = orange.da(40)
 local purple = hsl(265, 100, 50)
 
--- TODO: Replace named colors with HSL calls
--- TODO: Create a few primary colors, and then base UI on these colors
+local red = hsl(0, 100, 50)
+local green = hsl(120, 100, 50)
+local blue = hsl(240, 100, 50)
 
 -- Highlight rules. Uses magic meta functions, so disable certain diagnostics
 -- as to not have LSP become angry
@@ -28,10 +29,10 @@ return lush(function(injected)
         Comment  { fg=bg.lightness(30) },
         Todo     { bg=bg_emp.ro(20), fg=brown },
 
-        Statement { fg=fg.li(50), gui='bold'},
+        Statement   { fg=fg.li(50), gui='bold'},
         Conditional { Statement },
-        Identifier { fg=brown },
-        Type { fg = fg, gui='bold' },
+        Identifier  { fg=brown },
+        Type        { fg = fg, gui='bold' },
 
         -- Treesitter symbols
         sym'@class.declaration'      { bg=bg_emp.ro(90) },
@@ -45,26 +46,25 @@ return lush(function(injected)
 
         -- UI
         CursorLine               { bg=bg_emp.de(50) },
-        NonText                  { bg=bg_emp.de(50), fg=bg_emp.de(50).da(15), gui='italic' },
+        NonText                  { fg=bg_emp.de(50).mix(hsl(0,0,0), 20), gui='italic' },
         Pmenu                    { bg=bg_emp },
-        Search                   { bg='Pink', fg='black'},
+        Search                   { bg=bg_emp.da(30) },
         TreesitterContext        { bg=bg_emp.da(10)  },
-        TreesitterContextBottom  { gui='underline' },
+        TreesitterContextBottom  { TreesitterContext, gui='underline' },
 
         -- File diffing
-        DiffAdd      { bg = 'lightblue'  },
-        DiffChange   { bg = 'LightMagenta'  },
-        DiffText     {},
-        GitSignsAdd  { DiffAdd },
+        Changed { bg = bg.hue(240) },
+        Added   { bg = bg.hue(120) },
+        Removed { bg = bg.hue(0) },
 
         -- Litee UI
-        LTSymbol        { fg = 'orange', gui='bold' },
-        LTSymbolDetail  { fg = 'lightblue' },
+        LTSymbol        { fg = orange, gui='bold' },
+        LTSymbolDetail  { fg = bg.mix(blue, 50), gui='italic' },
 
         -- LSP symbol references
-        LspReferenceRead   { bg = 'green', fg = 'white'  },
-        LspReferenceText   { bg = 'SkyBlue1', fg = 'black' },
-        LspReferenceWrite  { bg = 'darkred', fg = 'white' },
+        LspReferenceRead   { bg = green.li(50), fg = green.readable()  },
+        LspReferenceText   { bg = blue.li(50), fg = blue.readable() },
+        LspReferenceWrite  { bg = red.li(50), fg = red.readable() },
     }
 end)
 
