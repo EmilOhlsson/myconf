@@ -1,6 +1,11 @@
 Diagnostics:
   ClangTidy:
-    Add: modernize*, bugprone*, cppcoreguidelines-*, misc-*, readability-*
+    Add:
+      - modernize*
+      - bugprone*
+      - misc-*
+      - readability-*
+      - cppcoreguidelines-*
     Remove: modernize-use-trailing-return-type
 
 CompileFlags:

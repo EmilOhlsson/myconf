@@ -22,7 +22,7 @@ def get_border_pixels(pixels: int, percentage: int):
 
 def main():
     parser = argparse.ArgumentParser(prog='Collage builder',
-                                     description='join images into same sized montages')
+                                     description='join images into montages')
     parser.add_argument('--resolution',
                         help='Resolution of scaled images of the form WxH',
                         type=str, default='3120x2080')
@@ -52,22 +52,25 @@ def main():
         sys.exit(1)
     os.makedirs(directory)
 
-    # Loop through all images in sets of four, and create an output montage image
-    # which will be the resulting image with the four images combined. If an image
-    # is in portrait mode, then rotate 90 degrees
+    # Loop through all images in sets of four, and create an output montage
+    # image which will be the resulting image with the four images combined.
+    # If an image is in portrait mode, then rotate 90 degrees
     for id, file_set in enumerate(chunked(args.files, args.pictures)):
         with wand.image.Image() as montage:
-            # For each image in the set of four images, resize and add a white border
+            # For each image in the set of four images,
+            # resize and add a white border
             for file_name in file_set:
                 with wand.image.Image(filename=file_name) as img:
                     if img.width < img.height:
                         img.rotate(90)
-                    # Resize image, without stretching, and pad extra to make sure en result
-                    # is the correct resolution
+                    # Resize image, preserve aspect ratio
                     img.transform(resize=f'{width}x{height}')
-                    img.border(wand.image.Color(color), width_border + (width -
-                               img.width) // 2, height_border + (height - img.height) // 2)
+                    pad_vertical = height_border + (height - img.height) // 2
+                    pad_horizontal = width_border + (width - img.width) // 2
+                    img.border(wand.image.Color(color),
+                               pad_horizontal, pad_vertical)
                     montage.image_add(img)
+            # TODO: Make sure that this handles non-multiples of args.pictures
             montage.montage(mode='concatenate')
             output_filename = os.path.join(
                 directory, f'montage_{id:04d}.{args.format}')
@@ -76,3 +79,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# vim: set et ts=4 sw=4 ss=4 tw=80 :

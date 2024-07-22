@@ -5,12 +5,15 @@ Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
 
+" Git stuff
 Plug 'tpope/vim-fugitive'
 Plug 'lewis6991/gitsigns.nvim'
 
+" Fuzzy searching
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
+" Litee IDE like stuff
 Plug 'ldelossa/litee.nvim'
 Plug 'ldelossa/litee-calltree.nvim'
 Plug 'ldelossa/litee-symboltree.nvim'

@@ -7,92 +7,73 @@ local function try_load(mod_name)
     return result
 end
 
+-- Highlights
+local lush = try_load('lush')
+if lush then
+    lush(require('lush-theme'))
+else
+    local highlights = try_load('highlights')
+    _ = highlights and highlights.setup()
+end
+
 -- LSP configuration
 local nvim_lsp = try_load('lspconfig')
 if nvim_lsp ~= nil then
-    -- Common LSP handling
-    local on_attach = function(_, bufnr)
-        local function map(mode, key, cmd)
-            vim.keymap.set(mode, key, cmd, {
-                buffer = bufnr
-            })
-        end
-        map('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
-        map('n', '<leader>lD', '<cmd>lua vim.lsp.buf.declaration()<CR>')
-        map('n', '<leader>ld', '<cmd>lua vim.lsp.buf.definition()<CR>')
-        map('n', '<leader>li', '<cmd>lua vim.lsp.buf.implementation()<CR>')
-        map('n', '<leader>lr', '<cmd>lua vim.lsp.buf.references()<CR>')
-        map('n', '<leader>ls', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
-        map('i', '<c-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
-        map('n', '<leader>lh', '<cmd>lua vim.lsp.buf.hover()<CR>')
-        map('i', '<c-h>', '<cmd>lua vim.lsp.buf.hover()<CR>')
-        map('v', '<leader>lF', '<cmd>lua vim.lsp.buf.format{async=true}<CR>')
-        map('n', '<leader>ee', '<cmd>lua vim.diagnostic.open_float({})<CR>')
-        map('n', '<leader>lF', '<cmd>lua vim.lsp.buf.format{async=true}<CR>')
-        map('n', '<leader>le', '<cmd>lua vim.diagnostic.goto_next()<CR>')
-        map('n', '<leader>lp', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
-        map('n', '<leader>lp', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
-        map('n', '<leader>ds', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
-        map('n', '<leader>ws', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>')
-        map('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-        map('n', '<leader>lI', '<cmd>lua vim.lsp.buf.incoming_calls()<CR>')
-        map('n', '<leader>lO', '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>')
-        vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-    end
-
-    local servers = { 'clangd', 'pylsp', 'rust_analyzer', 'julials', 'lua_ls', 'vimls' }
+    local servers = { 'clangd', 'pylsp', 'rust_analyzer', 'julials', 'lua_ls' }
     for _, lsp in ipairs(servers) do
-        local conf = {
-            on_attach = on_attach,
+        local common_conf = {
+            on_attach = function(_, bufnr)
+                local function map(mode, key, cmd)
+                    vim.keymap.set(mode, key, cmd, {
+                        buffer = bufnr
+                    })
+                end
+                map('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
+                map('n', '<leader>lD', '<cmd>lua vim.lsp.buf.declaration()<CR>')
+                map('n', '<leader>ld', '<cmd>lua vim.lsp.buf.definition()<CR>')
+                map('n', '<leader>li', '<cmd>lua vim.lsp.buf.implementation()<CR>')
+                map('n', '<leader>lr', '<cmd>lua vim.lsp.buf.references()<CR>')
+                map('n', '<leader>ls', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+                map('i', '<c-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+                map('n', '<leader>lh', '<cmd>lua vim.lsp.buf.hover()<CR>')
+                map('i', '<c-h>', '<cmd>lua vim.lsp.buf.hover()<CR>')
+                map('v', '<leader>lF', '<cmd>lua vim.lsp.buf.format{async=true}<CR>')
+                map('n', '<leader>ee', '<cmd>lua vim.diagnostic.open_float({})<CR>')
+                map('n', '<leader>lF', '<cmd>lua vim.lsp.buf.format{async=true}<CR>')
+                map('n', '<leader>le', '<cmd>lua vim.diagnostic.goto_next()<CR>')
+                map('n', '<leader>lp', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+                map('n', '<leader>lp', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
+                map('n', '<leader>ds', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
+                map('n', '<leader>ws', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>')
+                map('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+                map('n', '<leader>lI', '<cmd>lua vim.lsp.buf.incoming_calls()<CR>')
+                map('n', '<leader>lO', '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>')
+                vim.api.nvim_set_option_value('omnifunc', 'v:lua.vim.lsp.omnifunc', {})
+            end,
             handlers = {
                 ["textDocument/publishDiagnostics"] = vim.lsp.with(
                     vim.lsp.diagnostic.on_publish_diagnostics, {
                         virtual_text = false
                     }),
-                ["textDocument/hover"] = vim.lsp.with(
-                    vim.lsp.handlers.hover, {
-                        --border = "rounded",
-                    })
             },
         }
-        -- TODO: merge with server specific config below
-        if lsp == 'lua_ls' then -- Set up for NeoVim plugins
-            conf.on_init = function(client)
-                local path = client.workspace_folders[1].name
-                if not vim.loop.fs_stat(path .. '/.luarc.json') and not vim.loop.fs_stat(path .. '/.luarc.jsonc') then
-                    client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
-                        Lua = {
-                            runtime = {
-                                version = 'LuaJIT'
-                            },
-                            -- Make the server aware of Neovim runtime files
-                            workspace = {
-                                checkThirdParty = false,
-                                --library = {
-                                --    vim.env.VIMRUNTIME
-                                --}
-                                library = vim.api.nvim_get_runtime_file("", true)
-                            }
-                        }
-                    })
 
-                    client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
-                end
-                return true
-            end
-        end
-        --[[ TODO: Check if server is available using
-        --if vim.fn.executable('lsp-server-command') then
-        --      set up server
-        --end
-        --]]
         local server_configs = {
-            pylsp = {
-                pylsp = {
+            lua_ls = {
+                settings = {
+                    Lua = {
+                        settings = {
+                            version = 'LuaJIT',
+                        },
+                        workspace = {
+                            library = vim.api.nvim_get_runtime_file('', true)
+                        },
+                    },
                 }
             }
         }
-        conf = vim.tbl_deep_extend('force', conf, server_configs[lsp] or {})
+        local conf = vim.tbl_deep_extend('force', common_conf, server_configs[lsp] or {})
+        --print('Configuring ' .. lsp .. ' with ' .. vim.inspect(conf))
         nvim_lsp[lsp].setup(conf)
     end
 
@@ -108,21 +89,21 @@ end
 local litee_lib = try_load('litee.lib')
 if litee_lib ~= nil then
     local litee_tree_config = {
-        icon_set = "simple",
-        icon_set_custom = {
-            Method = "mf",
-            Module = "mod",
-        },
+        icon_set = "codicons",
+        --icon_set_custom = {
+        --    Method = "mf",
+        --    Module = "mod",
+        --},
         map_resize_keys = false,
         auto_highlight = false,
     }
 
-    litee_lib.setup {
+    litee_lib.setup({
         tree = litee_tree_config,
         panel = {
             panel_size = 60,
         },
-    }
+    })
     -- TODO: Configure colors, and make sure to expand incoming calls if there is space
     local litee_symboltree = try_load('litee.symboltree').setup(litee_tree_config)
     local litee_calltree = try_load('litee.calltree').setup(litee_tree_config)
@@ -187,7 +168,7 @@ if treesitter_configs ~= nil then
         },
 
         ensure_installed = {
-            "c", "cpp", "glsl", "rust", "lua", "python", "vim", "julia", "fennel", "markdown"
+            "c", "cpp", "glsl", "rust", "lua", "python", "vim", "vimdoc", "julia", "fennel", "markdown"
         },
     }
 
@@ -234,51 +215,5 @@ _ = gitsigns and gitsigns.setup {
         style = 'minimal',
     },
 }
-
--- TODO: Do we want to do this before setting up LSP, as that also affects highlights
--- Symbol highlighting
--- When setting backgrounds, consider looking at HSV color for current background, and only
--- adjust hue, and slightly adjust saturation
--- The current color scheme is based on a background color of #fdf6e3, which would be 44.10.99 in
--- HSV
-local highligts = {
-    -- Treesitter symbols
-    ['@class.declaration']      = { both = { bg = 'Purple4' } },
-    ['@declaration.identifier'] = { dark = { bg = 'DarkSlateGray' }, light = { bg = 'LightGoldenRod1' } },
-    ['@function']               = { dark = { bg = 'Maroon' }, light = { bg = '#fce3f2' } },
-    ['@function.call']          = { dark = { bg = 'NavyBlue' }, light = { bg = '#dcecf4' } },
-    ['@method']                 = { dark = { bg = 'Maroon' }, light = { bg = '#dcf4e0' } },
-    ['@note']                   = { light = { bg = '#e3e4fc'} },
-    ['@todo']                   = { light = { bg = '#fcdbb0', fg = 'blue' } },
-    ['TreesitterContext']       = { light = { bg = '#ffffaf' } },
-    ['TreesitterContextBottom'] = { both = { underline = true } },
-    -- File diffing
-    ['DiffAdd']                 = { light = { bg = 'lightblue' } },
-    ['DiffChange']              = { light = { bg = 'LightMagenta' } },
-    ['DiffText']                = {},
-    -- Litee UI
-    ['LTSymbol']                = { both = { fg = 'orange', bold = true } },
-    ['LTSymbolDetail']          = { light = { fg = 'lightblue' } },
-    -- LSP symbol references
-    ['LspReferenceRead']        = { both = { bg = 'green', fg = 'white' } },
-    ['LspReferenceText']        = { both = { bg = 'SkyBlue1', fg = 'black' } },
-    ['LspReferenceWrite']       = { both = { bg = 'darkred', fg = 'white' } },
-    -- UI
-    ['NonText']                 = { both = { fg = '#bcbcbc', italic = true } },
-    ['Pmenu']                   = { dark = { bg = 'grey15' }, light = { bg = '#ffffaf' } },
-    ['Search']                  = { both = { bg = 'pink', fg = 'black' } },
-    -- Misc
-    ['Constant']                = { light = { fg = 'brown', bold = true } },
-    ['Number']                  = { light = { fg = 'purple' } },
-    ['String']                  = { light = { fg = 'brown', bold = false, italic = true } },
-    ['Title']                   = { light = { fg = '#d70000', bold = true } },
-}
-
--- Apply highlights based on value of g:background, which should be 'light' or 'dark'
-for sym, hl in pairs(highligts) do
-    -- merge 'both' with 'light' or 'dark' to create options, allowing background override
-    local opt = vim.tbl_extend('force', hl['both'] or {}, hl[vim.g.background] or {})
-    vim.api.nvim_set_hl(0, sym, opt)
-end
 
 -- vim: set et ts=4 sw=4 ss=4 tw=100 :

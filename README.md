@@ -55,4 +55,15 @@ cpupower frequency-info -o proc
 cpupower frequency-set -g performance
 ```
 
-<!-- vim: set et ts=4 sw=4 ss=4 tw=100 : -->
+## Fedora mount
+```
+udiskctl mount -b /dev/device
+udiskctl unmount -b /dev/device
+```
+
+## firewall
+```
+firewall-cmd --list-all
+```
+
+<!-- vim: set et ts=2 sw=2 ss=2 tw=100 : -->
