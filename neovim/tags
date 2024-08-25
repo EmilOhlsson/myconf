@@ -1,0 +1,3 @@
+my-commands	doc/usage.txt	/*my-commands*
+my-plugins	doc/usage.txt	/*my-plugins*
+usage.txt	doc/usage.txt	/*usage.txt*

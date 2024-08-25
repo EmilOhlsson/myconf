@@ -22,6 +22,9 @@ building your own, by following [building Neovim](docs/building-neovim.md)
 
 - Set up `local.vim`
 
+## Direnv
+TODO: describe direnv
+
 ## Useful tree-sitter queries
 ```scheme
 ((comment) @todo
@@ -64,6 +67,13 @@ udiskctl unmount -b /dev/device
 ## firewall
 ```
 firewall-cmd --list-all
+firewall-cmd --add-port=8080/tcp
+firewall-cmd --permanent --add-service=mdns
+```
+
+## Podman
+```
+podman run --rm -it -v $PWD:$PWD:U,Z --entry-point=/bin/bash fedora:latest
 ```
 
 <!-- vim: set et ts=2 sw=2 ss=2 tw=100 : -->

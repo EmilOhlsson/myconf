@@ -1,6 +1,7 @@
 local lush = require('lush')
 local hsl = lush.hsl
 
+-- TODO: Describe how to modify this file (Lushify)
 --
 --hsl([0-360), [0-100], [0-100]) allow  converting a hsl color to hex
 
@@ -45,6 +46,7 @@ return lush(function(injected)
         sym'@text.todo'              { Todo },
 
         -- UI
+        Visual                   { bg=bg_emp.da(10).sa(10) },
         CursorLine               { bg=bg_emp.de(50) },
         NonText                  { fg=bg_emp.de(50).mix(hsl(0,0,0), 20), gui='italic' },
         Pmenu                    { bg=bg_emp },

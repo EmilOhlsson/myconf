@@ -24,7 +24,7 @@ set smartcase                       " Do not ignore case if upper case is used
 set wildmenu                        " Show possible matches
 set wildmode=longest,list,full      " Order of matching
 set hidden                          " Buffers are hidden instead of closed
-set switchbuf="split"               " use new tab to open files from quickfix
+set switchbuf=usetab,newtab         " use new tab to open files from quickfix
 set splitbelow                      " Open splits below
 set splitright                      " Open splits to the right
 
@@ -54,6 +54,9 @@ vnoremap <S-Down> :move '>+1<CR>gv=gv
 " Autocomple on ctrl+space
 inoremap <C-Space> <C-x><C-o>
 inoremap <C-@> <C-Space>
+
+" Terminal commands
+tnoremap <Esc> <C-\><C-n>
 
 " vim-markdown
 let g:vim_markdown_new_list_item_indent = 2

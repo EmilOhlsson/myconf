@@ -1,3 +1,8 @@
 Plug 'Olical/conjure'	   " Interact with scheme REPL
 Plug 'Olical/aniseed'      " Interaction with Lua Fennel
 Plug 'luochen1990/rainbow' " Colorful parenthesis
+
+Plug 'rktjmp/lush.nvim'                 " Useful color scheme plugin
+Plug 'nvim-lua/plenary.nvim'            " Used by lush
+Plug 'nvim-telescope/telescope.nvim'    " Handy file search etc
+Plug 'mfussenegger/nvim-dap'            " Debug adapter protocol client

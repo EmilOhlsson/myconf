@@ -1,0 +1,289 @@
+==============================================================================
+My usage						*my-usage.txt*
+
+This text describes my Neovim setup
+
+------------------------------------------------------------------------------
+Local keymaps						*my-commands*
+
+dap							*my-dap*
+	All shortcuts are prefixed with `,`
+	`,,`
+		Step over
+
+	`,b`
+		Toggle breakpoint
+
+	`,B`
+		Set logging breakpoint
+	
+	`,c`
+		Continue/start execution
+
+	`,C`
+		Clear all breakpoints
+
+	`,d`
+		Jump down one frame
+
+	`,h`
+		Show expression hover information
+
+	`,o`
+		Step out
+
+	`,r`
+		Toggle REPL
+
+	`,s`
+		Step into
+
+	`,u`
+		Jump up one frame
+
+Gitsigns						*my-gitsigns*
+	Shortcuts prefixed with `;`
+	`]h`
+		Next hunk
+	
+	`[h`
+		Previous hunk
+	
+	`;hs`
+		Stage hunk
+	
+	`;hr`
+		Reset hunk
+
+	`;hp`
+		Preview hunk
+
+lsp							*my-lsp*
+	All shortcuts are prefixed with `<leader>`
+	Insertion mode commands
+	`<c-k>`
+		Signature help, argument descriptions
+
+	`<c-h>`
+		Hover information
+
+	Normal mode commands
+	`<leader>ca`
+		Perform code action
+
+	`<leader>ds`
+		Jump to document symbol
+
+	`<leader>ee`
+		Open error message in floating window
+
+	`<leader>ih`
+		Toggle inlay hints (since 0.10)
+
+	`<leader>lD`
+		Jump to declaration
+
+	`<leader>ld`
+		Jump to definition
+		
+	`<leader>le`
+		Jump to next error
+
+	`<leader>lF`
+		Format selection/buffer
+
+	`<leader>lh`
+		Hover information
+
+	`<leader>li`
+		Jump to implementation
+
+	`<leader>lI`
+		Check incoming calls
+
+	`<leader>lO`
+		Check outgoing calls
+
+	`<leader>lp`
+		Jump to previous error
+
+	`<leader>lr`
+		Check references
+
+	`<leader>ls`
+		Signature help
+
+	`<leader>rn`
+		Rename symbol
+
+	`<leader>ws`
+		Jump to workspace symbol
+
+Telescope						*my-telescope*
+	All shortcuts are prefixed with `<space>`
+	<space>ff
+			Find files in current directory
+
+	<space>gf
+			Find git files
+
+	<space>lg	
+			Live grep
+
+	<space>fb
+			Find buffer
+
+	<space>fh
+			Search help tags
+
+	<space>qf
+			Search quickfix
+
+	<space>ic
+			List incoming function calls
+
+	<space>lb
+			List builtin telescope functions
+
+Treesitter						*my-treesitter*
+	Text objects
+	`aa`
+			Argument/parameter (outer)
+
+	`ac`
+			Comment (outer)
+	
+	`af`
+			Function (outer)
+
+	`ai`
+			Conditional (outer)
+
+	`al`
+			Loop (outer)
+
+	`ao`
+			Object/Class (outer)
+
+	`ia`		Argument/Parameter (inner)
+
+	`if`
+			Function (inner)
+
+	`io`
+			Object/Class (inner)
+
+	Navigation
+	`]m`
+			Next function
+	
+	`]a`
+			Next argument
+
+	`[m`
+			Previous function
+
+	`[a`
+			Previous argument
+
+	Commands
+	`<leader>tl`
+			List definitions
+
+	`<leader>ta`
+			List definitions TOC
+
+	`<leader>tn`
+			Next usage
+
+	`<leader>tp`
+			Previous uage
+
+	`<leader>td`
+			Go to defintion
+
+
+==============================================================================
+PLUGIN NOTES						*my-plugins*
+
+------------------------------------------------------------------------------
+lsp setup						*my-lsp-setup*
+This is currently configured in the main lua config file, and mostly
+configures keyboard shortcuts to be `\` followed by some more keys
+
+------------------------------------------------------------------------------
+Theme							*my-colorscheme-setup*
+
+After a lot of experimentation there are currently two parallel theme
+confiugrations. One of them uses the |lush| plugin, and the other only relies
+on vanilla Neovim. The benefit of the |lush| plugin is that you can configure
+colors based on hue, saturation etc, which makes it convenient to find
+complementary colors and matching suitable background highlights
+
+The lush theme is described in `lua/lush-theme.lua`, which can conveniently be
+edited after running `:Lushify` on the file while editing it. This will
+display all colors live while editing
+
+Otherwise the file `lua/highlights.lua` will be used, that set colors based on
+the background brighness
+
+------------------------------------------------------------------------------
+DAP							*my-dap-setup*
+
+Debug adapter protocol allow for more flexible debugging. The benefit over
+termdebug is that this isn't limited to gdb, and enables the use of python
+debugging etc
+
+In addition, this allows for some more flexible debugger setup based on the
+`launch.json` files used by VS code. This is described in |dap-launch.json|
+For example these can look like >
+	{
+	    "version": "0.2.0",
+	    "configurations": [
+		{
+		    "name": "Debug program-file",
+		    "type": "gdb",
+		    "program": "build/program-file",
+		    "request": "launch"
+		},
+		{
+		    "name": "Debug remote session, locally",
+		    "type": "gdb",
+		    "program": "build/program-file",
+		    "request": "attach",
+		    "target": "localhost:2345"
+		}
+	    ]
+	}
+<
+The initial configuration is done in `lua/config-dap.lua`
+
+==============================================================================
+LUA SETUP  						*my-lua-setup*
+
+`lua/config.lua`
+			This is the main lua configuration file. This in turns
+			call all additional configuration done.
+
+			Most module configuration follow the pattern of >
+			  local lib = utils.try_load('some_lib')
+			  if lib ~= lib then
+			      -- Perform setup
+<			or >
+			  local lib = utils.try_load('some_lib')
+			  _ = lib and lib.setup(...)
+<			Which allows for libraries to be missing without angry
+			error messages. This is useful as not all setups might
+			have all libraries
+
+`lua/config-utils.lua`
+			This is a helper file which contain all useful helper
+			functions used when doing configuration.
+
+			`try_load(module)`	Like `require(module)` but
+						returns `nil` on failure
+						instead of halting execution
+
+------------------------------------------------------------------------------
+
+vim:tw=78:ts=8:noet:ft=help:norl:

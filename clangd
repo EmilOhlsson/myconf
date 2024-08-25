@@ -6,7 +6,16 @@ Diagnostics:
       - misc-*
       - readability-*
       - cppcoreguidelines-*
-    Remove: modernize-use-trailing-return-type
+    Remove:
+      - modernize-use-trailing-return-type
 
 CompileFlags:
   CompilationDatabase: build
+
+InlayHints:
+  Enabled: Yes
+  DeducedTypes: Yes
+  BlockEnd: Yes
+
+Hover:
+  ShowAKA: Yes

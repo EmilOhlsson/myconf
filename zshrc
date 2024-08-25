@@ -14,7 +14,7 @@ export ZSH_CUSTOM=$HOME/myconf/zsh-custom
 ZSH_THEME="candy-solarized"
 HIST_STAMPS="yyyy-mm-dd"
 DISABLE_AUTO_TITLE="true"
-plugins=(zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(zsh-autosuggestions zsh-syntax-highlighting direnv)
 
 source $ZSH/oh-my-zsh.sh
 

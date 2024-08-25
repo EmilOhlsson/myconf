@@ -1,0 +1,12 @@
+my-colorscheme-setup	my-usage.txt	/*my-colorscheme-setup*
+my-commands	my-usage.txt	/*my-commands*
+my-dap	my-usage.txt	/*my-dap*
+my-dap-setup	my-usage.txt	/*my-dap-setup*
+my-gitsigns	my-usage.txt	/*my-gitsigns*
+my-lsp	my-usage.txt	/*my-lsp*
+my-lsp-setup	my-usage.txt	/*my-lsp-setup*
+my-lua-setup	my-usage.txt	/*my-lua-setup*
+my-plugins	my-usage.txt	/*my-plugins*
+my-telescope	my-usage.txt	/*my-telescope*
+my-treesitter	my-usage.txt	/*my-treesitter*
+my-usage.txt	my-usage.txt	/*my-usage.txt*
