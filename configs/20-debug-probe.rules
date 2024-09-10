@@ -1,0 +1,5 @@
+ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="0003", MODE="660", GROUP="plugdev", TAG+="uaccess"
+ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="0009", MODE="660", GROUP="plugdev", TAG+="uaccess"
+ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="000a", MODE="660", GROUP="plugdev", TAG+="uaccess"
+ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="000c", MODE="660", GROUP="plugdev", TAG+="uaccess"
+ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="000f", MODE="660", GROUP="plugdev", TAG+="uaccess"

@@ -11,9 +11,8 @@ local function configure_dap()
     -- Assume check in setup function
 
     assert(dap ~= nil)
-    -- TODO: Configure python debugger
 
-    dap.adapters.gdb = {
+    dap.adapters['gdb'] = {
         type = 'executable',
         command = 'gdb',
         args = {
@@ -21,7 +20,30 @@ local function configure_dap()
             '--eval-command', 'set pretty print on'
         },
     }
-    local lang_config = {
+    dap.adapters['python'] = function(cb, config)
+        if config.request == 'attach' then
+            local port = (config.connect or config).port
+            local host = (config.connect or config).host or '127.0.0.1'
+            cb({
+                type = 'server',
+                port = port,
+                host = host,
+                options = {
+                    source_filetype = 'python'
+                }
+            })
+        else
+            cb({
+                type = 'executable',
+                command = 'python',
+                args = { '-m', 'debugpy.adapter' },
+                options = {
+                    source_filetype = 'python'
+                }
+            })
+        end
+    end
+    local gdb_config = {
         {
             name = 'launch',
             type = 'gdb',
@@ -39,11 +61,21 @@ local function configure_dap()
         }
     }
     dap.configurations = {
-        c = lang_config,
-        cpp = lang_config,
-        rust = lang_config,
+        c = gdb_config,
+        cpp = gdb_config,
+        rust = gdb_config,
+        python = {
+            {
+                type = 'python',
+                request = 'launch',
+                name = 'Launch file',
+                program = '${file}',
+                pythonPath = function()
+                    return '/usr/bin/python'
+                end,
+            }
+        }
     }
-
 end
 
 -- Configure a keyboard shortcut for a given function. Prepend leader key
@@ -84,3 +116,5 @@ local M = {
 }
 
 return M
+
+-- vim: set et ts=4 sw=4 ss=4 tw=100 :

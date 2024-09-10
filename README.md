@@ -22,8 +22,27 @@ building your own, by following [building Neovim](docs/building-neovim.md)
 
 - Set up `local.vim`
 
+## bat
+Bat is like `cat`, but it can do syntax highlighting. It's worth setting color scheme to 
+something that works with your background colors.
+
+```
+$ cat $(bat --config-file)
+--theme=GitHub
+```
+
 ## Direnv
-TODO: describe direnv
+Direnv is tool that sources the `.envrc` when entering a directory. This is useful to set up
+directory local environments
+
+Make sure direnv is loaded by shell configuration. For OMZ this can be done by making sure the
+direnv plugin is loaded. To use direnv do the following steps
+```sh
+echo 'VARIABLE=value' >> .envrc
+direnv allow .
+pushd
+popd
+```
 
 ## Useful tree-sitter queries
 ```scheme

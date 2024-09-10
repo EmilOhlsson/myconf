@@ -64,7 +64,10 @@ if nvim_lsp ~= nil then
                         },
                     },
                 }
-            }
+            },
+            clangd = {
+                cmd = { "clangd", "--query-driver",  "/usr/bin/*-g++,/usr/bin/*-gcc" },
+            },
         }
         local conf = vim.tbl_deep_extend('force', common_conf, server_configs[lsp] or {})
         nvim_lsp[lsp].setup(conf)
@@ -161,7 +164,7 @@ if treesitter_configs ~= nil then
         },
 
         ensure_installed = {
-            "bash", "c", "cpp", "glsl", "rust", "lua", "python", "vim", "vimdoc", "json", "julia", "fennel", "markdown",
+            "pioasm", "bash", "c", "cpp", "glsl", "rust", "lua", "python", "vim", "vimdoc", "json", "julia", "fennel", "markdown",
             "strace", "tmux", "zig"
         },
     }
