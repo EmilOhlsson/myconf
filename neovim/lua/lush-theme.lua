@@ -1,7 +1,9 @@
 local lush = require('lush')
 local hsl = lush.hsl
 
--- TODO: Describe how to modify this file (Lushify)
+-- When editing this file, make sure that you run `:Lushify`, which will make
+-- Lush highlight Highlights using their respective color settings, making the
+-- editing a kind of a WYSIWYG process
 --
 --hsl([0-360), [0-100], [0-100]) allow  converting a hsl color to hex
 
