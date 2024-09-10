@@ -49,6 +49,8 @@ return lush(function(injected)
         Visual                   { bg=bg_emp.da(10).sa(10) },
         CursorLine               { bg=bg_emp.de(50) },
         NonText                  { fg=bg_emp.de(50).mix(hsl(0,0,0), 20), gui='italic' },
+        NvimDapVirtualText       { NonText },
+
         Pmenu                    { bg=bg_emp },
         Search                   { bg=bg_emp.da(30) },
         TreesitterContext        { bg=bg_emp.da(10)  },

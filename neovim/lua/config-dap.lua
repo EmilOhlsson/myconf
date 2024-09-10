@@ -111,6 +111,14 @@ local M = {
         if dap ~= nil then
             configure_dap()
             configure_dap_keymap()
+
+            -- Configure virutal text, if possible
+            local dap_virtual_text = utils.try_load('nvim-dap-virtual-text')
+            if dap_virtual_text ~= nil then
+                dap_virtual_text.setup({
+                    commented = true
+                })
+            end
         end
     end
 }
