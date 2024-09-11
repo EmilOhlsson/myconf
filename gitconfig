@@ -1,12 +1,12 @@
 [core]
 	editor = nvim
 	excludesfile = /home/<user>/.gitignore
-	pager = delta
+	pager = delta         # Use git-delta
 
 [delta]
 	line-numbers = true
 	side-by-side = true
-	light = true
+	light = true          # For bright terminal configuration
 
 [push]
 	default = simple
@@ -20,9 +20,15 @@
 	algorithm = histogram
 	colorMoved = dimmed_zebra
 	renames = copies
+    tool = nvimdiff
 
 [difftool]
+    # Do not actually ask for every file when diffing
 	prompt = false
+
+[difftool "nvimdiff"]
+    # Call neovim for diffing
+    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
 
 [color]
 	ui = auto
@@ -36,4 +42,4 @@
 	newMoved = blue bold
 
 [merge]
-	conflictstyle = diff3
+	conflictstyle = diff3 # Include full conflict
