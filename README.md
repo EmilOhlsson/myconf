@@ -2,6 +2,19 @@
 A small collection of common useful settings
 
 ## Setup
+Install
+
+Fedora:
+```
+sudo dnf install git zsh gettext
+```
+
+Debian:
+```
+sudo apt install git zsh gettext
+```
+
+
 Install bashrc by sourcing `bashrc`
 
 Install Xresources by adding

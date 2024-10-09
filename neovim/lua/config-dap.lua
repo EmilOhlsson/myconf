@@ -2,6 +2,7 @@ local utils = require('config-utils')
 
 local dap = utils.try_load('dap')
 local dap_widgets = utils.try_load('dap.ui.widgets')
+local dap_ui = utils.try_load('dapui')
 
 local pick_file = function()
     return vim.fn.input("Pick file: ", vim.fn.getcwd() .. '/', 'file')
@@ -9,7 +10,6 @@ end
 
 local function configure_dap()
     -- Assume check in setup function
-
     assert(dap ~= nil)
 
     dap.adapters['gdb'] = {
@@ -66,9 +66,9 @@ local function configure_dap()
         rust = gdb_config,
         python = {
             {
+                name = 'Launch file',
                 type = 'python',
                 request = 'launch',
-                name = 'Launch file',
                 program = '${file}',
                 pythonPath = function()
                     return '/usr/bin/python'
@@ -103,6 +103,9 @@ local function configure_dap_keymap()
     map_key('r', dap.repl.toggle)
     map_key('s', dap.step_into)
     map_key('u', dap.up)
+    if dap_ui ~= nil then
+        map_key('U', dap_ui.toggle)
+    end
 end
 
 
@@ -118,6 +121,11 @@ local M = {
                 dap_virtual_text.setup({
                     commented = true
                 })
+            end
+
+            -- Configure DAP UI, if available
+            if dap_ui ~= nil then
+                dap_ui.setup()
             end
         end
     end

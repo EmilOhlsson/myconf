@@ -1,13 +1,16 @@
-font_family Cascadia Code PL
-bold_font auto
-italic_font auto
-bold_italic_font auto
-font_size 10.0
+font_family      family='Cascadia Code NF' style=Regular
+bold_font        family='Cascadia Code NF' style=SemiBold
+italic_font      family='Cascadia Code NF' style=Italic
+bold_italic_font family='Cascadia Code NF' style=SemiBoldItalic
 
+font_size 12.0
 # ss01 - Stylistic alternative
 # ss19 - Slashed zero
 # ss20 - Graphical control sequences
-font_features CascadiaCodePL-Regular +ss19
-font_features CascadiaCodePL-Bold +ss19
-font_features CascadiaCodePL-Italic +ss19
-font_features CascadiaCodePL-BoldItalic +ss01 +ss19
+font_features CascadiaCodeNF-Light +ss19 +ss20
+font_features CascadiaCodeNF-Regular +ss19 +ss20
+font_features CascadiaCodeNF-SemiBold +ss19 +ss20
+font_features CascadiaCodeNF-Bold +ss19 +ss20
+font_features CascadiaCodeNF-Italic +ss19 +ss20
+font_features CascadiaCodeNF-BoldItalic +ss19 +ss20
+font_features CascadiaCodeNF-SemiBoldItalic +ss19 +ss20
