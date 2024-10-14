@@ -1,0 +1,11 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug {{cookiecutter.project_slug}}",
+            "type": "gdb",
+            "program": "build/{{cookiecutter.program_name}}",
+            "request": "launch"
+        }
+    ]
+}

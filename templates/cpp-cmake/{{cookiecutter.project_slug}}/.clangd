@@ -1,0 +1,21 @@
+Diagnostics:
+  ClangTidy:
+    Add:
+      - modernize*
+      - bugprone*
+      - misc-*
+      - readability-*
+      - cppcoreguidelines-*
+    Remove:
+      - readability-identifier-length
+
+CompileFlags:
+  CompilationDatabase: build
+
+InlayHints:
+  Enabled: Yes
+  DeducedTypes: Yes
+  BlockEnd: Yes
+
+Hover:
+  ShowAKA: Yes

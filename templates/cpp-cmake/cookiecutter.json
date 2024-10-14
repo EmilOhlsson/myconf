@@ -1,0 +1,7 @@
+{
+    "project_name": "Simple C++ project",
+    "project_slug": "{{cookiecutter.project_name.lower().replace(' ', '_').replace('+', '_')}}",
+    "project_description": "A simple C++ project template",
+    "program_name": "{{cookiecutter.project_slug}}",
+    "author": "Anon Nymous"
+}
