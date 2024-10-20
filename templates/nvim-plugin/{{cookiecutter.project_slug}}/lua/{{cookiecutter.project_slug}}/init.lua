@@ -1,12 +1,18 @@
 local M = {}
 
+local debug = function() end
+
 function M.setup(config)
     -- TODO: Set up plugin
+    if config.debug then
+        debug = function(msg) print(msg) end
+    end
+
+    debug('Setting up plugin command(s)')
     vim.api.nvim_create_user_command('{{cookiecutter.project_slug}}',
-        function(opts)
+        function()
             -- TODO: Do something cool
-        end, {
-    })
+        end, {})
 end
 
 return M
