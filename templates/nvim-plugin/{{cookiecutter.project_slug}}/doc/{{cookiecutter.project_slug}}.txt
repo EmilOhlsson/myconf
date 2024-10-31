@@ -1,0 +1,6 @@
+*{{cookiecutter.project_slug}}.txt*
+
+{{cookiecutter.project_description}}
+
+
+vim:tw=78:ts=8:et:ft=help:norl:

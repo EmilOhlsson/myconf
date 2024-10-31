@@ -84,7 +84,10 @@ if telescope ~= nil then
     vim.keymap.set('n', '<space>lb', builtin.builtin, {})
 end
 
-
--- TODO: Create shortcut for creating floating buffer and call nvim_open_term() on it
+-- Setup up Floating terminal
+local float_term = utils.try_load('FloatTerm')
+if float_term ~= nil then
+    float_term.setup()
+end
 
 -- vim: set et ts=4 sw=4 ss=4 tw=100 :
