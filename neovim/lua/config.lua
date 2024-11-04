@@ -88,6 +88,10 @@ end
 local float_term = utils.try_load('FloatTerm')
 if float_term ~= nil then
     float_term.setup()
+    vim.keymap.set('n', '<c-f>', float_term.toggle_window, {
+        noremap = true,
+        desc = 'Toggle floating terminal'
+    })
 end
 
 -- vim: set et ts=4 sw=4 ss=4 tw=100 :

@@ -21,6 +21,8 @@ Plug 'ldelossa/litee-symboltree.nvim'
 Plug 'godlygeek/tabular'
 Plug 'preservim/vim-markdown'
 
+Plug 'EmilOhlsson/FloatTerm.nvim'
+
 if filereadable(expand('$HOME/myconf/local-plugins.vim'))
     source ~/myconf/local-plugins.vim
 endif

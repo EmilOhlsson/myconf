@@ -60,7 +60,19 @@ local function configure_lsp()
                     }
                 },
                 clangd = {
-                    cmd = { "clangd", "--query-driver", "/usr/bin/*-g++,/usr/bin/*-gcc" },
+                    cmd = {
+                        "clangd",
+                        "--query-driver", "/usr/bin/*g++,/usr/bin/*gcc", -- Allow query of some compilers
+                        "--print-options",                           --
+                        "-j=16",                                     -- Use more threads
+                        "--completion-style=detailed",               -- Include more information
+                        "--enable-config",
+                        "--background-index",
+                        "--header-insertion=iwyu",
+                        -- "--pretty": -- Pretty print JSON, useful for debugging
+                        "--pch-storage=memory",
+                        "--header-insertion-decorators", -- Decorete completions that add headers
+                },
                 },
                 rust_analyzer = {
                     cmd = { 'rustup', 'run', 'stable', 'rust-analyzer' },

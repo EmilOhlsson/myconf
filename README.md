@@ -57,6 +57,16 @@ pushd
 popd
 ```
 
+## ssh
+```
+Host *
+    Compression yes
+    ControlMaster auto
+    ControlPersist yes
+    ControlPath ~/.ssh/config/...
+    ForwardX11 no
+```
+
 ## Useful tree-sitter queries
 ```scheme
 ((comment) @todo

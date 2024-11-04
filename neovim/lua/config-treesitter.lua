@@ -15,7 +15,7 @@ local function configure_treesitter()
                         ["ai"] = "@conditional.outer",
                         ["al"] = "@loop.outer",
                         ["ao"] = "@class.outer",
-                        ["ap"] = "@parameter.outer",
+                        ["aa"] = "@parameter.outer",
                         ["ia"] = "@parameter.inner",
                         ["ic"] = "@class.inner",
                         ["if"] = "@function.inner",
