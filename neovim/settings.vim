@@ -51,6 +51,10 @@ nnoremap <S-Down> :move +1<CR>==
 vnoremap <S-Up> :move '<-2<CR>gv=gv
 vnoremap <S-Down> :move '>+1<CR>gv=gv
 
+" Tab navigation
+nnoremap <C-left> :tabprevious<CR>
+nnoremap <C-right> :tabnext<CR>
+
 " Autocomple on ctrl+space
 inoremap <C-Space> <C-x><C-o>
 inoremap <C-@> <C-Space>

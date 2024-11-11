@@ -47,7 +47,6 @@ if litee_lib ~= nil then
     _ = litee_calltree and litee_calltree.setup(litee_tree_config)
 end
 
-
 -- Gitsigns
 local gitsigns = utils.try_load('gitsigns')
 _ = gitsigns and gitsigns.setup {
@@ -70,6 +69,7 @@ _ = gitsigns and gitsigns.setup {
     },
 }
 
+-- Telescope
 local telescope = utils.try_load('telescope')
 if telescope ~= nil then
     telescope.setup()
