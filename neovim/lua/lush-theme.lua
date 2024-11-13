@@ -10,6 +10,7 @@ local hsl = lush.hsl
 local bg = hsl(44, 87, 94)
 local fg = bg.ro(180).lightness(30).saturation(50)
 local bg_emp = bg.sa(5).da(5)
+local bg_cul = bg_emp.de(50)
 local orange = hsl(20, 100, 50)
 local brown = orange.da(40)
 local purple = hsl(265, 100, 50)
@@ -49,9 +50,16 @@ return lush(function(injected)
 
         -- UI
         Visual                   { bg=bg_emp.da(10).sa(10) },
-        CursorLine               { bg=bg_emp.de(50) },
+        CursorLine               { bg=bg_cul },
         NonText                  { fg=bg_emp.de(50).mix(hsl(0,0,0), 20), gui='italic' },
         NvimDapVirtualText       { NonText },
+
+        DapBreakpoint            { fg=red },
+        DapBreakpointLine        { bg=red.mix(bg, 80) },
+        DapBreakpointCurrentLine { DapBreakpoint, gui='bold' },
+        DapStopped               { fg=green },
+        DapStoppedLine           { fg=green.mix(bg, 80) },
+        DapStoppedCurrentLine    { DapStopped, gui='bold' },
 
         Pmenu                    { bg=bg_emp },
         Search                   { bg=bg_emp.da(30) },

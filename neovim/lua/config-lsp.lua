@@ -46,6 +46,8 @@ local function configure_lsp()
                 },
             }
 
+            --[[ TODO: There is support for doing lazy loading of configuration,
+            --         which makes it easier to set up project local settings ]]--
             local server_configs = {
                 lua_ls = {
                     settings = {
@@ -62,16 +64,14 @@ local function configure_lsp()
                 clangd = {
                     cmd = {
                         "clangd",
-                        "--query-driver", "/usr/bin/*g++,/usr/bin/*gcc", -- Allow query of some compilers
-                        "--print-options",                           --
-                        "-j=16",                                     -- Use more threads
-                        "--completion-style=detailed",               -- Include more information
-                        "--enable-config",
-                        "--background-index",
-                        "--header-insertion=iwyu",
-                        -- "--pretty": -- Pretty print JSON, useful for debugging
-                        "--pch-storage=memory",
-                        "--header-insertion-decorators", -- Decorete completions that add headers
+                        "--query-driver", "/usr/bin/*g++,/usr/bin/*gcc",    -- Allow query of some compilers
+                        "-j=16",                                            -- Use more threads
+                        "--completion-style=bundled",                       -- Include more information
+                        "--enable-config",                                  -- Allow configuration
+                        "--background-index",                               -- Index in background, store to file
+                        "--header-insertion=iwyu",                          -- Include what you use
+                        "--pch-storage=memory",                             -- Boost perf for precomiled headers
+                        "--header-insertion-decorators",                    -- Decorete completions that add headers
                 },
                 },
                 rust_analyzer = {

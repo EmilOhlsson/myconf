@@ -52,16 +52,17 @@ local gitsigns = utils.try_load('gitsigns')
 _ = gitsigns and gitsigns.setup {
     current_line_blame = true,
     on_attach = function(bufnr)
-        local function map(mode, key, cmd)
+        local function map(mode, key, cmd, description)
             vim.keymap.set(mode, key, cmd, {
-                buffer = bufnr
+                buffer = bufnr,
+                desc = description
             })
         end
-        map('n', ']h', '<cmd>lua package.loaded.gitsigns.next_hunk()<CR>')
-        map('n', '[h', '<cmd>lua package.loaded.gitsigns.prev_hunk()<CR>')
-        map('n', ';hs', '<cmd>lua package.loaded.gitsigns.stage_hunk()<CR>')
-        map('n', ';hr', '<cmd>lua package.loaded.gitsigns.reset_hunk()<CR>')
-        map('n', ';hp', '<cmd>lua package.loaded.gitsigns.preview_hunk()<CR>')
+        map('n', ']h', gitsigns.next_hunk, 'Jump to next changed hunk')
+        map('n', '[h',  gitsigns.prev_hunk, 'Jump to previos changed hunk')
+        map('n', ';hs', gitsigns.stage_hunk, 'Stage current hunk')
+        map('n', ';hr', gitsigns.reset_hunk, 'Reset current hunk')
+        map('n', ';hp', gitsigns.preview_hunk, 'Preview patch from current hunk')
     end,
     preview_config = {
         border = 'shadow',

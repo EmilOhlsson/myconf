@@ -108,12 +108,25 @@ local function configure_dap_keymap()
     end
 end
 
+local function configure_dap_signs()
+    local function define(sign, icon)
+        vim.fn.sign_define(sign, {
+            text = icon,
+            texthl = sign,
+            linehl = sign .. 'Line',
+            culhl = sign .. 'CurrentLine',
+        })
+    end
+    define('DapBreakpoint', '\u{29bf}')
+    define('DapStopped', '\u{23f5}')
+end
 
 local M = {
     setup = function()
         if dap ~= nil then
             configure_dap()
             configure_dap_keymap()
+            configure_dap_signs()
 
             -- Configure virutal text, if possible
             local dap_virtual_text = utils.try_load('nvim-dap-virtual-text')
