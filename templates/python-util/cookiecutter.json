@@ -1,0 +1,7 @@
+{
+    "project_name": "Python utility program",
+    "project_slug": "{{cookiecutter.project_name.lower().replace(' ', '_').replace('+', '_')}}",
+    "project_description": "Some form of python utility program",
+    "program_name": "{{cookiecutter.project_slug}}",
+    "author": "Anon Nymous"
+}
