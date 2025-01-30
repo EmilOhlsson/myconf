@@ -6,3 +6,11 @@ Plug 'rktjmp/lush.nvim'                 " Useful color scheme plugin
 Plug 'nvim-lua/plenary.nvim'            " Used by lush
 Plug 'nvim-telescope/telescope.nvim'    " Handy file search etc
 Plug 'mfussenegger/nvim-dap'            " Debug adapter protocol client
+Plug 'theHamsta/nvim-dap-virtual-text'  " Debug ui virtual text
+Plug 'nvim-neostat/nvim-nio'            " Dependency of DAP UI
+Plug 'rcarriga/nvim-dap-ui'             " DAP UI
+
+Plug 'EmilOhlsson/contributors.nvim'
+Plug 'EmilOhlsson/Highlighter.nvim'
+
+Plug 'tpope/vim-surround'

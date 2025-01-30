@@ -7,17 +7,18 @@ local hsl = lush.hsl
 --
 --hsl([0-360), [0-100], [0-100]) allow  converting a hsl color to hex
 
+local red = hsl(0, 100, 50)
+local green = hsl(120, 100, 50)
+local blue = hsl(240, 100, 50)
+local orange = hsl(20, 100, 50)
+local purple = hsl(265, 100, 50)
+local brown = orange.da(40)
+
 local bg = hsl(44, 87, 94)
 local fg = bg.ro(180).lightness(30).saturation(50)
 local bg_emp = bg.sa(5).da(5)
 local bg_cul = bg_emp.de(50)
-local orange = hsl(20, 100, 50)
-local brown = orange.da(40)
-local purple = hsl(265, 100, 50)
-
-local red = hsl(0, 100, 50)
-local green = hsl(120, 100, 50)
-local blue = hsl(240, 100, 50)
+local toolbar = '#eef1f8'
 
 -- Highlight rules. Uses magic meta functions, so disable certain diagnostics
 -- as to not have LSP become angry
@@ -54,12 +55,39 @@ return lush(function(injected)
         NonText                  { fg=bg_emp.de(50).mix(hsl(0,0,0), 20), gui='italic' },
         NvimDapVirtualText       { NonText },
 
+        -- DAP look
         DapBreakpoint            { fg=red },
         DapBreakpointLine        { bg=red.mix(bg, 80) },
         DapBreakpointCurrentLine { DapBreakpoint, gui='bold' },
-        DapStopped               { fg=green },
-        DapStoppedLine           { fg=green.mix(bg, 80) },
+        DapStopped               { fg=green.da(40) },
+        DapStoppedLine           { bg=green.mix(bg, 80) },
         DapStoppedCurrentLine    { DapStopped, gui='bold' },
+
+        -- DAP UI
+        DapUIBreakpointsCurrentLine { fg=green.da(40),gui='bold' },
+        DapUIBreakpointsInfo        { fg=green.da(40) },
+        DapUIBreakpointsPath        { fg=blue.da(40) },
+        DapUIDecoration             { fg=blue.da(40) },
+        DapUIFloatBorder            { fg=blue.da(40) },
+        DapUILineNumber             { fg=blue.da(40) },
+        DapUIModifiedValue          { fg=blue.da(40),gui='bold' },
+        DapUIPlayPause              { fg=green.da(40) },
+        DapUIPlayPauseNC            { fg=green.da(40),bg=toolbar },
+        DapUIRestart                { fg=green.da(40) },
+        DapUIRestartNC              { fg=green.da(40),bg=toolbar },
+        DapUIScope                  { fg=blue.da(40) },
+        DapUIStepBack               { fg=blue.da(40) },
+        DapUIStepBackNC             { fg=blue.da(40),bg=toolbar },
+        DapUIStepInto               { fg=blue.da(40) },
+        DapUIStepIntoNC             { fg=blue.da(40),bg=toolbar },
+        DapUIStepOut                { fg=blue.da(40) },
+        DapUIStepOutNC              { fg=blue.da(40),bg=toolbar },
+        DapUIStepOver               { fg=blue.da(40) },
+        DapUIStepOverNC             { fg=blue.da(40),bg=toolbar },
+        DapUIStoppedThread          { fg=blue.da(40) },
+        DapUIThread                 { fg=green.da(40) },
+        DapUIWatchesValue           { fg=green.da(40) },
+        DapUIWinSelect              { fg=blue.da(40),gui='bold' },
 
         Pmenu                    { bg=bg_emp },
         Search                   { bg=bg_emp.da(30) },

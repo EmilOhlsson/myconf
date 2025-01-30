@@ -1,5 +1,15 @@
 local utils = require('config-utils')
 
+-- Neovide specific configuration
+if vim.g.neovide then
+    vim.o.guifont = 'Cascadia Code NF:h10'
+    vim.g.neovide_transparancy = 0.8
+    vim.g.neovide_floating_shadow = true
+    vim.g.neovide_cursor_vfx_mode = 'railgun'
+    vim.g.neovide_cursor_vfx_particle_speed = 10.0
+    vim.g.neovide_cursor_vfx_particle_lifetime = 1.2
+end
+
 -- Highlights
 local lush = utils.try_load('lush')
 if lush then
@@ -94,5 +104,18 @@ if float_term ~= nil then
         desc = 'Toggle floating terminal'
     })
 end
+
+-- Setup Mini plugins
+local mini_surround = utils.try_load('mini.surround')
+if mini_surround ~= nil then
+    mini_surround.setup()
+end
+
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldcolumn = "auto"
+vim.opt.foldnestmax = 4
+vim.opt.foldlevelstart = 99
+vim.opt.foldtext = ''
 
 -- vim: set et ts=4 sw=4 ss=4 tw=100 :

@@ -5,6 +5,8 @@ Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
 
+Plug 'echasnovski/mini.surround'
+
 " Git stuff
 Plug 'tpope/vim-fugitive'
 Plug 'lewis6991/gitsigns.nvim'

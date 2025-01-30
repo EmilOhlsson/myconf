@@ -46,6 +46,7 @@ local function configure_lsp()
                 },
             }
 
+            --[[ TODO: Move symbol usage highlighting here. (autocmd in init.vim) ]]--
             --[[ TODO: There is support for doing lazy loading of configuration,
             --         which makes it easier to set up project local settings ]]--
             local server_configs = {
@@ -78,7 +79,17 @@ local function configure_lsp()
                     cmd = { 'rustup', 'run', 'stable', 'rust-analyzer' },
                 },
                 pylsp = {
-                    settings = { pylsp = { plugins = { pylint = { enabled = true } } } },
+                    settings = {
+                        pylsp = {
+                            plugins = {
+                                pylint = { enabled = true },
+                                pycodestyle = {
+                                    enabled = true,
+                                    maxlinelength = 120,
+                                },
+                            },
+                        },
+                    },
                 }
             }
             local conf = vim.tbl_deep_extend('force', common_conf, server_configs[lsp] or {})

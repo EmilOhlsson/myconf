@@ -132,7 +132,9 @@ local M = {
             local dap_virtual_text = utils.try_load('nvim-dap-virtual-text')
             if dap_virtual_text ~= nil then
                 dap_virtual_text.setup({
-                    commented = true
+                    enabled = false,            -- Disable by default, can be verbose
+                    commented = true,           -- Use language comment style
+                    enabled_commands = true,    -- Allow toggle using command
                 })
             end
 
