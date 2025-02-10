@@ -105,11 +105,51 @@ if float_term ~= nil then
     })
 end
 
+-- Configure highlighter
+local highlighter = utils.try_load('Highlighter')
+if highlighter ~= nil then
+    highlighter.setup()
+    vim.keymap.set('n', '<c-h>', ':Highlighter<cr>', {
+        noremap = true,
+        desc = 'Highlight current symbol',
+    })
+end
+
 -- Setup Mini plugins
 local mini_surround = utils.try_load('mini.surround')
 if mini_surround ~= nil then
     mini_surround.setup()
 end
+
+-- Configure neo-tree
+local neotree = utils.try_load('neo-tree')
+if neotree ~= nil then
+    neotree.setup({
+        window = {
+            mappings = {
+                ["P"] = {
+                    "toggle_preview",
+                    config = {
+                        use_float = false,
+                    }
+                }
+            }
+        }
+    })
+    vim.keymap.set('n', '<c-b>', ':Neotree toggle<cr>', {
+        noremap = true,
+        desc = 'Toggle Neotree naviation',
+    })
+end
+
+-- Misc common setup
+vim.api.nvim_create_autocmd({"TextYankPost"}, {
+    callback = function(_)
+        vim.highlight.on_yank({
+            on_visual = false
+        })
+    end
+})
 
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"

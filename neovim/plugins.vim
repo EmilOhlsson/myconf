@@ -23,7 +23,14 @@ Plug 'ldelossa/litee-symboltree.nvim'
 Plug 'godlygeek/tabular'
 Plug 'preservim/vim-markdown'
 
+Plug 'rktjmp/lush.nvim'
 Plug 'EmilOhlsson/FloatTerm.nvim'
+Plug 'EmilOhlsson/Highlighter.nvim'
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'MunifTanjim/nui.nvim'
+
+Plug 'nvim-neo-tree/neo-tree.nvim'
 
 if filereadable(expand('$HOME/myconf/local-plugins.vim'))
     source ~/myconf/local-plugins.vim

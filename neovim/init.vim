@@ -22,14 +22,7 @@ if has('nvim')
   lua require('config')
 endif
 
-" TODO: Should probably move these to the on_attach in lua code
-autocmd CursorHold * lua vim.lsp.buf.document_highlight()
-autocmd CursorMoved * lua vim.lsp.buf.clear_references()
-autocmd TextYankPost * lua vim.highlight.on_yank {on_visual = false}
-
 filetype plugin indent on
-
-set cursorline
 
 if filereadable(expand('$HOME/myconf/local.after.vim'))
     source ~/myconf/local.after.vim

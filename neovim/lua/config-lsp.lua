@@ -8,33 +8,47 @@ end
 local function configure_lsp()
     local nvim_lsp = utils.try_load('lspconfig')
     if nvim_lsp ~= nil then
-        local servers = { 'clangd', 'pylsp', 'rust_analyzer', 'julials', 'lua_ls', 'bashls' }
+        local servers = { 'clangd', 'pylsp', 'ruff', 'pyright', 'rust_analyzer', 'julials', 'lua_ls', 'bashls' }
         for _, lsp in ipairs(servers) do
             local common_conf = {
-                on_attach = function(_, bufnr)
+                on_attach = function(server, bufnr)
+                    -- Only configure reference highlight if server supports it
+                    if server.server_capabilities.documentHighlightProvider then
+                        vim.api.nvim_create_autocmd({"CursorHold", "CursorMoved"}, {
+                            callback = function(event)
+                                if event.event == "CursorHold" then
+                                    vim.lsp.buf.document_highlight()
+                                else
+                                    vim.lsp.buf.clear_references()
+                                end
+                            end
+                        })
+                    end
                     local function map(mode, key, cmd, description)
-                        vim.keymap.set(mode, '\\' .. key, cmd, {
+                        vim.keymap.set(mode, key, cmd, {
                             buffer = bufnr,
                             desc = description,
                         })
                     end
                     -- TODO: Might be worth checking if all of these commands are really relevant
-                    map('n', 'ca', vim.lsp.buf.code_action, "Execute code action")
-                    map('n', 'ds', vim.lsp.buf.document_symbol, "Show symbol documentation")
-                    map('n', 'ee', vim.diagnostic.open_float, "Show line error")
-                    map('n', 'ih', toggle_inlay_hint, "Toggle inlay hints from LSP")
-                    map('n', 'lD', vim.lsp.buf.declaration, "Go to declaration")
-                    map('n', 'ld', vim.lsp.buf.definition, "Go to definition")
-                    map('n', 'le', vim.diagnostic.goto_next, "Go to next error")
-                    map('n', 'lh', vim.lsp.buf.hover, "Show hover information")
-                    map('n', 'li', vim.lsp.buf.implementation, "Go to implementation")
-                    map('n', 'lI', vim.lsp.buf.incoming_calls, "List incoming calls")
-                    map('n', 'lO', vim.lsp.buf.outgoing_calls, "List outgoing calls")
-                    map('n', 'lp', vim.diagnostic.goto_prev, "Go to previous error")
-                    map('n', 'lr', vim.lsp.buf.references, "Jump to next reference")
-                    map('n', 'ls', vim.lsp.buf.signature_help, "Show signature help")
-                    map('n', 'rn', vim.lsp.buf.rename, "Rename symbol")
-                    map('n', 'ws', vim.lsp.buf.workspace_symbol, "Search for workspace symbol")
+                    -- Several commands are now set by default. See `:help ls-defaults`
+                    local prefix = '\\'
+                    map('n', prefix .. 'ca', vim.lsp.buf.code_action, "Execute code action")
+                    map('n', prefix .. 'ds', vim.lsp.buf.document_symbol, "Show symbol documentation")
+                    map('n', prefix .. 'ee', vim.diagnostic.open_float, "Show line error")
+                    map('n', prefix .. 'ih', toggle_inlay_hint, "Toggle inlay hints from LSP")
+                    map('n', prefix .. 'lD', vim.lsp.buf.declaration, "Go to declaration")
+                    map('n', prefix .. 'ld', vim.lsp.buf.definition, "Go to definition")
+                    map('n', prefix .. 'le', vim.diagnostic.goto_next, "Go to next error")
+                    map('n', prefix .. 'lh', vim.lsp.buf.hover, "Show hover information")
+                    map('n', prefix .. 'li', vim.lsp.buf.implementation, "Go to implementation")
+                    map('n', prefix .. 'lI', vim.lsp.buf.incoming_calls, "List incoming calls")
+                    map('n', prefix .. 'lO', vim.lsp.buf.outgoing_calls, "List outgoing calls")
+                    map('n', prefix .. 'lp', vim.diagnostic.goto_prev, "Go to previous error")
+                    map('n', prefix .. 'lr', vim.lsp.buf.references, "Jump to next reference")
+                    map('n', prefix .. 'ls', vim.lsp.buf.signature_help, "Show signature help")
+                    map('n', prefix .. 'rn', vim.lsp.buf.rename, "Rename symbol")
+                    map('n', prefix .. 'ws', vim.lsp.buf.workspace_symbol, "Search for workspace symbol")
                     map('i', '<c-k>', vim.lsp.buf.signature_help, "Show signature help")
                     map('i', '<c-h>', vim.lsp.buf.hover, "Show hover information")
                 end,

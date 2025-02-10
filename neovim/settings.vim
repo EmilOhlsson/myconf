@@ -27,6 +27,7 @@ set hidden                          " Buffers are hidden instead of closed
 set switchbuf=usetab,newtab         " use new tab to open files from quickfix
 set splitbelow                      " Open splits below
 set splitright                      " Open splits to the right
+set cursorline                      " Highlight current line
 
 set wrap                                 " Wrap long lines
 set linebreak                            " break long lines at words
