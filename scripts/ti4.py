@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+"""Script for generating TI4 Roster."""
+
 import random
 import argparse
 
@@ -38,6 +40,7 @@ expansion_factions = [
         ]
 
 def main():
+    """Program entry point"""
     parser = argparse.ArgumentParser(description="Randomize TI4 factions")
     parser.add_argument('--new_players', nargs='+', help='Only give these players base factions')
     parser.add_argument('--players', nargs='+', help='list of players (excluding new players)')
@@ -45,7 +48,7 @@ def main():
     parser.add_argument('--options', type=int, default=2, help='Number of options per player')
     args = parser.parse_args()
 
-    rosters = dict()
+    rosters = {}
     random.shuffle(base)
     if args.new_players is not None:
         assert len(args.new_players) * args.options <= len(base), \
@@ -54,7 +57,8 @@ def main():
             rosters[player] = [ base.pop() for _ in range(args.options) ]
 
     factions.extend(base)
-    if args.use_pok: factions.extend(expansion_factions)
+    if args.use_pok:
+        factions.extend(expansion_factions)
     random.shuffle(factions)
 
     if args.players is not None:
@@ -67,7 +71,7 @@ def main():
 
     # Print dealing
     for (player, roster) in rosters.items():
-        print(f'{player}: {roster}')
+        print(f'- *{player}*: {', '.join(roster)}')
 
 
 if __name__ == '__main__':
