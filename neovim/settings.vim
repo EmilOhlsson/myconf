@@ -56,6 +56,14 @@ vnoremap <S-Down> :move '>+1<CR>gv=gv
 nnoremap [t :tabprevious<CR>
 nnoremap ]t :tabnext<CR>
 
+" Allow location list stepping
+nnoremap [l :lprev<CR>
+nnoremap ]l :lnext<CR>
+
+" Allow quick fix stepping
+nnoremap [c :cprev<CR>
+nnoremap ]c :cnext<CR>
+
 " Autocomple on ctrl+space
 inoremap <C-Space> <C-x><C-o>
 inoremap <C-@> <C-Space>
