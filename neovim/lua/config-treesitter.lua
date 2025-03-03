@@ -61,8 +61,9 @@ local function configure_treesitter()
             },
 
             ensure_installed = {
-                "pioasm", "bash", "c", "cpp", "rust", "lua", "python", "vim", "vimdoc", "json", "julia", "fennel", "markdown",
-                "strace"
+                "pioasm", "bash", "c", "cpp", "rust", "lua", "python", "vim", "vimdoc", "json", "julia", "fennel",
+                "markdown", "markdown_inline", "strace", "regex",
+                "css", "html", "javascript", "latex", "norg", "scss", "svelte", "tsx", "typst", "vue",
             },
         }
 

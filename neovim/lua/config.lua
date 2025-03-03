@@ -1,15 +1,5 @@
 local utils = require('config-utils')
 
--- Neovide specific configuration
-if vim.g.neovide then
-    vim.o.guifont = 'Cascadia Code NF:h10'
-    vim.g.neovide_transparancy = 0.8
-    vim.g.neovide_floating_shadow = true
-    vim.g.neovide_cursor_vfx_mode = 'railgun'
-    vim.g.neovide_cursor_vfx_particle_speed = 10.0
-    vim.g.neovide_cursor_vfx_particle_lifetime = 1.2
-end
-
 -- Highlights
 local lush = utils.try_load('lush')
 if lush then
@@ -80,21 +70,6 @@ _ = gitsigns and gitsigns.setup {
     },
 }
 
--- Telescope
-local telescope = utils.try_load('telescope')
-if telescope ~= nil then
-    telescope.setup()
-    local builtin = require('telescope.builtin')
-    vim.keymap.set('n', '<space>ff', builtin.find_files, {})
-    vim.keymap.set('n', '<space>gf', builtin.git_files, {})
-    vim.keymap.set('n', '<space>lg', builtin.live_grep, {})
-    vim.keymap.set('n', '<space>fb', builtin.buffers, {})
-    vim.keymap.set('n', '<space>fh', builtin.help_tags, {})
-    vim.keymap.set('n', '<space>qf', builtin.quickfix, {})
-    vim.keymap.set('n', '<space>ic', builtin.lsp_incoming_calls, {})
-    vim.keymap.set('n', '<space>lb', builtin.builtin, {})
-end
-
 -- Setup up Floating terminal
 local float_term = utils.try_load('FloatTerm')
 if float_term ~= nil then
@@ -121,27 +96,6 @@ if mini_surround ~= nil then
     mini_surround.setup()
 end
 
--- Configure neo-tree
-local neotree = utils.try_load('neo-tree')
-if neotree ~= nil then
-    neotree.setup({
-        window = {
-            mappings = {
-                ["P"] = {
-                    "toggle_preview",
-                    config = {
-                        use_float = false,
-                    }
-                }
-            }
-        }
-    })
-    vim.keymap.set('n', '<c-b>', ':Neotree toggle<cr>', {
-        noremap = true,
-        desc = 'Toggle Neotree naviation',
-    })
-end
-
 -- Misc common setup
 vim.api.nvim_create_autocmd({"TextYankPost"}, {
     callback = function(_)
@@ -157,5 +111,54 @@ vim.opt.foldcolumn = "auto"
 vim.opt.foldnestmax = 4
 vim.opt.foldlevelstart = 99
 vim.opt.foldtext = ''
+
+local web_devicons = utils.try_load("nvim-web-devicons")
+if web_devicons ~= nil then
+    web_devicons.setup({
+    })
+end
+
+local snacks = utils.try_load('snacks')
+if snacks ~= nil then
+    snacks.setup({
+        bigfile = {},
+        indent = {
+            enabled = true,
+            animate = {
+                enabled = false,
+            },
+            statuscolumn = {
+            },
+        },
+        picker = {
+            layout = 'telescope',
+        },
+        notifier = {
+            enabled = true,
+        },
+        git = {},
+    })
+    vim.keymap.set('n', '<space>ff', snacks.picker.files, {})
+    vim.keymap.set('n', '<space>lg', snacks.picker.grep, {})
+    vim.keymap.set('n', '<space>fb', snacks.picker.buffers, {})
+    vim.keymap.set('n', '<space>fp', snacks.picker.projects, {})
+    vim.keymap.set('n', '<space>pp', snacks.picker.pick, {})
+    vim.keymap.set('n', '<space>lr', snacks.picker.lsp_references, {})
+
+    -- File explorer
+    vim.keymap.set('n', '<c-b>', snacks.picker.explorer, {})
+end
+
+local todo_comments = utils.try_load('todo-comments')
+if todo_comments ~= nil then
+    todo_comments.setup({
+    })
+end
+
+local trouble = utils.try_load('trouble')
+if trouble ~= nil then
+    trouble.setup({
+    })
+end
 
 -- vim: set et ts=4 sw=4 ss=4 tw=100 :

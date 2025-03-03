@@ -1,19 +1,16 @@
 call plug#begin()
+" Helper tool for configuring LSP servers
 Plug 'neovim/nvim-lspconfig'
+
+" Tree-sitter helpers
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
 
-Plug 'echasnovski/mini.surround'
-
 " Git stuff
 Plug 'tpope/vim-fugitive'
 Plug 'lewis6991/gitsigns.nvim'
-
-" Fuzzy searching
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 
 " Litee IDE like stuff
 Plug 'ldelossa/litee.nvim'
@@ -23,16 +20,30 @@ Plug 'ldelossa/litee-symboltree.nvim'
 Plug 'godlygeek/tabular'
 Plug 'preservim/vim-markdown'
 
+" Theme plugin
 Plug 'rktjmp/lush.nvim'
-Plug 'EmilOhlsson/FloatTerm.nvim'
-Plug 'EmilOhlsson/Highlighter.nvim'
 
-Plug 'nvim-lua/plenary.nvim'
-Plug 'MunifTanjim/nui.nvim'
+" My own plugins
+Plug 'EmilOhlsson/FloatTerm.nvim'       " Floating terminal
+Plug 'EmilOhlsson/Highlighter.nvim'     " Highlight text objects
 
-Plug 'nvim-neo-tree/neo-tree.nvim'
+" Debug adapter protocol
+Plug 'mfussenegger/nvim-dap'
+Plug 'nvim-neotest/nvim-nio'
+Plug 'rcarriga/nvim-dap-ui'
+Plug 'theHamsta/nvim-dap-virtual-text'
+
+" Experimenting with new plugins
+Plug 'nvim-lua/plenary.nvim'        " Useful for plenty of stuff
+Plug 'echasnovski/mini.nvim'        " mini.nvim is a collection of plugins
+Plug 'folke/snacks.nvim'            " Pickers etc
+Plug 'folke/trouble.nvim'           " Better diagnostics
+Plug 'folke/todo-comments.nvim'     " TODO lists from comments
+Plug 'nvim-tree/nvim-web-devicons'  " Easy access to reasonable icons
 
 if filereadable(expand('$HOME/myconf/local-plugins.vim'))
     source ~/myconf/local-plugins.vim
 endif
 call plug#end()
+
+" vim: set et ts=4 sw=4 ts=4 tw=80:

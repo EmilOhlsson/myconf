@@ -31,7 +31,7 @@ local function configure_lsp()
                         })
                     end
                     -- TODO: Might be worth checking if all of these commands are really relevant
-                    -- Several commands are now set by default. See `:help ls-defaults`
+                    -- NOTE: Several commands are now set by default. See `:help ls-defaults`
                     local prefix = '\\'
                     map('n', prefix .. 'ca', vim.lsp.buf.code_action, "Execute code action")
                     map('n', prefix .. 'ds', vim.lsp.buf.document_symbol, "Show symbol documentation")
@@ -55,7 +55,7 @@ local function configure_lsp()
                 handlers = {
                     ["textDocument/publishDiagnostics"] = vim.lsp.with(
                         vim.lsp.diagnostic.on_publish_diagnostics, {
-                            virtual_text = false
+                            virtual_text = false,
                         }),
                 },
             }
@@ -87,7 +87,7 @@ local function configure_lsp()
                         "--header-insertion=iwyu",                          -- Include what you use
                         "--pch-storage=memory",                             -- Boost perf for precomiled headers
                         "--header-insertion-decorators",                    -- Decorete completions that add headers
-                },
+                    },
                 },
                 rust_analyzer = {
                     cmd = { 'rustup', 'run', 'stable', 'rust-analyzer' },
@@ -96,9 +96,12 @@ local function configure_lsp()
                     settings = {
                         pylsp = {
                             plugins = {
-                                pylint = { enabled = true },
+                                pylint = {
+                                    enabled = true
+                                },
                                 pycodestyle = {
                                     enabled = true,
+                                    ignore = 'E501',
                                     maxlinelength = 120,
                                 },
                             },
