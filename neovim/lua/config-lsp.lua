@@ -5,6 +5,10 @@ local function toggle_inlay_hint()
     vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end
 
+local function toggle_diagnostics()
+    vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end
+
 local function configure_lsp()
     local nvim_lsp = utils.try_load('lspconfig')
     if nvim_lsp ~= nil then
@@ -49,6 +53,7 @@ local function configure_lsp()
                     map('n', prefix .. 'ls', vim.lsp.buf.signature_help, "Show signature help")
                     map('n', prefix .. 'rn', vim.lsp.buf.rename, "Rename symbol")
                     map('n', prefix .. 'ws', vim.lsp.buf.workspace_symbol, "Search for workspace symbol")
+                    map('n', prefix .. 'td', toggle_diagnostics, "Toggle diagnostic hints")
                     map('i', '<c-k>', vim.lsp.buf.signature_help, "Show signature help")
                     map('i', '<c-h>', vim.lsp.buf.hover, "Show hover information")
                 end,

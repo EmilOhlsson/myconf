@@ -20,6 +20,11 @@ local function configure_dap()
             '--eval-command', 'set pretty print on'
         },
     }
+    dap.adapters['lldb'] = {
+        type = 'executable',
+        command = vim.fn.exepath('lldb-dap'),
+        name = 'lldb',
+    }
     dap.adapters['python'] = function(cb, config)
         if config.request == 'attach' then
             local port = (config.connect or config).port
@@ -43,9 +48,9 @@ local function configure_dap()
             })
         end
     end
-    local gdb_config = {
+    local native_config = {
         {
-            name = 'launch',
+            name = 'launch in GDB',
             type = 'gdb',
             request = 'launch',
             program = pick_file,
@@ -58,12 +63,19 @@ local function configure_dap()
             target = 'localhost:2345',
             program = pick_file,
             cwd = "${workspaceFolder}"
-        }
+        },
+        {
+            name = 'launch in LLDB',
+            type = 'lldb',
+            request = 'launch',
+            program = pick_file,
+            cwd = "${workspaceFolder}",
+        },
     }
     dap.configurations = {
-        c = gdb_config,
-        cpp = gdb_config,
-        rust = gdb_config,
+        c = native_config,
+        cpp = native_config,
+        rust = native_config,
         python = {
             {
                 name = 'Launch file',
@@ -102,6 +114,7 @@ local function configure_dap_keymap()
     map_key('o', dap.step_out)
     map_key('r', dap.repl.toggle)
     map_key('s', dap.step_into)
+    map_key('t', dap.terminate)
     map_key('u', dap.up)
     if dap_ui ~= nil then
         map_key('U', dap_ui.toggle)
