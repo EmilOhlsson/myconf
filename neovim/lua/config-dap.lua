@@ -83,7 +83,7 @@ local function configure_dap()
                 request = 'launch',
                 program = '${file}',
                 pythonPath = function()
-                    return '/usr/bin/python'
+                    return vim.fn.exepath('python')
                 end,
             }
         }

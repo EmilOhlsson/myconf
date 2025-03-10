@@ -135,8 +135,7 @@ if snacks ~= nil then
         },
         notifier = {
             enabled = true,
-        },
-        git = {},
+        }
     })
     vim.keymap.set('n', '<space>ff', snacks.picker.files, {})
     vim.keymap.set('n', '<space>lg', snacks.picker.grep, {})
