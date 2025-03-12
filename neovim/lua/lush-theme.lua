@@ -109,9 +109,9 @@ return lush(function(injected)
         LTSymbolDetail  { fg = bg.mix(blue, 50), gui='italic' },
 
         -- LSP symbol references
-        LspReferenceRead   { bg = green.li(50), fg = green.readable()  },
-        LspReferenceText   { bg = blue.li(50), fg = blue.readable() },
-        LspReferenceWrite  { bg = red.li(50), fg = red.readable() },
+        LspReferenceRead   { bg=green.li(50), fg=green.readable()  },
+        LspReferenceText   { bg=blue.li(50), fg=blue.readable() },
+        LspReferenceWrite  { bg=red.li(50), fg=red.readable() },
 
         -- Gitsigns
         GitSignsAdd             { bg=added.da(20) },
