@@ -10,7 +10,7 @@ Plug 'nvim-treesitter/nvim-treesitter-refactor'
 
 " Git stuff
 Plug 'tpope/vim-fugitive'
-Plug 'lewis6991/gitsigns.nvim'
+Plug 'lewis6991/gitsigns.nvim', { 'tag': 'v1.0.1' }
 
 " Litee IDE like stuff
 Plug 'ldelossa/litee.nvim'

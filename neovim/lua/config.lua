@@ -61,11 +61,12 @@ _ = gitsigns and gitsigns.setup {
         map('n', ']h', gitsigns.next_hunk, 'Jump to next changed hunk')
         map('n', '[h',  gitsigns.prev_hunk, 'Jump to previos changed hunk')
         map('n', ';hs', gitsigns.stage_hunk, 'Stage current hunk')
+        map('n', ';hS', gitsigns.stage_buffer, 'Stage current hunk')
         map('n', ';hr', gitsigns.reset_hunk, 'Reset current hunk')
         map('n', ';hp', gitsigns.preview_hunk, 'Preview patch from current hunk')
     end,
     preview_config = {
-        border = 'shadow',
+        border = 'rounded',
         style = 'minimal',
     },
 }

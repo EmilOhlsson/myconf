@@ -20,6 +20,11 @@ local bg_emp = bg.sa(5).da(5)
 local bg_cul = bg_emp.de(50)
 local toolbar = '#eef1f8'
 
+-- Base colors for highlighting changes
+local added = bg.hue(120)
+local changed = bg.hue(240)
+local removed = bg.hue(0)
+
 -- Highlight rules. Uses magic meta functions, so disable certain diagnostics
 -- as to not have LSP become angry
 ---@diagnostic disable: undefined-global
@@ -95,9 +100,9 @@ return lush(function(injected)
         TreesitterContextBottom  { TreesitterContext, gui='underline' },
 
         -- File diffing
-        Changed { bg = bg.hue(240) },
-        Added   { bg = bg.hue(120) },
-        Removed { bg = bg.hue(0) },
+        Changed { bg = changed },
+        Added   { bg = added },
+        Removed { bg = removed },
 
         -- Litee UI
         LTSymbol        { fg = orange, gui='bold' },
@@ -107,6 +112,18 @@ return lush(function(injected)
         LspReferenceRead   { bg = green.li(50), fg = green.readable()  },
         LspReferenceText   { bg = blue.li(50), fg = blue.readable() },
         LspReferenceWrite  { bg = red.li(50), fg = red.readable() },
+
+        -- Gitsigns
+        GitSignsAdd             { bg=added.da(20) },
+        GitSignsChange          { bg=changed.da(20) },
+        GitSignsDelete          { bg=removed.da(20) },
+        GitSignsStagedAdd       { bg=added.li(10) },
+        GitSignsStagedChange    { bg=changed.li(10) },
+        GitSignsStagedDelete    { bg=removed.li(10) },
+
+        -- Snacks
+        SnacksIndent      { fg=bg_emp },
+        SnacksIndentScope { fg=bg_emp.de(50).mix(hsl(0,0,0), 20) },
     }
 end)
 

@@ -58,6 +58,7 @@ local function configure_treesitter()
             indent = {
                 enable = false,
                 disable = {},
+                only_scope = true,
             },
 
             ensure_installed = {
