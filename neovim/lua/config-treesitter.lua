@@ -65,6 +65,7 @@ local function configure_treesitter()
                 "pioasm", "bash", "c", "cpp", "rust", "lua", "python", "vim", "vimdoc", "json", "julia", "fennel",
                 "markdown", "markdown_inline", "strace", "regex",
                 "css", "html", "javascript", "latex", "norg", "scss", "svelte", "tsx", "typst", "vue",
+                "yaml"
             },
         }
 

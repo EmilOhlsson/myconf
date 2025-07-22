@@ -34,12 +34,12 @@ Plug 'rcarriga/nvim-dap-ui'
 Plug 'theHamsta/nvim-dap-virtual-text'
 
 " Experimenting with new plugins
-Plug 'nvim-lua/plenary.nvim'        " Useful for plenty of stuff
-Plug 'echasnovski/mini.nvim'        " mini.nvim is a collection of plugins
-Plug 'folke/snacks.nvim'            " Pickers etc
-Plug 'folke/trouble.nvim'           " Better diagnostics
-Plug 'folke/todo-comments.nvim'     " TODO lists from comments
-Plug 'nvim-tree/nvim-web-devicons'  " Easy access to reasonable icons
+Plug 'nvim-lua/plenary.nvim'                        " Useful for plenty of stuff
+Plug 'echasnovski/mini.nvim'                        " mini.nvim is a collection of plugins
+Plug 'folke/snacks.nvim', { 'commit': '5eac729' }   " Pickers etc
+Plug 'folke/trouble.nvim'                           " Better diagnostics
+Plug 'folke/todo-comments.nvim'                     " TODO lists from comments
+Plug 'nvim-tree/nvim-web-devicons'                  " Easy access to reasonable icons
 
 if filereadable(expand('$HOME/myconf/local-plugins.vim'))
     source ~/myconf/local-plugins.vim

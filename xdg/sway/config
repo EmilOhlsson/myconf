@@ -11,10 +11,10 @@ set $up k
 set $right l
 
 # Preferred terminal emulator
-set $term kitty
+set $term wezterm
 
 # Preferred application launcher
-set $menu dmenu_path | dmenu | xargs swaymsg exec --
+set $menu fuzzel
 
 # Idle configuration
 exec swayidle -w \
@@ -24,24 +24,19 @@ exec swayidle -w \
 
 # Status Bar:
 bar {
-    position top
-
-    status_command while ~/local/bin/hugmin; do sleep 1; done
-
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
+    swaybar_command waybar
 }
 
 smart_borders on
 smart_gaps on
 default_border pixel 2
+gaps inner 10
 
 # Load other specific configurations
-include ~/myconf/sway/config.d/*
+include ~/myconf/xdg/sway/config.d/*
 include ~/myconf/local-sway.conf
 
 # Red shift at night
 exec wlsunset -l 55.7 -L 13.2
+
+# vim: set et ts=4 sw=4 ss=4 tw=100 :

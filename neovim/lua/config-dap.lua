@@ -100,6 +100,11 @@ local function set_logging_breakpoint()
     dap.set_breakpoint(nil, nil, vim.fn.input('Log message: '))
 end
 
+local function set_conditional_breakpoint()
+    assert(dap ~= nil)
+    dap.set_breakpoint(vim.fn.input('Break condition: '), nil, nil)
+end
+
 local function configure_dap_keymap()
     assert(dap ~= nil)
     assert(dap_widgets ~= nil)
@@ -110,6 +115,7 @@ local function configure_dap_keymap()
     map_key('C', dap.clear_breakpoints)
     map_key('c', dap.continue)
     map_key('d', dap.down)
+    map_key('e', set_conditional_breakpoint)
     map_key('h', dap_widgets.hover)
     map_key('o', dap.step_out)
     map_key('r', dap.repl.toggle)

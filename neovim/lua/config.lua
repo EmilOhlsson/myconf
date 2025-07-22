@@ -1,3 +1,15 @@
+-- Profile startup if `PROF` is set to truthy value
+if vim.env.PROF then
+    local snacks = vim.fn.stdpath('data') .. '/plugged/snacks.nvim'
+    vim.opt.rtp:append(snacks)
+    ---@diagnostic disable-next-line: missing-fields
+    require('snacks.profiler').startup({
+        startup = {
+            event = "VimEnter",
+        }
+    })
+end
+
 local utils = require('config-utils')
 
 -- Highlights
@@ -7,6 +19,39 @@ if lush then
 else
     local highlights = utils.try_load('highlights')
     _ = highlights and highlights.setup()
+end
+
+local snacks = utils.try_load('snacks')
+if snacks ~= nil then
+    snacks.setup({
+        bigfile = {},
+        indent = {
+            enabled = true,
+            animate = {
+                enabled = false,
+            },
+            statuscolumn = {
+            },
+        },
+        picker = {
+            layout = 'telescope',
+        },
+        notifier = {
+            enabled = true,
+        }
+    })
+    vim.keymap.set('n', '<space>ff', snacks.picker.files, {})
+    vim.keymap.set('n', '<space>lg', snacks.picker.grep, {})
+    vim.keymap.set('n', '<space>fb', snacks.picker.buffers, {})
+    vim.keymap.set('n', '<space>fp', snacks.picker.projects, {})
+    vim.keymap.set('n', '<space>pp', snacks.picker.pick, {})
+    vim.keymap.set('n', '<space>lr', snacks.picker.lsp_references, {})
+    vim.keymap.set('n', '<space>gs', snacks.picker.git_status, {})
+    -- TODO: For whatever reason, this doesn't work when assigning function here
+    vim.keymap.set('n', '<space>dd', ':lua Snacks.picker.todo_comments()<CR>', {})
+
+    -- File explorer
+    vim.keymap.set('n', '<c-b>', snacks.picker.explorer, {})
 end
 
 -- LSP
@@ -106,53 +151,19 @@ vim.api.nvim_create_autocmd({"TextYankPost"}, {
     end
 })
 
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-vim.opt.foldcolumn = "auto"
-vim.opt.foldnestmax = 4
-vim.opt.foldlevelstart = 99
-vim.opt.foldtext = ''
-
 local web_devicons = utils.try_load("nvim-web-devicons")
 if web_devicons ~= nil then
     web_devicons.setup({
     })
 end
 
-local snacks = utils.try_load('snacks')
-if snacks ~= nil then
-    snacks.setup({
-        bigfile = {},
-        indent = {
-            enabled = true,
-            animate = {
-                enabled = false,
-            },
-            statuscolumn = {
-            },
-        },
-        picker = {
-            layout = 'telescope',
-        },
-        notifier = {
-            enabled = true,
-        }
-    })
-    vim.keymap.set('n', '<space>ff', snacks.picker.files, {})
-    vim.keymap.set('n', '<space>lg', snacks.picker.grep, {})
-    vim.keymap.set('n', '<space>fb', snacks.picker.buffers, {})
-    vim.keymap.set('n', '<space>fp', snacks.picker.projects, {})
-    vim.keymap.set('n', '<space>pp', snacks.picker.pick, {})
-    vim.keymap.set('n', '<space>lr', snacks.picker.lsp_references, {})
-
-    -- File explorer
-    vim.keymap.set('n', '<c-b>', snacks.picker.explorer, {})
-end
-
 local todo_comments = utils.try_load('todo-comments')
 if todo_comments ~= nil then
     todo_comments.setup({
+        signs = false,
     })
+    vim.keymap.set('n', ']d', todo_comments.jump_next, { desc = 'Next todo' })
+    vim.keymap.set('n', '[d', todo_comments.jump_prev, { desc = 'Previous todo' })
 end
 
 local trouble = utils.try_load('trouble')
@@ -160,5 +171,64 @@ if trouble ~= nil then
     trouble.setup({
     })
 end
+
+local codecompanion = utils.try_load("codecompanion")
+if codecompanion ~= nil then
+    local adapters = require("codecompanion.adapters")
+    vim.cmd('cab cc CodeCompanion')
+    codecompanion.setup({
+        adapters = {
+            anthropic = function()
+                return adapters.extend("anthropic", {
+                    name = "My Anthropic interface",
+                    env = {
+                        -- NOTE: Sometimes there are issues unlocking storage
+                        api_key = "cmd:pass show claude/api-key",
+                    },
+                })
+            end,
+        },
+        strategies = {
+            chat = {
+                adapter = "anthropic",
+                slash_commands = {
+                    buffer = {
+                        opts = {
+                            provider = "snacks",
+                        },
+                    },
+                    file = {
+                        opts = {
+                            provider = "snacks",
+                        },
+                    },
+                    symbols = {
+                        opts = {
+                            provider = "snacks",
+                        },
+                    },
+                },
+                keymaps = {
+                    completion = {
+                        modes = {
+                            i = "<C-I>",
+                        },
+                    },
+                },
+            },
+            inline = {
+                adapter = "anthropic",
+            },
+            cmd = {
+                adapter = "anthropic",
+            },
+        },
+        opts = {
+            --log_level = "TRACE"
+        },
+    })
+end
+
+-- TODO: try setting up snippet expansion: https://www.reddit.com/r/neovim/comments/1cxfhom/builtin_snippets_so_good_i_removed_luasnip/
 
 -- vim: set et ts=4 sw=4 ss=4 tw=100 :

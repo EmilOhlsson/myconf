@@ -1,0 +1,39 @@
+* {
+    font-family: "Cascadia Code NF";
+    background-color: #fdf6e3;
+    color: #52676f;
+}
+.modules-right * {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#backlight-slider slider,
+#pulseaudio-slider slider {
+    min-height: 2px;
+    min-width: 2px;
+    background-color: #52676f;
+    border-radius: 1px;
+}
+
+#backlight-slider trough,
+#pulseaudio-slider trough {
+    min-height: 2px;
+    min-width: 80px;
+    background-color: #52676f;
+    border-radius: 1px;
+    opacity: 0.3;
+}
+
+#backlight-slider highlight,
+#pulseaudio-slider highlight {
+    min-width: 10px;
+    background-color: #52676f;
+    border-radius: 1px;
+}
+
+tooltip {
+    border: 1px solid #52676f;
+    border-radius: 3px;
+    font-size: inherit;
+}

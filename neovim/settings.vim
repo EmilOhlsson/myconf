@@ -39,6 +39,13 @@ set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
 set laststatus=2
 set exrc                            " Load local vimrc
 
+set foldmethod=expr
+set foldexpr=v:lua.vim.treesitter.foldexpr()
+set foldcolumn=auto
+set foldnestmax=4
+set foldlevelstart=99
+set foldtext=
+
 " Termdebug
 nnoremap <leader>ds <cmd>Step<CR>
 nnoremap <leader>dn <cmd>Over<CR>
@@ -74,5 +81,8 @@ tnoremap <Esc> <C-\><C-n>
 " vim-markdown
 let g:vim_markdown_new_list_item_indent = 2
 let g:vim_markdown_folding_disabled = 1
+
+" Build
+nnoremap <c-j> :make<CR>
 
 " vim: set et tw=80 ts=4 sw=4 ss=4:

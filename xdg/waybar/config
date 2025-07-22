@@ -1,0 +1,88 @@
+{
+    "layer": "top",
+    "position": "top",
+    "modules-left": [
+        "sway/workspaces",
+        "sway/mode"
+    ],
+    "modules-right": [
+        "idle_inhibitor",
+        "power-profiles-daemon",
+        "backlight/slider",
+        "network",
+        "pulseaudio",
+        "pulseaudio/slider",
+        "battery",
+        "temperature",
+        "cpu",
+        "memory",
+        "clock",
+        "custom/sleep",
+    ],
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        },
+        "tooltip-format-activated": "Idle inhibitor activated",
+        "tooltip-format-deactivated": "Idle inhibitor deactivated",
+    },
+    "battery": {
+        "format": "{icon}{capacity}%",
+        "format-icons": ["", "", "", "", ""],
+    },
+    "backlight/slider": {
+        "min": 0,
+        "max": 100,
+        "orientation": "horizontal"
+    },
+    "clock": {
+        "format": "◷{:%d/%m %H:%M}",
+        "tooltip": false,
+    },
+    "custom/sleep": {
+        "format": "∿",
+        "tooltip-format": "Suspend system",
+        "on-click": "systemctl suspend",
+    },
+    "cpu": {
+        "format": "{usage}%"
+    },
+    "memory": {
+        "format": "{used}GiB",
+        "tooltip-format": "{used:0.1f}GiB/{total:0.1f}GiB"
+    },
+    "network": {
+        "format": "{ifname}",
+        "format-wifi": "{signalStrength}%",
+        "format-ethernet": "󰊗{ipaddr}",
+        "tooltip-format": "{ifname} via {gwaddr} 󰊗",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
+        "tooltip-format-ethernet": "{ifname} ",
+    },
+    "sway/mode": {
+        "format": "{}",
+        "max-length": 50
+    },
+    "power-profiles-daemon": {
+        "format": "{icon}",
+        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+        "tooltip": true,
+        "format-icons": {
+            "default": "",
+            "performance": "",
+            "balanced": "",
+            "power-saver": ""
+        }
+    },
+    "pulseaudio": {
+        "format": "{icon}",
+        "format-muted": "",
+        "format-icons": ["", ""],
+        "on-click": "pavucontrol",
+    },
+    "temperature": {
+        "format": "{temperatureC}°C"
+    }
+}
