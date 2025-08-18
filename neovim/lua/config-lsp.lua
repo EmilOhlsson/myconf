@@ -152,6 +152,7 @@ local M = {
 
         -- Snippet navigation is handled by default Neovim 0.11 keybindings:
         -- <Tab> jumps forward, <S-Tab> jumps backward when snippet is active
+        -- Snippets are expanded using <c-y>
     end
 }
 
