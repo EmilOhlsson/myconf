@@ -17,8 +17,13 @@ local lush = utils.try_load('lush')
 if lush then
     lush(require('lush-theme'))
 else
-    local highlights = utils.try_load('highlights')
-    _ = highlights and highlights.setup()
+    local mini_theme = utils.try_load('mini-theme')
+    if mini_theme then
+        mini_theme.setup()
+    else
+        local highlights = utils.try_load('highlights')
+        _ = highlights and highlights.setup()
+    end
 end
 
 local snacks = utils.try_load('snacks')
@@ -228,7 +233,5 @@ if codecompanion ~= nil then
         },
     })
 end
-
--- TODO: try setting up snippet expansion: https://www.reddit.com/r/neovim/comments/1cxfhom/builtin_snippets_so_good_i_removed_luasnip/
 
 -- vim: set et ts=4 sw=4 ss=4 tw=100 :
