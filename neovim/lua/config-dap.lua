@@ -136,6 +136,8 @@ local function configure_dap_signs()
             culhl = sign .. 'CurrentLine',
         })
     end
+    -- TODO: try to read from nvim-web-devicons
+    define('DapBreakpointCondition', '\u{29bf}')
     define('DapBreakpoint', '\u{29bf}')
     define('DapStopped', '\u{23f5}')
 end

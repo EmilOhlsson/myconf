@@ -111,8 +111,9 @@ _ = gitsigns and gitsigns.setup {
         map('n', ']h', gitsigns.next_hunk, 'Jump to next changed hunk')
         map('n', '[h',  gitsigns.prev_hunk, 'Jump to previos changed hunk')
         map('n', ';hs', gitsigns.stage_hunk, 'Stage current hunk')
-        map('n', ';hS', gitsigns.stage_buffer, 'Stage current hunk')
+        map('n', ';hS', gitsigns.stage_buffer, 'Stage current buffer')
         map('n', ';hr', gitsigns.reset_hunk, 'Reset current hunk')
+        map('n', ';hR', gitsigns.reset_buffer, 'Reset current buffer')
         map('n', ';hp', gitsigns.preview_hunk, 'Preview patch from current hunk')
     end,
     preview_config = {
@@ -124,10 +125,14 @@ _ = gitsigns and gitsigns.setup {
 -- Setup up Floating terminal
 local float_term = utils.try_load('FloatTerm')
 if float_term ~= nil then
-    float_term.setup()
+    float_term.setup({
+        window_config = {
+            border = 'rounded',
+        },
+    })
     vim.keymap.set('n', '<c-f>', float_term.toggle_window, {
         noremap = true,
-        desc = 'Toggle floating terminal'
+        desc = 'Toggle floating terminal',
     })
 end
 
@@ -232,6 +237,12 @@ if codecompanion ~= nil then
             --log_level = "TRACE"
         },
     })
+end
+
+if vim.fn.has('nvim-0.12') == 1 then
+    vim.o.diffopt = 'internal,filler,closeoff,inline:word,linematch:40'
+elseif vim.fn.has('nvim-0.11') == 1 then
+    vim.o.diffopt = 'internal,filler,closeoff,linematch:40'
 end
 
 -- vim: set et ts=4 sw=4 ss=4 tw=100 :

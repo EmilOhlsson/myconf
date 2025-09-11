@@ -8,6 +8,13 @@ local function toggle_diagnostics()
     vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end
 
+local function toggle_virtual_diagnostic()
+    local has_virtual_lines = vim.diagnostic.config().virtual_lines
+    vim.diagnostic.config({
+        virtual_lines = not has_virtual_lines
+    })
+end
+
 local function next_diagnostic()
     vim.diagnostic.jump({ count = 1, float = true })
 end
@@ -54,6 +61,8 @@ local function configure_lsp()
                 -- TODO: Might be worth checking if all of these commands are really relevant
                 -- NOTE: Several commands are now set by default. See `:help lsp-defaults`
                 local prefix = '\\'
+                map('n', '[e', vim.diagnostic.goto_prev, "Go to previous error")
+                map('n', ']e', vim.diagnostic.goto_next, "Go to next error")
                 map('n', prefix .. 'ca', vim.lsp.buf.code_action, "Execute code action")
                 map('n', prefix .. 'ds', vim.lsp.buf.document_symbol, "Show symbol documentation")
                 map('n', prefix .. 'ee', vim.diagnostic.open_float, "Show line error")
@@ -71,6 +80,7 @@ local function configure_lsp()
                 map('n', prefix .. 'rn', vim.lsp.buf.rename, "Rename symbol")
                 map('n', prefix .. 'ws', vim.lsp.buf.workspace_symbol, "Search for workspace symbol")
                 map('n', prefix .. 'td', toggle_diagnostics, "Toggle diagnostic hints")
+                map('n', prefix .. 'tv', toggle_virtual_diagnostic, "Toggle diagnostic virtual text")
                 map('i', '<c-k>', vim.lsp.buf.signature_help, "Show signature help")
                 map('i', '<c-h>', vim.lsp.buf.hover, "Show hover information")
             end,
