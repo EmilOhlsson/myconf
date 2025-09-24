@@ -41,6 +41,8 @@ Plug 'folke/trouble.nvim'                            " Better diagnostics
 Plug 'folke/todo-comments.nvim'                      " TODO lists from comments
 Plug 'nvim-tree/nvim-web-devicons'                   " Easy access to reasonable icons
 
+Plug 'MeanderingProgrammer/render-markdown.nvim', { 'commit': '6594102' }
+
 if filereadable(expand('$HOME/myconf/local-plugins.vim'))
     source ~/myconf/local-plugins.vim
 endif

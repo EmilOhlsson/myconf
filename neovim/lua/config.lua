@@ -1,3 +1,7 @@
+-- TODO: A lot of the setup in this file is just plugin setup, so this should probably be renamed
+-- TODO: Once v0.12 is release, replace `Plug` with the built in package manager, and replace
+-- vim-script files with lua setup
+
 -- Profile startup if `PROF` is set to truthy value
 if vim.env.PROF then
     local snacks = vim.fn.stdpath('data') .. '/plugged/snacks.nvim'
@@ -42,7 +46,10 @@ if snacks ~= nil then
             layout = 'telescope',
         },
         notifier = {
+            -- TODO: make sure there is a command for showing history
             enabled = true,
+            timeout = 10000,
+            style = 'fancy',
         }
     })
     vim.keymap.set('n', '<space>ff', snacks.picker.files, {})
@@ -239,10 +246,59 @@ if codecompanion ~= nil then
     })
 end
 
+local render_markdown = utils.try_load('render-markdown')
+if render_markdown ~= nil then
+    render_markdown.setup({
+        bullet = {
+            render_modes = false,
+        },
+    })
+end
+
 if vim.fn.has('nvim-0.12') == 1 then
     vim.o.diffopt = 'internal,filler,closeoff,inline:word,linematch:40'
 elseif vim.fn.has('nvim-0.11') == 1 then
     vim.o.diffopt = 'internal,filler,closeoff,linematch:40'
 end
+
+-- Read skeleton files when available
+local skel_group = vim.api.nvim_create_augroup('skeletons', {clear=true})
+vim.api.nvim_create_autocmd({'BufNewFile'}, {
+    group = skel_group,
+    pattern = { '*.*' },
+    callback = function(env)
+        local ext = vim.fn.expand('%:e')
+        if vim.fn.line('$') > 1 or vim.fn.getline(1) ~= '' or ext == '' then
+            return
+        end
+
+        -- Construct template path
+        local rtp = vim.api.nvim_list_runtime_paths()[1]
+        local template_path = rtp .. '/templates/skeleton.' .. ext
+        if vim.fn.filereadable(template_path) == 0 then
+            return
+        end
+
+        -- Read template content
+        local template_lines = vim.fn.readfile(template_path)
+
+        -- Insert template content into buffer
+        vim.api.nvim_buf_set_lines(env.buf, 0, -1, false, template_lines)
+
+        -- Move cursor to first line
+        local win = vim.fn.bufwinid(env.buf)
+        if win ~= -1 then
+            vim.api.nvim_win_set_cursor(win, { 1, 0 })
+        end
+    end,
+})
+
+vim.o.guicursor = 'i-ci:ver30-iCursor-blinkwait300-blinkon200-blinkoff150'
+
+-- TODO: Create function for yanking file name and line range, as to easily be able
+-- to give to prompt
+-- local start_line = vim.fn.getpos("'<")[2]
+-- local path = vim.fn.expand("%")
+-- vim.fn.setreg("+", result)
 
 -- vim: set et ts=4 sw=4 ss=4 tw=100 :

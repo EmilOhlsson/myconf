@@ -6,7 +6,9 @@ local M = {
             return nil
         end
         return result
-    end
+    end,
 }
 
 return M
+
+-- vim: set et ts=4 sw=4 ss=4 tw=100 :

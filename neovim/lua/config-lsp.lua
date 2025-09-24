@@ -43,6 +43,7 @@ local function configure_lsp()
                 -- Only configure reference highlight if server supports it
                 if client.server_capabilities.documentHighlightProvider then
                     vim.api.nvim_create_autocmd({ "CursorHold", "CursorMoved" }, {
+                        buffer = bufnr,
                         callback = function(event)
                             if event.event == "CursorHold" then
                                 vim.lsp.buf.document_highlight()
@@ -131,18 +132,11 @@ local function configure_lsp()
             }
         }
 
-        local servers = { 'clangd', 'pylsp', 'ruff', 'pyright', 'rust_analyzer', 'julials', 'lua_ls', 'bashls' }
-
         -- Configure each server with the native vim.lsp.config API
-        for _, lsp in ipairs(servers) do
-            local server_specific_config = server_configs[lsp] or {}
-            local final_config = vim.tbl_deep_extend('force', common_config, server_specific_config)
-            vim.lsp.config(lsp, final_config)
-        end
-
-        -- Enable all configured servers
-        for _, lsp in ipairs(servers) do
-            vim.lsp.enable(lsp)
+        for server, config in pairs(server_configs) do
+            local final_config = vim.tbl_deep_extend('force', common_config, config)
+            vim.lsp.config(server, final_config)
+            vim.lsp.enable(server)
         end
     end
 end
@@ -151,11 +145,6 @@ end
 local M = {
     setup = function()
         configure_lsp()
-        vim.diagnostic.config({
-            virtual_lines = {
-                current_line = true,
-            },
-        })
         vim.o.winborder = 'rounded'
 
         -- Snippet navigation is handled by default Neovim 0.11 keybindings:

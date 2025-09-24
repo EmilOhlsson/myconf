@@ -124,6 +124,9 @@ return lush(function(injected)
         -- Snacks
         SnacksIndent      { fg=bg_emp },
         SnacksIndentScope { fg=bg_emp.de(50).mix(hsl(0,0,0), 20) },
+
+        -- Render markdown
+        RenderMarkdownCode { bg=bg_emp },
     }
 end)
 

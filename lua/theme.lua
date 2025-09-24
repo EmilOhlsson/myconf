@@ -19,7 +19,7 @@ local M = {
     background   = hsl("#fdf6e3"),
     foreground   = hsl("#52676f"),
     cursor_bg    = hsl("#52676f"),
-    cursor_fg    = hsl("#52676f"),
+    cursor_fg    = hsl("#fdf6e3"),
     selection_bg = hsl("#e9e2cb"),
     selection_fg = hsl("#fcf4dc"),
 
