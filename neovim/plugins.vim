@@ -10,7 +10,6 @@ Plug 'nvim-treesitter/nvim-treesitter-refactor'
 
 " Git stuff
 Plug 'tpope/vim-fugitive'
-Plug 'lewis6991/gitsigns.nvim', { 'tag': 'v1.0.1' }
 
 " Litee IDE like stuff
 Plug 'ldelossa/litee.nvim'
@@ -39,7 +38,6 @@ Plug 'echasnovski/mini.nvim', { 'branch': 'stable' } " mini.nvim is a collection
 Plug 'folke/snacks.nvim', { 'commit': '5eac729' }    " Pickers etc
 Plug 'folke/trouble.nvim'                            " Better diagnostics
 Plug 'folke/todo-comments.nvim'                      " TODO lists from comments
-Plug 'nvim-tree/nvim-web-devicons'                   " Easy access to reasonable icons
 
 Plug 'MeanderingProgrammer/render-markdown.nvim', { 'commit': '6594102' }
 

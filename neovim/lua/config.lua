@@ -164,6 +164,16 @@ if mini_pairs ~= nil then
     mini_pairs.setup()
 end
 
+local mini_diff = utils.try_load('mini.diff')
+if mini_diff ~= nil then
+    mini_diff.setup({
+        mappings = {
+            apply = ';hs',
+            reset = ';hr',
+        }
+    })
+end
+
 -- Misc common setup
 vim.api.nvim_create_autocmd({"TextYankPost"}, {
     callback = function(_)
@@ -173,10 +183,9 @@ vim.api.nvim_create_autocmd({"TextYankPost"}, {
     end
 })
 
-local web_devicons = utils.try_load("nvim-web-devicons")
-if web_devicons ~= nil then
-    web_devicons.setup({
-    })
+local mini_icons = utils.try_load("mini.icons")
+if mini_icons ~= nil then
+    mini_icons.setup()
 end
 
 local todo_comments = utils.try_load('todo-comments')
