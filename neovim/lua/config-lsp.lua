@@ -86,6 +86,20 @@ local function configure_lsp()
         }
 
         local server_configs = {
+            armls = {
+                cmd = {
+                    'armls',
+                },
+                filetypes = { 'asm' },
+                diagnostics = {
+                    enable = true,
+                },
+                externalDiagnostics = {
+                    clang = {
+                        path = vim.fn.exepath('clang'),
+                    },
+                },
+            },
             lua_ls = {
                 settings = {
                     Lua = {

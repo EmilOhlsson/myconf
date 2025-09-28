@@ -35,6 +35,11 @@ building your own, by following [building Neovim](docs/building-neovim.md)
 
 - Set up `local.vim`
 
+Setting things up is described in `:help nvim-from-vim`. In short, content of `~/.local/share/nvim/init.vim` should be the following:
+```
+source ~/myconf/neovim/init.vim
+```
+
 ## bat
 Bat is like `cat`, but it can do syntax highlighting. It's worth setting color scheme to 
 something that works with your background colors.

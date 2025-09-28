@@ -159,6 +159,11 @@ if mini_surround ~= nil then
     mini_surround.setup()
 end
 
+local mini_pairs = utils.try_load('mini.pairs')
+if mini_pairs ~= nil then
+    mini_pairs.setup()
+end
+
 -- Misc common setup
 vim.api.nvim_create_autocmd({"TextYankPost"}, {
     callback = function(_)
