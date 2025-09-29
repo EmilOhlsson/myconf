@@ -24,8 +24,8 @@ local function prev_diagnostic()
 end
 
 local function configure_lsp()
-    local nvim_lsp = utils.try_load('lspconfig')
-    if nvim_lsp ~= nil then
+    local lspconfig = utils.try_load('lspconfig')
+    if lspconfig ~= nil then
         --[[ NOTE: Neovim 0.11+ has built-in support for project-specific LSP configurations:
                    Create lsp/<server>.lua files in your project root to override these settings.
                    For example: create "lsp/clangd.lua" in your project with custom compiler paths.
@@ -87,16 +87,18 @@ local function configure_lsp()
 
         local server_configs = {
             armls = {
-                cmd = {
-                    'armls',
-                },
+                cmd = { 'armls', },
                 filetypes = { 'asm' },
-                diagnostics = {
-                    enable = true,
-                },
-                externalDiagnostics = {
-                    clang = {
-                        path = vim.fn.exepath('clang'),
+                settings = {
+                    armls = {
+                        diagnostics = {
+                            enable = true,
+                        },
+                        externalDiagnostics = {
+                            clang = {
+                                path = vim.fn.exepath('clang'),
+                            },
+                        },
                     },
                 },
             },
