@@ -159,11 +159,6 @@ if mini_surround ~= nil then
     mini_surround.setup()
 end
 
-local mini_pairs = utils.try_load('mini.pairs')
-if mini_pairs ~= nil then
-    mini_pairs.setup()
-end
-
 local mini_diff = utils.try_load('mini.diff')
 if mini_diff ~= nil then
     mini_diff.setup({
@@ -263,9 +258,6 @@ end
 local render_markdown = utils.try_load('render-markdown')
 if render_markdown ~= nil then
     render_markdown.setup({
-        bullet = {
-            render_modes = false,
-        },
     })
 end
 
