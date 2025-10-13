@@ -63,3 +63,18 @@ The `.luarc.json` file configures:
 - **Hints**: Enables inlay hints for types and parameters when using LSP in editor
 
 The configuration disables `undefined-field` warnings since Neovim's API is highly dynamic and many fields are defined at runtime.
+
+## Coding Standards
+
+### Lua Files
+All Lua configuration files should include the following modeline at the end:
+```lua
+-- vim: set et ts=4 sw=4 ss=4 tw=100 :
+```
+
+This ensures consistent formatting with:
+- `et` (expandtab): Use spaces instead of tabs
+- `ts=4` (tabstop): Tab width of 4 spaces
+- `sw=4` (shiftwidth): Indent width of 4 spaces
+- `ss=4` (softtabstop): Soft tab stop of 4 spaces
+- `tw=100` (textwidth): Line wrap at 100 characters

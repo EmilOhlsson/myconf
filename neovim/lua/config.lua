@@ -291,32 +291,11 @@ vim.api.nvim_create_autocmd({'BufNewFile'}, {
 
 vim.o.guicursor = 'i-ci:ver30-iCursor-blinkwait300-blinkon200-blinkoff150'
 
--- Yank functions for file references
-local function yank_annotated()
-    local path = vim.fn.expand('%')
-    local line = vim.fn.line('.')
-    local result = path .. ':' .. line
-    vim.fn.setreg('+', result)
-    print('Yanked: ' .. result)
-end
+-- Smart yank functionality for outputting file references
+require('smart-yank').setup()
 
-local function yank_range()
-    local path = vim.fn.expand('%')
-    local start_line = vim.fn.getpos("'<")[2]
-    local end_line = vim.fn.getpos("'>")[2]
-
-    -- Get the selected content
-    ---@type string[]
-    local lines = vim.fn.getline(start_line, end_line)
-    local content = table.concat(lines, '\n')
-
-    local result = path .. ':' .. start_line .. ',' .. end_line .. '\n```\n' .. content .. '\n```'
-    vim.fn.setreg('+', result)
-    print('Yanked: ' .. path .. ':' .. start_line .. ',' .. end_line .. ' with content')
-end
-
--- Keymaps for yank functions
-vim.keymap.set('n', '<leader>ya', yank_annotated, { desc = 'Yank annotated (file:line)' })
-vim.keymap.set('v', '<leader>yr', yank_range, { desc = 'Yank range with content' })
+-- Test runner for development
+-- TODO: should this be kept here?
+vim.keymap.set('n', '<leader>tt', '<Plug>PlenaryTestFile', { desc = 'Run current test file' })
 
 -- vim: set et ts=4 sw=4 ss=4 tw=100 :
