@@ -203,17 +203,7 @@ if codecompanion ~= nil then
     local adapters = require("codecompanion.adapters")
     vim.cmd('cab cc CodeCompanion')
     codecompanion.setup({
-        adapters = {
-            anthropic = function()
-                return adapters.extend("anthropic", {
-                    name = "My Anthropic interface",
-                    env = {
-                        -- NOTE: Sometimes there are issues unlocking storage
-                        api_key = "cmd:pass show claude/api-key",
-                    },
-                })
-            end,
-        },
+        -- NOTE: Anthropic API key comes from ANTHROPIC_API_KEY
         strategies = {
             chat = {
                 adapter = "anthropic",
