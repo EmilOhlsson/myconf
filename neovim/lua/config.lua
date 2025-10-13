@@ -306,6 +306,7 @@ local function yank_range()
     local end_line = vim.fn.getpos("'>")[2]
 
     -- Get the selected content
+    ---@type string[]
     local lines = vim.fn.getline(start_line, end_line)
     local content = table.concat(lines, '\n')
 

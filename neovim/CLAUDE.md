@@ -34,3 +34,32 @@ The configuration uses a defensive plugin loading strategy via `config-utils.lua
 - Supports local overrides via `~/myconf/local.vim` and `~/myconf/local-plugins.vim`
 - Uses skeleton templates from `templates/` directory for new files
 - Profiling available by setting `PROF=1` environment variable
+
+## Static Analysis
+
+The repository includes a `.luarc.json` configuration file for the Lua Language Server to enable static analysis of Lua configuration files.
+
+### Running Static Analysis
+
+To perform static analysis on the Lua files:
+
+```bash
+# Check all Lua files in the lua/ directory
+lua-language-server --check lua/ --checklevel=Warning
+
+# Check a specific file
+lua-language-server --check lua/config.lua --checklevel=Warning
+
+# Check with more verbose output (includes Information level)
+lua-language-server --check lua/ --checklevel=Information
+```
+
+### Configuration
+
+The `.luarc.json` file configures:
+- **Runtime**: LuaJIT (used by Neovim) with standard Lua path resolution
+- **Workspace**: Includes third-party libraries (luv, busted, luassert) for testing and async operations
+- **Diagnostics**: Recognizes `vim` as a global variable and disables false positives for Neovim's dynamic API
+- **Hints**: Enables inlay hints for types and parameters when using LSP in editor
+
+The configuration disables `undefined-field` warnings since Neovim's API is highly dynamic and many fields are defined at runtime.
