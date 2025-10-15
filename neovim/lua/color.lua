@@ -12,7 +12,7 @@ M.hsv2rgb = function(h, s, v)
     local i = math.floor(h * 6)
     local f = h * 6 - i
 
-    function v_mul(x)
+    local function v_mul(x)
         return v * (1 - x * s)
     end
 

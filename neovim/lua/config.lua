@@ -203,17 +203,7 @@ if codecompanion ~= nil then
     local adapters = require("codecompanion.adapters")
     vim.cmd('cab cc CodeCompanion')
     codecompanion.setup({
-        adapters = {
-            anthropic = function()
-                return adapters.extend("anthropic", {
-                    name = "My Anthropic interface",
-                    env = {
-                        -- NOTE: Sometimes there are issues unlocking storage
-                        api_key = "cmd:pass show claude/api-key",
-                    },
-                })
-            end,
-        },
+        -- NOTE: Anthropic API key comes from ANTHROPIC_API_KEY
         strategies = {
             chat = {
                 adapter = "anthropic",
@@ -301,10 +291,11 @@ vim.api.nvim_create_autocmd({'BufNewFile'}, {
 
 vim.o.guicursor = 'i-ci:ver30-iCursor-blinkwait300-blinkon200-blinkoff150'
 
--- TODO: Create function for yanking file name and line range, as to easily be able
--- to give to prompt
--- local start_line = vim.fn.getpos("'<")[2]
--- local path = vim.fn.expand("%")
--- vim.fn.setreg("+", result)
+-- Smart yank functionality for outputting file references
+require('smart-yank').setup()
+
+-- Test runner for development
+-- TODO: should this be kept here?
+vim.keymap.set('n', '<leader>tt', '<Plug>PlenaryTestFile', { desc = 'Run current test file' })
 
 -- vim: set et ts=4 sw=4 ss=4 tw=100 :
