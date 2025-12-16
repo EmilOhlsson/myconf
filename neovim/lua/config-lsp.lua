@@ -87,16 +87,17 @@ local function configure_lsp()
 
         local server_configs = {
             armls = {
-                cmd = { 'armls', },
+                cmd = { vim.fn.exepath('armls'), },
                 filetypes = { 'asm' },
                 settings = {
                     armls = {
                         diagnostics = {
-                            enable = true,
+                            enable = false,
                         },
                         externalDiagnostics = {
                             clang = {
                                 path = vim.fn.exepath('clang'),
+                                args = { '--target=aarch64' },
                             },
                         },
                     },

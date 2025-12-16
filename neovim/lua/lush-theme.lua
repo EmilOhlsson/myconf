@@ -121,6 +121,11 @@ return lush(function(injected)
         GitSignsStagedChange    { bg=changed.li(10) },
         GitSignsStagedDelete    { bg=removed.li(10) },
 
+        -- Shears.nvim
+        ShearsAdded    { GitSignsAdd },
+        ShearsDeleted  { GitSignsDelete },
+        ShearsChanged  { GitSignsChange },
+
         -- Snacks
         SnacksIndent      { fg=bg_emp },
         SnacksIndentScope { fg=bg_emp.de(50).mix(hsl(0,0,0), 20) },

@@ -9,6 +9,7 @@ local act = wezterm.action
 
 -- Default keys: https://wezterm.org/config/default-keys.html
 local config = {
+    default_cursor_style = 'BlinkingBar',
     use_fancy_tab_bar = false,
     colors = {
         background = tostring(theme.background),

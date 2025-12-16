@@ -5,6 +5,15 @@ local function configure_treesitter()
     local treesitter_configs = utils.try_load('nvim-treesitter.configs')
     if treesitter_configs ~= nil then
         treesitter_configs.setup {
+            incremental_selection = {
+                enable = true,
+                keymaps = {
+                    init_selection = "<leader>ss",
+                    node_incremental = "<leader>ss",
+                    scope_incremental = "<leader>sa",
+                    node_decremental = "<leader>sd",
+                },
+            },
             textobjects = {
                 select = {
                     enable = true,

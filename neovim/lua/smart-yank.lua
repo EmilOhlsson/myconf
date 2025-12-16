@@ -67,9 +67,11 @@ local highlight_ns = vim.api.nvim_create_namespace('smart-yank-highlight')
 --- @return number start_line
 --- @return number end_line
 local function get_range_from_marks(start_mark, end_mark)
-    local start_pos = vim.fn.getpos(start_mark)
-    local end_pos = vim.fn.getpos(end_mark)
-    return start_pos[2], end_pos[2]
+    local start_line, end_line = vim.fn.getpos(start_mark)[2], vim.fn.getpos(end_mark)[2]
+    if end_line < start_line then
+        return end_line, start_line
+    end
+    return start_line, end_line
 end
 
 --- Get the appropriate register to use
@@ -158,7 +160,7 @@ end
 
 --- Yank content with code block - visual mode function
 local function yank_content_visual()
-    smart_yank(true, "'<", "'>")
+    smart_yank(true, "v", ".")
 
     -- Exit visual mode like normal yank operations
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', false)
@@ -166,7 +168,7 @@ end
 
 --- Yank range reference only - visual mode function
 local function yank_range_visual()
-    smart_yank(false, "'<", "'>")
+    smart_yank(false, "v", ".")
 
     -- Exit visual mode
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', false)

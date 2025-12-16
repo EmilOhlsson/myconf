@@ -159,16 +159,6 @@ if mini_surround ~= nil then
     mini_surround.setup()
 end
 
-local mini_diff = utils.try_load('mini.diff')
-if mini_diff ~= nil then
-    mini_diff.setup({
-        mappings = {
-            apply = ';hs',
-            reset = ';hr',
-        }
-    })
-end
-
 -- Misc common setup
 vim.api.nvim_create_autocmd({"TextYankPost"}, {
     callback = function(_)
@@ -248,6 +238,10 @@ end
 local render_markdown = utils.try_load('render-markdown')
 if render_markdown ~= nil then
     render_markdown.setup({
+        bullet = { enabled = false, },
+        checkbox = { enabled = false, },
+        code = { sign = false, },
+        heading = { sign = false, },
     })
 end
 
@@ -291,11 +285,9 @@ vim.api.nvim_create_autocmd({'BufNewFile'}, {
 
 vim.o.guicursor = 'i-ci:ver30-iCursor-blinkwait300-blinkon200-blinkoff150'
 
--- Smart yank functionality for outputting file references
-require('smart-yank').setup()
-
--- Test runner for development
--- TODO: should this be kept here?
-vim.keymap.set('n', '<leader>tt', '<Plug>PlenaryTestFile', { desc = 'Run current test file' })
+local smart_yank = utils.try_load('smart-yank')
+if smart_yank then
+    smart_yank.setup()
+end
 
 -- vim: set et ts=4 sw=4 ss=4 tw=100 :
