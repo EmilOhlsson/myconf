@@ -5,8 +5,7 @@ Plug 'neovim/nvim-lspconfig'
 " Tree-sitter helpers
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-context'
-Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-Plug 'nvim-treesitter/nvim-treesitter-refactor'
+Plug 'nvim-treesitter/nvim-treesitter-textobjects', {'branch': 'main'}
 
 " Git stuff
 Plug 'tpope/vim-fugitive'
