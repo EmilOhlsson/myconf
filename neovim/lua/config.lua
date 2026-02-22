@@ -173,6 +173,16 @@ if mini_icons ~= nil then
     mini_icons.setup()
 end
 
+-- Enable jumping essentially anywhere on screen
+local mini_jump2d = utils.try_load("mini.jump2d")
+if mini_jump2d then
+    mini_jump2d.setup({
+        mappings = {
+            start_jumping = '<CR>',
+        },
+    })
+end
+
 local todo_comments = utils.try_load('todo-comments')
 if todo_comments ~= nil then
     todo_comments.setup({

@@ -17,7 +17,6 @@ local function configure_treesitter()
             "lua",
             "markdown",
             "markdown_inline",
-            "norg",
             "python",
             "regex",
             "rust",

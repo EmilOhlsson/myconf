@@ -33,11 +33,11 @@ Plug 'rcarriga/nvim-dap-ui'
 Plug 'theHamsta/nvim-dap-virtual-text'
 
 " Experimenting with new plugins
-Plug 'nvim-lua/plenary.nvim'                         " Useful for plenty of stuff
-Plug 'echasnovski/mini.nvim', { 'branch': 'stable' } " mini.nvim is a collection of plugins
-Plug 'folke/snacks.nvim', { 'commit': '5eac729' }    " Pickers etc
-Plug 'folke/trouble.nvim'                            " Better diagnostics
-Plug 'folke/todo-comments.nvim'                      " TODO lists from comments
+Plug 'nvim-lua/plenary.nvim'                            " Useful for plenty of stuff
+Plug 'echasnovski/mini.nvim', { 'commit': 'a995fe9' }   " 0.17 - mini.nvim is a collection of plugins
+Plug 'folke/snacks.nvim', { 'commit': '5eac729' }       " Pickers etc
+Plug 'folke/trouble.nvim'                               " Better diagnostics
+Plug 'folke/todo-comments.nvim'                         " TODO lists from comments
 
 Plug 'MeanderingProgrammer/render-markdown.nvim', { 'commit': '6a744f0' } " v8.10.0
 
