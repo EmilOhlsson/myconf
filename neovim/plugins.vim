@@ -39,7 +39,7 @@ Plug 'folke/snacks.nvim', { 'commit': '5eac729' }       " Pickers etc
 Plug 'folke/trouble.nvim'                               " Better diagnostics
 Plug 'folke/todo-comments.nvim'                         " TODO lists from comments
 
-Plug 'MeanderingProgrammer/render-markdown.nvim', { 'commit': '6a744f0' } " v8.10.0
+Plug 'MeanderingProgrammer/render-markdown.nvim', { 'commit': '82aa306' } " v8.11.0
 
 if filereadable(expand('$HOME/myconf/local-plugins.vim'))
     source ~/myconf/local-plugins.vim

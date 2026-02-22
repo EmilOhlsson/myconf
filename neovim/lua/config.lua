@@ -52,13 +52,16 @@ if snacks ~= nil then
             style = 'fancy',
         }
     })
-    vim.keymap.set('n', '<space>ff', snacks.picker.files, {})
-    vim.keymap.set('n', '<space>lg', snacks.picker.grep, {})
+    vim.keymap.set('n', '<space>bd', snacks.picker.diagnostics_buffer, {})
     vim.keymap.set('n', '<space>fb', snacks.picker.buffers, {})
+    vim.keymap.set('n', '<space>ff', snacks.picker.files, {})
     vim.keymap.set('n', '<space>fp', snacks.picker.projects, {})
-    vim.keymap.set('n', '<space>pp', snacks.picker.pick, {})
-    vim.keymap.set('n', '<space>lr', snacks.picker.lsp_references, {})
     vim.keymap.set('n', '<space>gs', snacks.picker.git_status, {})
+    vim.keymap.set('n', '<space>lg', snacks.picker.grep, {})
+    vim.keymap.set('n', '<space>ll', snacks.picker.loclist, {})
+    vim.keymap.set('n', '<space>lr', snacks.picker.lsp_references, {})
+    vim.keymap.set('n', '<space>pp', snacks.picker.pick, {})
+    vim.keymap.set('n', '<space>qf', snacks.picker.qflist, {})
     -- TODO: For whatever reason, this doesn't work when assigning function here
     vim.keymap.set('n', '<space>dd', ':lua Snacks.picker.todo_comments()<CR>', {})
 
@@ -248,6 +251,7 @@ end
 local render_markdown = utils.try_load('render-markdown')
 if render_markdown ~= nil then
     render_markdown.setup({
+        latex = { enabled = true, },
         bullet = { enabled = false, },
         checkbox = { enabled = false, },
         code = { sign = false, },

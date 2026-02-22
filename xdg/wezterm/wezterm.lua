@@ -23,10 +23,11 @@ local config = {
     },
     font = wezterm.font('Cascadia Code NF'),
     font_size = 10.0,
-    keys = {
-        { key = 'UpArrow', mods = 'SHIFT', action = act.ScrollToPrompt(-1) },
-        { key = 'DownArrow', mods = 'SHIFT', action = act.ScrollToPrompt(1) },
-    }
+    -- TODO: This conflicts with move line in Neovim
+    -- keys = {
+    --     { key = 'UpArrow', mods = 'SHIFT', action = act.ScrollToPrompt(-1) },
+    --     { key = 'DownArrow', mods = 'SHIFT', action = act.ScrollToPrompt(1) },
+    -- }
 }
 
 -- ctrl+shift+z -- zoom state
