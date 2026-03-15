@@ -1,0 +1,43 @@
+font-family = "Cascadia Code NF"
+font-size = 10.0
+
+# Colors
+palette = 0=E3E3E3
+palette = 1=D60000
+palette = 2=5D8500
+palette = 3=AD8500
+palette = 4=0088FF
+palette = 5=AD005F
+palette = 6=00ADAD
+palette = 7=262626
+palette = 8=FFFFD6
+palette = 9=D66000
+palette = 10=595959
+palette = 11=616161
+palette = 12=808080
+palette = 13=6060AF
+palette = 14=8A8A8A
+palette = 15=1C1C1C
+background = FDF6E2
+foreground = 52676F
+cursor-color = 52676F
+cursor-text = FDF6E2
+selection-background = E8E1C9
+selection-foreground = FCF5DE
+
+minimum-contrast = 1.3
+
+# Tab bar
+gtk-custom-css = tab-style.css
+window-theme = ghostty
+
+# Pane splitting
+unfocused-split-opacity = 0.7
+unfocused-split-fill = c0b99f
+
+# Default
+# ctrl+shift+t             -- new tabe
+# ctrl+shift+e             -- split vertical
+# ctrl+shift+o             -- split horizontal
+# ctrl+shift+pg_up/pg_down -- prev/next tab
+# ctrl+shift+,             -- Reload config
