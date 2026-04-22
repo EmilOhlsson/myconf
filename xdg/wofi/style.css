@@ -1,0 +1,37 @@
+window {
+    background-color: #FDF6E3;
+    border: 1px solid #52676F;
+    border-radius: 3px;
+    font-family: "Cascadia Code NF";
+    font-size: 13px;
+    color: #52676F;
+}
+
+#input {
+    background-color: #FDF6E3;
+    color: #52676F;
+    border: none;
+    border-bottom: 1px solid #52676F;
+    padding: 4px 8px;
+}
+
+#inner-box {
+    background-color: #FDF6E3;
+}
+
+#outer-box {
+    padding: 4px;
+}
+
+#entry {
+    padding: 4px 8px;
+}
+
+#entry:selected {
+    background-color: #52676F;
+    color: #FDF6E3;
+}
+
+#text {
+    color: inherit;
+}

@@ -20,7 +20,7 @@ source $ZSH/oh-my-zsh.sh
 
 source $HOME/myconf/common.sh
 
-setopt emacs
+setopt vi
 setopt inc_append_history
 setopt hist_save_no_dups
 setopt extendedglob
@@ -28,7 +28,7 @@ setopt extendedglob
 export VISUAL=nvim
 export EDITOR=nvim
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+command -v fzf &>/dev/null && source <(fzf --zsh)
 
 # Add support for searching backward in history based on prefix
 autoload -Uz up-line-or-beginning-search

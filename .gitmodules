@@ -25,3 +25,6 @@
 [submodule "dotbot-omnipkg"]
 	path = dotbot-omnipkg
 	url = https://github.com/Code-Maniac/dotbot-omnipkg.git
+[submodule "tools/ghostty"]
+	path = tools/ghostty
+	url = https://github.com/ghostty-org/ghostty.git

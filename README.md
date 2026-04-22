@@ -123,4 +123,9 @@ firewall-cmd --permanent --add-service=mdns
 podman run --rm -it -v $PWD:$PWD:U,Z --entry-point=/bin/bash fedora:latest
 ```
 
+## Earlier set variables
+```
+~/.config/environment.d/10-env.conf
+```
+
 <!-- vim: set et ts=2 sw=2 ss=2 tw=100 : -->

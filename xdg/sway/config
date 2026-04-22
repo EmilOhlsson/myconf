@@ -11,10 +11,10 @@ set $up k
 set $right l
 
 # Preferred terminal emulator
-set $term wezterm
+set $term ghostty
 
 # Preferred application launcher
-set $menu fuzzel
+set $menu wofi --show drun
 
 # Idle configuration
 exec swayidle -w \
