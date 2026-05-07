@@ -27,9 +27,14 @@ bar {
     swaybar_command waybar
 }
 
+output * bg #ebe4ce solid_color
+
 smart_borders on
 smart_gaps on
 default_border pixel 2
+client.focused          #c0b99f #c0b99f #ffffff #c0b99f #c0b99f
+client.focused_inactive #9a947f #9a947f #ffffff #9a947f #9a947f
+client.unfocused        #9a947f #9a947f #ffffff #9a947f #9a947f
 gaps inner 10
 
 # Load other specific configurations

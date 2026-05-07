@@ -257,6 +257,9 @@ if render_markdown ~= nil then
         code = { sign = false, },
         heading = { sign = false, },
     })
+    vim.keymap.set('n', '<leader>rt', function()
+        render_markdown.toggle()
+    end, {})
 end
 
 if vim.fn.has('nvim-0.12') == 1 then

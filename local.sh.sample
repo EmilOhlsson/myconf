@@ -2,3 +2,7 @@ function setup-environment() {
 	export PATH="<extra>:$PATH"
 	echo 'did something'
 }
+
+ghostty-ssh() {
+    TERM=xterm-256color command ssh "$@"
+}

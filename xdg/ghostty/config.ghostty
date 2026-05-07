@@ -28,10 +28,16 @@ selection-foreground = FCF5DE
 minimum-contrast = 1.3
 
 mouse-scroll-multiplier = 0.5
+macos-option-as-alt = true
 
 # Tab bar
 gtk-custom-css = tab-style.css
 window-theme = ghostty
+
+window-vsync = false
+background-blur = false
+cursor-style-blink = false
+resize-overlay = never
 
 # Pane splitting
 unfocused-split-opacity = 0.7
@@ -39,11 +45,25 @@ unfocused-split-fill = c0b99f
 split-divider-color = 262626
 
 # ghostty +list-keybinds --default
+
+## Linux
 # ctrl+shift+t             -- new tabe
 # ctrl+shift+e             -- split horizontal
 # ctrl+shift+o             -- split vertical
 # ctrl+shift+pg_up/pg_down -- prev/next tab
 # ctrl+shift+,             -- Reload config
-
 # ctrl+shift+p             -- Command palette
+
+## macOS
+# super + d                 -- new_split:right
+# super+shift+d             -- new_split:down
+# super+t                   -- new_tab
+# super+shift+[             -- previous_tab
+# super+shift+]             -- next_tab
+# super+[                   -- goto_split:previous
+# super+]                   -- goto_split:next
+# super+shift+enter         -- Zoom split
+# super+shift+p             -- Command palette
+# super+shift+,             -- Reload config
+
 # vim: set et ts=4 sw=4 ss=4 tw=80 :

@@ -28,6 +28,8 @@ set switchbuf=usetab,newtab         " use new tab to open files from quickfix
 set splitbelow                      " Open splits below
 set splitright                      " Open splits to the right
 set cursorline                      " Highlight current line
+set fillchars=diff:\                " Indicate missing code
+set nocindent                       " Disable C indentation
 
 set wrap                                 " Wrap long lines
 set linebreak                            " break long lines at words

@@ -8,7 +8,6 @@ local function configure_treesitter()
             "c",
             "cpp",
             "css",
-            "fennel",
             "html",
             "javascript",
             "json",
