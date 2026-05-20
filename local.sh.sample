@@ -6,3 +6,6 @@ function setup-environment() {
 ghostty-ssh() {
     TERM=xterm-256color command ssh "$@"
 }
+eval "$(pyenv init - zsh)"
+eval "$(pyenv virtualenv-init -)"
+eval "$(op completion zsh)"; compdef _op op
