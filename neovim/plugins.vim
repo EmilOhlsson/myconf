@@ -1,7 +1,4 @@
 call plug#begin()
-" Helper tool for configuring LSP servers
-Plug 'neovim/nvim-lspconfig'
-
 " Tree-sitter helpers
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-context'
@@ -10,11 +7,6 @@ Plug 'nvim-treesitter/nvim-treesitter-textobjects', {'branch': 'main'}
 " Git stuff
 Plug 'tpope/vim-fugitive'
 Plug 'lewis6991/gitsigns.nvim', { 'commit': '7010000'}
-
-" Litee IDE like stuff
-Plug 'ldelossa/litee.nvim'
-Plug 'ldelossa/litee-calltree.nvim'
-Plug 'ldelossa/litee-symboltree.nvim'
 
 Plug 'godlygeek/tabular'
 Plug 'preservim/vim-markdown'
