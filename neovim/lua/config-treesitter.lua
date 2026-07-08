@@ -4,30 +4,9 @@ local function configure_treesitter()
     local treesitter = utils.try_load('nvim-treesitter')
     if treesitter then
         treesitter.install({
-            "bash",
             "c",
             "cpp",
-            "css",
-            "html",
-            "javascript",
-            "json",
-            "julia",
-            "latex",
             "lua",
-            "markdown",
-            "markdown_inline",
-            "python",
-            "regex",
-            "rust",
-            "scss",
-            "strace",
-            "svelte",
-            "tsx",
-            "typst",
-            "vim",
-            "vimdoc",
-            "vue",
-            "yaml",
         })
     end
 

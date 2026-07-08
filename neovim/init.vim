@@ -14,7 +14,6 @@ if filereadable(expand('$HOME/myconf/local.vim'))
     source ~/myconf/local.vim
 endif
 
-source ~/myconf/neovim/plugins.vim
 source ~/myconf/neovim/settings.vim
 source ~/myconf/neovim/helpers.vim
 

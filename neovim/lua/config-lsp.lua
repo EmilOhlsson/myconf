@@ -112,6 +112,7 @@ local function configure_lsp()
             }
         },
         clangd = {
+            filetypes = { 'c', 'cpp' },
             cmd = {
                 "clangd",
                 "--query-driver", "/usr/bin/*g++,/usr/bin/*gcc", -- Allow query of some compilers
@@ -124,10 +125,8 @@ local function configure_lsp()
                 "--header-insertion-decorators",                 -- Decorete completions that add headers
             },
         },
-        rust_analyzer = {
-            cmd = { 'rustup', 'run', 'stable', 'rust-analyzer' },
-        },
         pylsp = {
+            filetypes = { 'python' },
             settings = {
                 pylsp = {
                     plugins = {

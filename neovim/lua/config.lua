@@ -16,6 +16,16 @@ end
 
 local utils = require('config-utils')
 
+-- Use the new UI mode
+if vim.fn.has('nvim-0.12') == 1 then
+   require('vim._core.ui2').enable({})
+end
+
+local packages = require('packages')
+packages.setup()
+
+-- TODO: make sure that `:packadd nvim.undotree` is always set up
+
 -- Highlights
 local lush = utils.try_load('lush')
 if lush then
@@ -111,6 +121,11 @@ end
 local gitsigns = utils.try_load('gitsigns')
 _ = gitsigns and gitsigns.setup {
     current_line_blame = true,
+    word_diff = true,
+    preview_config = {
+        border = 'rounded',
+        style = 'minimal',
+    },
     on_attach = function(bufnr)
         local function map(mode, key, cmd, description)
             vim.keymap.set(mode, key, cmd, {
@@ -118,13 +133,15 @@ _ = gitsigns and gitsigns.setup {
                 desc = description
             })
         end
-        map('n', ']h', gitsigns.next_hunk, 'Jump to next changed hunk')
         map('n', '[h',  gitsigns.prev_hunk, 'Jump to previos changed hunk')
-        map('n', ';hs', gitsigns.stage_hunk, 'Stage current hunk')
-        map('n', ';hS', gitsigns.stage_buffer, 'Stage current buffer')
-        map('n', ';hr', gitsigns.reset_hunk, 'Reset current hunk')
-        map('n', ';hR', gitsigns.reset_buffer, 'Reset current buffer')
+        map('n', ']h', gitsigns.next_hunk, 'Jump to next changed hunk')
+
+        map('n', ';hd', gitsigns.diffthis, 'Show diff for current buffer')
         map('n', ';hp', gitsigns.preview_hunk, 'Preview patch from current hunk')
+        map('n', ';hR', gitsigns.reset_buffer, 'Reset current buffer')
+        map('n', ';hr', gitsigns.reset_hunk, 'Reset current hunk')
+        map('n', ';hS', gitsigns.stage_buffer, 'Stage current buffer')
+        map('n', ';hs', gitsigns.stage_hunk, 'Stage current hunk')
     end,
     preview_config = {
         border = 'rounded',
@@ -176,16 +193,6 @@ if mini_icons ~= nil then
     mini_icons.setup()
 end
 
--- Enable jumping essentially anywhere on screen
-local mini_jump2d = utils.try_load("mini.jump2d")
-if mini_jump2d then
-    mini_jump2d.setup({
-        mappings = {
-            start_jumping = '<CR>',
-        },
-    })
-end
-
 local todo_comments = utils.try_load('todo-comments')
 if todo_comments ~= nil then
     todo_comments.setup({
@@ -198,53 +205,6 @@ end
 local trouble = utils.try_load('trouble')
 if trouble ~= nil then
     trouble.setup({
-    })
-end
-
-local codecompanion = utils.try_load("codecompanion")
-if codecompanion ~= nil then
-    local adapters = require("codecompanion.adapters")
-    vim.cmd('cab cc CodeCompanion')
-    codecompanion.setup({
-        -- NOTE: Anthropic API key comes from ANTHROPIC_API_KEY
-        strategies = {
-            chat = {
-                adapter = "anthropic",
-                slash_commands = {
-                    buffer = {
-                        opts = {
-                            provider = "snacks",
-                        },
-                    },
-                    file = {
-                        opts = {
-                            provider = "snacks",
-                        },
-                    },
-                    symbols = {
-                        opts = {
-                            provider = "snacks",
-                        },
-                    },
-                },
-                keymaps = {
-                    completion = {
-                        modes = {
-                            i = "<C-I>",
-                        },
-                    },
-                },
-            },
-            inline = {
-                adapter = "anthropic",
-            },
-            cmd = {
-                adapter = "anthropic",
-            },
-        },
-        opts = {
-            --log_level = "TRACE"
-        },
     })
 end
 
@@ -263,9 +223,9 @@ if render_markdown ~= nil then
 end
 
 if vim.fn.has('nvim-0.12') == 1 then
-    vim.o.diffopt = 'internal,filler,closeoff,inline:word,linematch:40'
+    vim.o.diffopt = 'internal,filler,closeoff,inline:word,linematch:40,vertical'
 elseif vim.fn.has('nvim-0.11') == 1 then
-    vim.o.diffopt = 'internal,filler,closeoff,linematch:40'
+    vim.o.diffopt = 'internal,filler,closeoff,linematch:40,vertical'
 end
 
 -- Read skeleton files when available

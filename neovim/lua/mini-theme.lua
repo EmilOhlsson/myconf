@@ -1,5 +1,8 @@
 -- Color scheme using mini.colors with OKHSL
 
+-- OKHSL colors are described as
+-- Hue: 0-360, Saturation: 0-100, Lightness: 0-100
+
 -- This is work in progress, and doesn't produce any nice theme at the moment
 -- The purpose is to separate the hues from the lightness + saturation, and
 -- to assign color properties to certain aspects, like different kind of symbols
@@ -8,13 +11,18 @@
 
 local M = {}
 
-local colors = require('mini.colors')
-
--- Initialize color converter
-local convert = colors.convert
+-- TODO: This is the only function needed from `mini.colors`. We could very easily just replace it 
+-- with a local implementation.
+local convert = require('mini.colors').convert
 
 -- Some base values
 local bg_hex = '#fdf6e3'
+-- {
+--   h = 90,
+--   l = 96.91632557906,
+--   s = 73.71562509253
+-- }
+
 local bg_base = convert(bg_hex, 'okhsl')
 assert(bg_base ~= nil)
 
@@ -23,7 +31,7 @@ local fg_base = convert(fg_hex, 'okhsl')
 assert(fg_base ~= nil)
 
 -- Hue palette - defines the color wheel positions
-local hs = {
+local hues = {
     -- Base hue derived from bg
     base = bg_base.h,
 
@@ -39,7 +47,7 @@ local hs = {
 }
 
 -- Properties palette - defines saturation and lightness for different uses
-local ps = {
+local props = {
     -- Backgrounds
     bg = { s = bg_base.s, l = bg_base.l },                     -- Main background
     bg_emphasis = { s = 2, l = bg_base.l - 2 },                -- Slightly emphasized
@@ -58,128 +66,133 @@ local ps = {
     fg_ui = { s = 15, l = 50 },                            -- UI foreground
 }
 
-
 -- Define all highlights in a simplified table format
 local highlights = {
     -- Basic highlights
-    Normal                      = { fg = { h = hs.base + 180, p = ps.fg }, bg = { h = hs.base, p = ps.bg } },
-    String                      = { fg = { h = hs.orange, p = ps.fg_colorful }, gui = 'italic' },
-    Number                      = { fg = { h = hs.purple, p = ps.fg_colorful } },
-    Title                       = { fg = { h = hs.orange, p = ps.fg_emphasis }, gui = 'bold' },
-    Comment                     = { fg = { h = hs.base, p = ps.fg_muted } },
-    Todo                        = { fg = { h = hs.orange, p = ps.fg_emphasis }, bg = { h = hs.base, p = ps.bg_emphasis } },
+    Normal  = { fg = { h = hues.base + 180, p = props.fg },             bg = { h = hues.base, p = props.bg, } },
+    String  = { fg = { h = hues.orange,     s = 90, l = 40 },           gui = 'italic' },
+    Number  = { fg = { h = hues.purple,     s = 90, l = 40 }, },
+    Title   = { fg = { h = hues.orange,     s = 90, l = 40 },           gui = 'bold' },
+    Comment = { fg = { h = hues.base,       s = 90, l = 50 } },
+    Todo    = { fg = { h = hues.orange,     s = 90, l = 30 },    bg = { h = hues.base, p = props.bg_emphasis, } },
 
     -- Statements and identifiers
-    Statement                   = { fg = { h = hs.base, p = ps.fg_emphasis }, gui = 'bold' },
+    Statement                   = { fg = { h = hues.base, p = props.fg_emphasis }, gui = 'bold' },
     Conditional                 = { link = 'Statement' },
-    Identifier                  = { fg = { h = hs.orange, p = ps.fg } },
-    Type                        = { fg = { h = hs.base, p = ps.fg }, gui = 'bold' },
+    Identifier                  = { fg = { h = hues.orange, p = props.fg } },
+    Type                        = { fg = { h = hues.base, p = props.fg }, gui = 'bold' },
 
     -- Line numbers and signs
-    LineNr                      = { fg = { h = hs.base, p = ps.fg_subtle } },
-    CursorLineNr                = { fg = { h = hs.orange, p = ps.fg_muted }, gui = 'bold' },
-    SignColumn                  = { bg = { h = hs.base, p = ps.bg } },
-    FoldColumn                  = { fg = { h = hs.base, p = ps.fg_linenr }, bg = { h = hs.base, p = ps.bg } },
+    LineNr                      = { fg = { h = hues.base,   p = props.fg_subtle } },
+    CursorLineNr                = { fg = { h = hues.orange, p = props.fg_muted }, gui = 'bold' },
+    SignColumn                  = { bg = { h = hues.base,   p = props.bg } },
+    FoldColumn                  = { fg = { h = hues.base,   p = props.fg_linenr }, bg = { h = hues.base, p = props.bg } },
 
     -- Treesitter highlights
-    -- ['@class.declaration']      = { bg = { h = hs.base, p = ps.bg_emphasis } },
-    -- ['@declaration.identifier'] = { bg = { h = hs.base, p = ps.bg_emphasis } },
-    -- ['@function']               = { bg = { h = hs.base, p = ps.bg_emphasis } },
-    -- ['@function.call']          = { bg = { h = hs.base, p = ps.bg_emphasis } },
-    -- ['@method']                 = { bg = { h = hs.base, p = ps.bg_emphasis } },
-    -- ['@note']                   = { bg = { h = hs.base, p = ps.bg_emphasis } },
+    -- ['@class.declaration']      = { bg = { h = hues.base, p = props.bg_emphasis } },
+    -- ['@declaration.identifier'] = { bg = { h = hues.base, p = props.bg_emphasis } },
+    -- ['@function']               = { bg = { h = hues.base, p = props.bg_emphasis } },
+    -- ['@function.call']          = { bg = { h = hues.base, p = props.bg_emphasis } },
+    -- ['@method']                 = { bg = { h = hues.base, p = props.bg_emphasis } },
+    -- ['@note']                   = { bg = { h = hues.base, p = props.bg_emphasis } },
     -- ['@todo']                   = { link = 'Todo' },
     -- ['@text.todo']              = { link = 'Todo' },
 
     -- UI elements
-    Visual                      = { bg = { h = hs.base, p = ps.bg_ui } },
-    CursorLine                  = { bg = { h = hs.base, p = ps.bg_cursor } },
-    NonText                     = { fg = { h = hs.base, p = ps.fg_subtle }, gui = 'italic' },
+    Visual                      = { bg = { h = hues.base, s = bg_base.s + 10, l = bg_base.l - 10 } },
+    CursorLine                  = { bg = { h = hues.base, p = props.bg_cursor } },
+    NonText                     = { fg = { h = hues.base, p = props.fg_subtle }, gui = 'italic' },
     NvimDapVirtualText          = { link = 'NonText' },
 
     -- -- DAP debugging
-    -- DapBreakpoint               = { fg = { h = hs.red, p = ps.fg_ui } },
-    -- DapBreakpointLine           = { bg = { h = hs.red, p = ps.bg_highlight } },
-    -- DapBreakpointCurrentLine    = { fg = { h = hs.red, p = ps.fg_ui }, gui = 'bold' },
-    -- DapStopped                  = { fg = { h = hs.green, p = ps.fg_ui } },
-    -- DapStoppedLine              = { bg = { h = hs.green, p = ps.bg_highlight } },
-    -- DapStoppedCurrentLine       = { fg = { h = hs.green, p = ps.fg_ui }, gui = 'bold' },
+    -- DapBreakpoint               = { fg = { h = hues.red, p = props.fg_ui } },
+    -- DapBreakpointLine           = { bg = { h = hues.red, p = props.bg_highlight } },
+    -- DapBreakpointCurrentLine    = { fg = { h = hues.red, p = props.fg_ui }, gui = 'bold' },
+    -- DapStopped                  = { fg = { h = hues.green, p = props.fg_ui } },
+    -- DapStoppedLine              = { bg = { h = hues.green, p = props.bg_highlight } },
+    -- DapStoppedCurrentLine       = { fg = { h = hues.green, p = props.fg_ui }, gui = 'bold' },
     --
     -- -- DAP UI elements
-    -- DapUIBreakpointsCurrentLine = { fg = { h = hs.green, p = ps.fg_ui }, gui = 'bold' },
-    -- DapUIBreakpointsInfo        = { fg = { h = hs.green, p = ps.fg_ui } },
-    -- DapUIBreakpointsPath        = { fg = { h = hs.blue, p = ps.fg_ui } },
-    -- DapUIDecoration             = { fg = { h = hs.blue, p = ps.fg_ui } },
-    -- DapUIFloatBorder            = { fg = { h = hs.blue, p = ps.fg_ui } },
-    -- DapUILineNumber             = { fg = { h = hs.blue, p = ps.fg_ui } },
-    -- DapUIModifiedValue          = { fg = { h = hs.blue, p = ps.fg_ui }, gui = 'bold' },
-    -- DapUIPlayPause              = { fg = { h = hs.green, p = ps.fg_ui } },
-    -- DapUIPlayPauseNC            = { fg = { h = hs.green, p = ps.fg_ui }, bg = { h = hs.toolbar, p = ps.bg_ui } },
-    -- DapUIRestart                = { fg = { h = hs.green, p = ps.fg_ui } },
-    -- DapUIRestartNC              = { fg = { h = hs.green, p = ps.fg_ui }, bg = { h = hs.toolbar, p = ps.bg_ui } },
-    -- DapUIScope                  = { fg = { h = hs.blue, p = ps.fg_ui } },
-    -- DapUIStepBack               = { fg = { h = hs.blue, p = ps.fg_ui } },
-    -- DapUIStepBackNC             = { fg = { h = hs.blue, p = ps.fg_ui }, bg = { h = hs.toolbar, p = ps.bg_ui } },
-    -- DapUIStepInto               = { fg = { h = hs.blue, p = ps.fg_ui } },
-    -- DapUIStepIntoNC             = { fg = { h = hs.blue, p = ps.fg_ui }, bg = { h = hs.toolbar, p = ps.bg_ui } },
-    -- DapUIStepOut                = { fg = { h = hs.blue, p = ps.fg_ui } },
-    -- DapUIStepOutNC              = { fg = { h = hs.blue, p = ps.fg_ui }, bg = { h = hs.toolbar, p = ps.bg_ui } },
-    -- DapUIStepOver               = { fg = { h = hs.blue, p = ps.fg_ui } },
-    -- DapUIStepOverNC             = { fg = { h = hs.blue, p = ps.fg_ui }, bg = { h = hs.toolbar, p = ps.bg_ui } },
-    -- DapUIStoppedThread          = { fg = { h = hs.blue, p = ps.fg_ui } },
-    -- DapUIThread                 = { fg = { h = hs.green, p = ps.fg_ui } },
-    -- DapUIWatchesValue           = { fg = { h = hs.green, p = ps.fg_ui } },
-    -- DapUIWinSelect              = { fg = { h = hs.blue, p = ps.fg_ui }, gui = 'bold' },
+    -- DapUIBreakpointsCurrentLine = { fg = { h = hues.green, p = props.fg_ui }, gui = 'bold' },
+    -- DapUIBreakpointsInfo        = { fg = { h = hues.green, p = props.fg_ui } },
+    -- DapUIBreakpointsPath        = { fg = { h = hues.blue, p = props.fg_ui } },
+    -- DapUIDecoration             = { fg = { h = hues.blue, p = props.fg_ui } },
+    -- DapUIFloatBorder            = { fg = { h = hues.blue, p = props.fg_ui } },
+    -- DapUILineNumber             = { fg = { h = hues.blue, p = props.fg_ui } },
+    -- DapUIModifiedValue          = { fg = { h = hues.blue, p = props.fg_ui }, gui = 'bold' },
+    -- DapUIPlayPause              = { fg = { h = hues.green, p = props.fg_ui } },
+    -- DapUIPlayPauseNC            = { fg = { h = hues.green, p = props.fg_ui }, bg = { h = hues.toolbar, p = props.bg_ui } },
+    -- DapUIRestart                = { fg = { h = hues.green, p = props.fg_ui } },
+    -- DapUIRestartNC              = { fg = { h = hues.green, p = props.fg_ui }, bg = { h = hues.toolbar, p = props.bg_ui } },
+    -- DapUIScope                  = { fg = { h = hues.blue, p = props.fg_ui } },
+    -- DapUIStepBack               = { fg = { h = hues.blue, p = props.fg_ui } },
+    -- DapUIStepBackNC             = { fg = { h = hues.blue, p = props.fg_ui }, bg = { h = hues.toolbar, p = props.bg_ui } },
+    -- DapUIStepInto               = { fg = { h = hues.blue, p = props.fg_ui } },
+    -- DapUIStepIntoNC             = { fg = { h = hues.blue, p = props.fg_ui }, bg = { h = hues.toolbar, p = props.bg_ui } },
+    -- DapUIStepOut                = { fg = { h = hues.blue, p = props.fg_ui } },
+    -- DapUIStepOutNC              = { fg = { h = hues.blue, p = props.fg_ui }, bg = { h = hues.toolbar, p = props.bg_ui } },
+    -- DapUIStepOver               = { fg = { h = hues.blue, p = props.fg_ui } },
+    -- DapUIStepOverNC             = { fg = { h = hues.blue, p = props.fg_ui }, bg = { h = hues.toolbar, p = props.bg_ui } },
+    -- DapUIStoppedThread          = { fg = { h = hues.blue, p = props.fg_ui } },
+    -- DapUIThread                 = { fg = { h = hues.green, p = props.fg_ui } },
+    -- DapUIWatchesValue           = { fg = { h = hues.green, p = props.fg_ui } },
+    -- DapUIWinSelect              = { fg = { h = hues.blue, p = props.fg_ui }, gui = 'bold' },
     --
     -- -- Popup menu and search
-    -- Pmenu                       = { bg = { h = hs.base, p = ps.bg_emphasis } },
-    -- Search                      = { bg = { h = hs.base, p = ps.bg_highlight } },
-    -- TreesitterContext           = { bg = { h = hs.base, p = ps.bg_context } },
-    -- TreesitterContextBottom     = { bg = { h = hs.base, p = ps.bg_context }, gui = 'underline' },
+    Pmenu                       = { bg = { h = hues.base, s = bg_base.s + 10, l = bg_base.l - 10 } },
+    Search                      = { bg = { h = hues.base, s = bg_base.s + 10, l = bg_base.l - 10 } },
+    TreesitterContext           = { bg = { h = hues.base, s = bg_base.s + 10, l = bg_base.l - 5 } },
+    TreesitterContextBottom     = { bg = { h = hues.base, s = bg_base.s + 10, l = bg_base.l - 5 }, gui = 'underline' },
 
     -- File diffing
-    Changed                     = { bg = { h = hs.blue, p = ps.bg_highlight } },
-    Added                       = { bg = { h = hs.green, p = ps.bg_highlight } },
-    Removed                     = { bg = { h = hs.red, p = ps.bg_highlight } },
+    Changed                     = { bg = { h = hues.blue, s = 90, l = 85, } },
+    Added                       = { bg = { h = hues.green, s = 90, l = 85, } },
+    Removed                     = { bg = { h = hues.red, s = 90, l = 85, } },
 
     -- -- Litee UI
-    -- LTSymbol                    = { fg = { h = hs.orange, p = ps.fg_emphasis }, gui = 'bold' },
-    -- LTSymbolDetail              = { fg = { h = hs.blue, p = ps.fg }, gui = 'italic' },
+    -- LTSymbol                    = { fg = { h = hues.orange, p = props.fg_emphasis }, gui = 'bold' },
+    -- LTSymbolDetail              = { fg = { h = hues.blue, p = props.fg }, gui = 'italic' },
     --
     -- -- LSP references
-    -- LspReferenceRead            = { bg = { h = hs.green, p = ps.bg_highlight }, fg = { h = hs.green, p = ps.ref_fg } },
-    -- LspReferenceText            = { bg = { h = hs.blue, p = ps.bg_highlight }, fg = { h = hs.blue, p = ps.ref_fg } },
-    -- LspReferenceWrite           = { bg = { h = hs.red, p = ps.bg_highlight }, fg = { h = hs.red, p = ps.ref_fg } },
+    LspReferenceRead            = { bg = { h = hues.green, s = 90, l = 95 }, },
+    LspReferenceText            = { bg = { h = hues.blue, s = 90, l = 95 }, },
+    LspReferenceWrite           = { bg = { h = hues.red, s = 90, l = 95 }, },
     --
-    -- -- Gitsigns
-    -- GitSignsAdd                 = { bg = { h = hs.green, p = ps.diff_background_dark } },
-    -- GitSignsChange              = { bg = { h = hs.blue, p = ps.diff_background_dark } },
-    -- GitSignsDelete              = { bg = { h = hs.red, p = ps.diff_background_dark } },
-    -- GitSignsStagedAdd           = { bg = { h = hs.green, p = ps.diff_background_light } },
-    -- GitSignsStagedChange        = { bg = { h = hs.blue, p = ps.diff_background_light } },
-    -- GitSignsStagedDelete        = { bg = { h = hs.red, p = ps.diff_background_light } },
+    -- Gitsigns
+    GitSignsAdd                 = { bg = { h = hues.green, s = 90, l = 85, } },
+    GitSignsAddInline           = { bg = { h = hues.green, s = 90, l = 95, } },
+    GitSignsChange              = { bg = { h = hues.blue,  s = 90, l = 85, } },
+    GitSignsChangeInline        = { bg = { h = hues.blue,  s = 90, l = 95, } },
+    GitSignsDelete              = { bg = { h = hues.red,   s = 90, l = 85, } },
+    GitSignsDeleteInline        = { bg = { h = hues.red,   s = 90, l = 95, } },
+    GitSignsStagedAdd           = { bg = { h = hues.green, s = 90, l = 95, } },
+    GitSignsStagedAddInline     = { bg = { h = hues.green, s = 90, l = 95, } },
+    GitSignsStagedChange        = { bg = { h = hues.blue,  s = 90, l = 95, } },
+    GitSignsStagedChangeInline  = { bg = { h = hues.blue,  s = 90, l = 95, } },
+    GitSignsStagedDelete        = { bg = { h = hues.red,   s = 90, l = 95, } },
+    GitSignsStagedDeleteInline  = { bg = { h = hues.red,   s = 90, l = 95, } },
     --
     -- -- Snacks
-    -- SnacksIndent                = { fg = { h = hs.base, p = ps.bg_emphasis } },
-    -- SnacksIndentScope           = { fg = { h = hs.base, p = ps.fg_subtle } },
+    -- SnacksIndent                = { fg = { h = hues.base, p = props.bg_emphasis } },
+    -- SnacksIndentScope           = { fg = { h = hues.base, p = props.fg_subtle } },
     --
     -- -- Whitespace and special characters
-    -- Whitespace                  = { fg = { h = hs.base, p = ps.fg_subtle } },
-    -- SpecialKey                  = { fg = { h = hs.base, p = ps.fg_subtle } },
-    -- EndOfBuffer                 = { fg = { h = hs.base, p = ps.fg_subtle } },
+    -- Whitespace                  = { fg = { h = hues.base, p = props.fg_subtle } },
+    -- SpecialKey                  = { fg = { h = hues.base, p = props.fg_subtle } },
+    -- EndOfBuffer                 = { fg = { h = hues.base, p = props.fg_subtle } },
 }
 
--- Helper to process color specs in the simplified format
-local function process_color(spec)
+--- Resolve color
+local function resolve_color(spec)
     -- print(' processing color: '..vim.inspect(spec))
     if not spec then return nil end
     if type(spec) == 'string' then return spec end
 
     return {
         -- Note that `h` can be nil for achromatic colors
-        h = ((spec.h or 0) + 360) % 360,
-        s = math.min(100, math.max(0, spec.p.s or 0)),
-        l = math.min(100, math.max(0, spec.p.l or 0))
+        h = ((spec.h or spec.p.h or 0) + 360) % 360,              -- Keep within 0-360
+        s = math.min(100, math.max(0, spec.s or spec.p.s or 0)),  -- Clamp to 0-100
+        l = math.min(100, math.max(0, spec.l or spec.p.l or 0)),  -- Clamp to 0-100
     }
 end
 
@@ -188,7 +201,7 @@ local function to_hex(color)
     if type(color) == 'string' then
         return color
     end
-    return colors.convert(color, 'hex')
+    return convert(color, 'hex')
 end
 
 -- Helper function to set highlights
@@ -202,17 +215,8 @@ local function hi(name, opts)
 
     local cmd = { 'hi', name }
 
-    if opts.fg ~= nil then
-        assert(opts.fg.p ~= nil, name .. ' foreground does not have properties')
-    end
-    if opts.bg ~= nil then
-        assert(opts.bg.p ~= nil, name .. ' background does not have properties')
-    end
-
-
-    -- Process color specs
-    local fg = process_color(opts.fg)
-    local bg = process_color(opts.bg)
+    local fg = resolve_color(opts.fg)
+    local bg = resolve_color(opts.bg)
 
     if fg then
         -- print(' - fg='..vim.inspect(fg))
@@ -244,19 +248,6 @@ function M.setup()
         -- print('name='..name..', opts='..vim.inspect(opts))
         hi(name, opts)
     end
-end
-
--- Export palettes for debugging or external use
-function M.get_palettes()
-    return {
-        hues = hs,
-        properties = ps
-    }
-end
-
--- Export highlights table for debugging or customization
-function M.get_highlights()
-    return highlights
 end
 
 -- For use as a colorscheme

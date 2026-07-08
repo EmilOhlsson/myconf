@@ -115,8 +115,11 @@ return lush(function(injected)
 
         -- Gitsigns
         GitSignsAdd             { bg=added.da(20) },
+        GitSignsAddInline       { bg=added.li(20) },
         GitSignsChange          { bg=changed.da(20) },
+        GitSignsChangeInline    { bg=changed.li(20) },
         GitSignsDelete          { bg=removed.da(20) },
+        GitSignsDeleteInline    { bg=removed.li(20) },
         GitSignsStagedAdd       { bg=added.li(10) },
         GitSignsStagedChange    { bg=changed.li(10) },
         GitSignsStagedDelete    { bg=removed.li(10) },
