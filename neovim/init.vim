@@ -15,6 +15,7 @@ if filereadable(expand('$HOME/myconf/local.vim'))
 endif
 
 source ~/myconf/neovim/settings.vim
+lua require('settings')
 source ~/myconf/neovim/helpers.vim
 
 if has('nvim')
