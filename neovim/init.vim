@@ -16,11 +16,8 @@ endif
 
 lua require('settings')
 lua require('mappings')
+lua require('config')
 source ~/myconf/neovim/helpers.vim
-
-if has('nvim')
-  lua require('config')
-endif
 
 filetype plugin indent on
 
