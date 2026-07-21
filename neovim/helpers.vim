@@ -1,3 +1,12 @@
+function MdMode()
+    set expandtab
+    set smarttab
+    set ts=2
+    set tw=80
+    set sw=2
+    set ss=2
+endfunction
+
 function DevMode()
     set expandtab
     set smarttab
@@ -6,14 +15,6 @@ function DevMode()
     set sw=4
     set ss=4
     set cin
-    set cursorline
-endfunction
-
-function SchemeMode()
-    set expandtab
-    set tw=100
-    RainbowToggle
-    imap <C-l> λ
 endfunction
 
 function LinuxDevMode()
