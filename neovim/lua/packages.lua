@@ -9,7 +9,8 @@ M.setup = function()
 
         { src = 'https://github.com/lewis6991/gitsigns.nvim', version = 'a462f41' }, -- v2.1.0
 
-        -- Plug 'godlygeek/tabular' -- TODO: This should be easy to replace with something built in
+	-- Tabularize text, could probably be replaced by something simpler
+	{ src = 'https://github.com/godlygeek/tabular.git', version = '12437cd' },
 
         -- -- TODO: Go through and tag specific commits
         -- Plug 'mfussenegger/nvim-dap'	-- 6a5bba0ddea5d419a783e170c20988046376090d
