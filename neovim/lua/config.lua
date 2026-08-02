@@ -1,6 +1,4 @@
 -- TODO: A lot of the setup in this file is just plugin setup, so this should probably be renamed
--- TODO: Once v0.12 is release, replace `Plug` with the built in package manager, and replace
--- vim-script files with lua setup
 
 -- Profile startup if `PROF` is set to truthy value
 if vim.env.PROF then
@@ -72,8 +70,6 @@ if snacks ~= nil then
     vim.keymap.set('n', '<space>lr', snacks.picker.lsp_references, {})
     vim.keymap.set('n', '<space>pp', snacks.picker.pick, {})
     vim.keymap.set('n', '<space>qf', snacks.picker.qflist, {})
-    -- TODO: For whatever reason, this doesn't work when assigning function here
-    vim.keymap.set('n', '<space>dd', ':lua Snacks.picker.todo_comments()<CR>', {})
 
     -- File explorer
     vim.keymap.set('n', '<c-b>', snacks.picker.explorer, {})

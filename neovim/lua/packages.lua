@@ -12,12 +12,10 @@ M.setup = function()
 	-- Tabularize text, could probably be replaced by something simpler
 	{ src = 'https://github.com/godlygeek/tabular.git', version = '12437cd' },
 
-        -- -- TODO: Go through and tag specific commits
-        -- Plug 'mfussenegger/nvim-dap'	-- 6a5bba0ddea5d419a783e170c20988046376090d
-        -- Plug 'nvim-neotest/nvim-nio'
-        -- Plug 'rcarriga/nvim-dap-ui'
-        -- Plug 'theHamsta/nvim-dap-virtual-text'
-        --
+	-- Debug tools
+	{ src = 'https://github.com/mfussenegger/nvim-dap', version = '6a5bba0ddea5d419a783e170c20988046376090d', },
+	{ src = 'https://github.com/theHamsta/nvim-dap-virtual-text', version = 'fbdb48c', },
+
         -- TODO: Clean these up. I don't think these are actually required
 	{ src = 'https://github.com/nvim-lua/plenary.nvim', version = '74b06c6c75e4eeb3108ec01852001636d85a932b', }, -- Useful for Shears, but candidate for removal
         { src = 'https://github.com/echasnovski/mini.nvim', version = '1345d191bb3da9c7b0e977f4387c5761f9bff68d', }, -- 0.18 - mini.nvim is a collection of plugins
