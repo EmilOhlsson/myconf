@@ -37,7 +37,7 @@ local M = {}
 ---@alias SmartYankHighlight {enabled?: boolean, higroup?: string, timeout?: number, on_visual?: boolean}
 
 --- Smart-yank setup options
----@alias SmartYankOptions {leader?: string, keymaps?: SmartYankKeymaps, register?: string, highlight?: SmartYankHighlight}
+---@alias SmartYankOptions {leader?: string, keymaps?: SmartYankKeymaps, register?: string, highlight?: SmartYankHighlight, relative_path?: boolean}
 
 --- Default configuration options
 local DEFAULT_CONFIG = {
@@ -47,6 +47,7 @@ local DEFAULT_CONFIG = {
         output_range = 'or'    -- <leader>or
     },
     register = '+',            -- default to system clipboard
+    relative_path = false      -- Use relative paths
     highlight = {
         enabled = true,        -- Enable/disable highlighting
         higroup = 'IncSearch', -- Highlight group (alternatives: 'Visual', 'Search')
@@ -87,7 +88,7 @@ end
 --- @param end_line number Ending line number
 --- @return string formatted_reference The markdown-formatted file reference
 local function format_file_reference(start_line, end_line)
-    local path = vim.fn.expand('%')
+    local path = vim.fn.expand(config.relative_path and '%:p:.' or '%')
     if start_line == end_line then
         return '`' .. path .. ':' .. start_line .. '`'
     else

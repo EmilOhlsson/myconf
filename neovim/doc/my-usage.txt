@@ -4,6 +4,13 @@ My usage						*my-usage.txt*
 This text describes my Neovim setup
 
 ------------------------------------------------------------------------------
+Handy tools
+
+Describe things I typically use
+
+:Undotree
+
+------------------------------------------------------------------------------
 Local keymaps						*my-commands*
 
 dap							*my-dap*

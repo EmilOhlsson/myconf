@@ -1,5 +1,10 @@
 -- TODO: A lot of the setup in this file is just plugin setup, so this should probably be renamed
 
+-- TODO: Enable :packadd nvim.undotree
+--       -> :UndoTree
+
+-- TODO: There should now be markdown tree-sitter support
+
 -- Profile startup if `PROF` is set to truthy value
 if vim.env.PROF then
     local snacks = vim.fn.stdpath('data') .. '/plugged/snacks.nvim'
@@ -64,6 +69,16 @@ if snacks ~= nil then
     vim.keymap.set('n', '<space>fb', snacks.picker.buffers, {})
     vim.keymap.set('n', '<space>ff', snacks.picker.files, {})
     vim.keymap.set('n', '<space>fp', snacks.picker.projects, {})
+    vim.keymap.set('n', '<space>gd', function()
+        snacks.picker.git_diff({ staged = false, group = true })
+    end, {
+        desc = "Pick unstaged changes, by file",
+    })
+    vim.keymap.set('n', '<space>gD', function()
+        snacks.picker.git_diff({ staged = true, group = true })
+    end, {
+        desc = "staged unstaged changes, by file",
+    })
     vim.keymap.set('n', '<space>gs', snacks.picker.git_status, {})
     vim.keymap.set('n', '<space>lg', snacks.picker.grep, {})
     vim.keymap.set('n', '<space>ll', snacks.picker.loclist, {})
@@ -116,6 +131,7 @@ end
 -- Gitsigns
 local gitsigns = utils.try_load('gitsigns')
 _ = gitsigns and gitsigns.setup {
+    attach_to_untracked = true,
     current_line_blame = true,
     word_diff = true,
     preview_config = {
@@ -189,21 +205,6 @@ if mini_icons ~= nil then
     mini_icons.setup()
 end
 
-local todo_comments = utils.try_load('todo-comments')
-if todo_comments ~= nil then
-    todo_comments.setup({
-        signs = false,
-    })
-    vim.keymap.set('n', ']d', todo_comments.jump_next, { desc = 'Next todo' })
-    vim.keymap.set('n', '[d', todo_comments.jump_prev, { desc = 'Previous todo' })
-end
-
-local trouble = utils.try_load('trouble')
-if trouble ~= nil then
-    trouble.setup({
-    })
-end
-
 local render_markdown = utils.try_load('render-markdown')
 if render_markdown ~= nil then
     render_markdown.setup({
@@ -256,11 +257,28 @@ vim.api.nvim_create_autocmd({'BufNewFile'}, {
     end,
 })
 
+vim.api.nvim_create_autocmd({'FileType'}, {
+    pattern = {'markdown'},
+    callback = function(env)
+        vim.bo[env.buf].textwidth = 80
+        vim.opt_local.spell = true
+    end,
+})
+
+vim.api.nvim_create_autocmd({'FileType'}, {
+    pattern = {'gitcommit'},
+    callback = function(env)
+        vim.opt_local.spell = true
+    end,
+})
+
 vim.o.guicursor = 'i-ci:ver30-iCursor-blinkwait300-blinkon200-blinkoff150'
 
 local smart_yank = utils.try_load('smart-yank')
 if smart_yank then
-    smart_yank.setup()
+    smart_yank.setup({
+        relative_path = true,
+    })
 end
 
 -- vim: set et ts=4 sw=4 ss=4 tw=100 :
