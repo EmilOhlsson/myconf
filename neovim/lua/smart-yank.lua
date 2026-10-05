@@ -47,7 +47,7 @@ local DEFAULT_CONFIG = {
         output_range = 'or'    -- <leader>or
     },
     register = '+',            -- default to system clipboard
-    relative_path = false      -- Use relative paths
+    relative_path = false,     -- Use relative paths
     highlight = {
         enabled = true,        -- Enable/disable highlighting
         higroup = 'IncSearch', -- Highlight group (alternatives: 'Visual', 'Search')
