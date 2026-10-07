@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+import argparse
+import random
+import sys
+
+COLORS = [
+    "red", "blue", "green", "cyan", "pink", "grey", "gold", "black", 
+    "white", "teal", "lime", "aqua", "beige", "brown", "azure", 
+    "coral", "indigo", "mauve", "olive", "peach", "violet"
+]
+
+ADJECTIVES = [
+    "fast", "calm", "bold", "wild", "cool", "kind", "lazy", "epic", 
+    "sly", "mad", "tiny", "huge", "brisk", "swift", "brave", "chill", 
+    "goofy", "happy", "jolly", "merry", "nerdy", "quirky", "silly", "zesty",
+    "brawny", "clever", "daring", "eager", "fierce", "gentle", "honest", 
+    "jolly", "keen", "loyal", "mighty", "noble", "proud", "quick", "ready"
+]
+
+ANIMALS = list(set([
+    "cat", "dog", "fox", "bear", "lion", "wolf", "bird", "fish", 
+    "deer", "frog", "goat", "seal", "crab", "moth", "wasp", "ape", 
+    "bat", "bee", "bug", "elk", "emu", "hen", "jay", "lynx", "mole", 
+    "mule", "owl", "pig", "rat", "slug", "snail", "toad", "ant", "boar", 
+    "buck", "calf", "colt", "cow", "cub", "doe", "duck", "eel", "ewe", 
+    "fawn", "foal", "gull", "hare", "hawk", "lamb", "mare", "newt", 
+    "otter", "ox", "prawn", "pug", "puma", "swan", "tick", "vole", 
+    "whelk", "worm", "mink", "orca", "koi", "crow", "crane", "heron", 
+    "loon", "stork", "egret", "ibis", "swift", "tern", "coot", "teal", 
+    "mallard", "puffin", "skua", "gannet", "auk", "seal", "seal"
+]))
+
+def generate_name(seed=None):
+    if seed is not None:
+        random.seed(seed)
+    
+    color = random.choice(COLORS)
+    adjective = random.choice(ADJECTIVES)
+    animal = random.choice(ANIMALS)
+    
+    return f"{color}-{adjective}-{animal}"
+
+def main():
+    parser = argparse.ArgumentParser(description="Generate a random name in the form <color>-<adjective>-<animal>.")
+    parser.add_argument("--seed", type=str, help="Seed for deterministic output.")
+    args = parser.parse_args()
+
+    try:
+        name = generate_name(args.seed)
+        print(name)
+        print(f"tmp-name: {name}", file=sys.stderr)
+    except Exception as e:
+        print(f"tmp-name: Error: {e}", file=sys.stderr)
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()

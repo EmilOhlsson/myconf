@@ -1,0 +1,215 @@
+#!/usr/bin/env python3
+"""
+Launch opencode inside a bubblewrap (bwrap) sandbox.
+
+- The system (/usr, /etc, /opt, ...) is mounted read-only.
+- $HOME is replaced by an empty tmpfs; only selected paths are mounted back in.
+- A list of folders is writable (including ~/llm-home and opencode's own state dirs).
+- The current directory is writable by default (disable with --no-cwd).
+- Network is shared (opencode needs it to reach model providers).
+
+Usage:
+    opencode-sandbox.py [options] [-- opencode-args...]
+
+Examples:
+    opencode-sandbox.py                      # run opencode in the current project
+    opencode-sandbox.py --no-cwd             # only ~/llm-home etc. are writable
+    opencode-sandbox.py --rw ~/src/other     # add an extra writable dir
+    opencode-sandbox.py --dry-run            # print the bwrap command
+    opencode-sandbox.py --shell              # open a bash shell in the sandbox to test it
+"""
+
+import argparse
+import os
+import shlex
+import shutil
+import sys
+from pathlib import Path
+
+HOME = Path.home()
+
+# ---------------------------------------------------------------------------
+# Configuration — edit these lists to taste
+# ---------------------------------------------------------------------------
+
+# System paths mounted read-only (missing ones are skipped).
+SYSTEM_RO = [
+    "/bin",
+    "/etc",
+    "/lib",
+    "/lib32",
+    "/lib64",
+    "/opt",
+    "/sbin",
+    "/usr",
+]
+
+# Paths inside $HOME mounted read-only (missing ones are skipped).
+# Toolchains, shell config, and git identity — no secrets like ~/.ssh or ~/.aws.
+HOME_RO = [
+    ".cargo/bin",
+    ".config/git",
+    ".config/nvim",
+    ".gitconfig",
+    ".local/bin",
+    ".local/share/uv",
+    ".opencode",
+    ".pyenv",
+    ".rustup",
+]
+
+# Writable paths. Created on the host if missing.
+WRITABLE = [
+    "~/llm-home",
+    "~/.config/opencode",
+    "~/.local/share/opencode",   # sessions + auth.json
+    "~/.local/state/opencode",
+    "~/.cache/opencode",
+]
+
+# Environment variables passed through to the sandbox (everything else is cleared).
+ENV_PASSTHROUGH = [
+    "TERM", "COLORTERM", "LANG", "LC_ALL", "LC_CTYPE", "TZ",
+    "EDITOR", "VISUAL",
+]
+
+# ---------------------------------------------------------------------------
+
+
+def expand(p: str) -> Path:
+    return Path(os.path.expandvars(os.path.expanduser(p)))
+
+
+def build_command(args) -> list[str]:
+    bwrap = shutil.which("bwrap")
+    if not bwrap:
+        sys.exit("error: bwrap not found (install the 'bubblewrap' package)")
+
+    cmd = [
+        bwrap,
+        "--unshare-all",
+        "--share-net",
+        "--die-with-parent",
+        "--hostname", "sandbox",
+        "--proc", "/proc",
+        "--dev", "/dev",
+        "--tmpfs", "/tmp",
+        "--tmpfs", "/run",
+    ]
+    if args.new_session:
+        # Blocks TIOCSTI terminal injection on old kernels; can upset some TUIs.
+        cmd.append("--new-session")
+
+    # --- System, read-only --------------------------------------------------
+    for p in SYSTEM_RO:
+        path = Path(p)
+        if path.is_symlink():
+            # e.g. /bin -> usr/bin on merged-/usr distros
+            cmd += ["--symlink", os.readlink(path), p]
+        elif path.exists():
+            cmd += ["--ro-bind", p, p]
+
+    # DNS: /etc/resolv.conf is often a symlink into /run (systemd-resolved),
+    # which we replaced with a tmpfs, so bind the real target.
+    resolv = Path("/etc/resolv.conf")
+    if resolv.is_symlink():
+        target = resolv.resolve()
+        if target.exists() and str(target).startswith("/run/"):
+            cmd += ["--ro-bind", str(target), str(target)]
+
+    # --- Home: empty tmpfs, then selected paths -----------------------------
+    cmd += ["--tmpfs", str(HOME)]
+
+    ro_paths = [HOME / p for p in HOME_RO] + [expand(p) for p in args.ro]
+
+    # Make sure the opencode binary's location is visible.
+    opencode = shutil.which("opencode")
+    if not opencode and not args.shell:
+        sys.exit("error: opencode not found in PATH")
+    if opencode:
+        for d in {Path(opencode).parent, Path(opencode).resolve().parent}:
+            ro_paths.append(d)
+
+    rw_paths = [expand(p) for p in WRITABLE] + [expand(p) for p in args.rw]
+
+    cwd = Path.cwd()
+    if not args.no_cwd:
+        if cwd == HOME or cwd == Path("/"):
+            sys.exit(f"error: refusing to make {cwd} writable; cd into a project "
+                     "or use --no-cwd")
+        rw_paths.append(cwd)
+
+    for p in rw_paths:
+        p.mkdir(parents=True, exist_ok=True)
+
+    # Shallow paths first so deeper binds aren't hidden by later mounts.
+    binds = [(p, "--ro-bind") for p in ro_paths if p.exists()]
+    binds += [(p, "--bind") for p in rw_paths]
+    binds.sort(key=lambda b: len(b[0].parts))
+    seen = set()
+    for path, flag in binds:
+        if path in seen:
+            continue
+        seen.add(path)
+        cmd += [flag, str(path), str(path)]
+
+    # --- Environment ---------------------------------------------------------
+    cmd.append("--clearenv")
+    env = {
+        "HOME": str(HOME),
+        "USER": os.environ.get("USER", "user"),
+        "SHELL": "/bin/bash",
+        "PATH": os.environ.get("PATH", "/usr/local/bin:/usr/bin:/bin"),
+        "TMPDIR": "/tmp",
+        "XDG_CONFIG_HOME": str(HOME / ".config"),
+        "XDG_DATA_HOME": str(HOME / ".local/share"),
+        "XDG_STATE_HOME": str(HOME / ".local/state"),
+        "XDG_CACHE_HOME": str(HOME / ".cache"),
+        "OPENCODE_SANDBOX": "1",
+    }
+    for name in ENV_PASSTHROUGH:
+        if name in os.environ:
+            env[name] = os.environ[name]
+    for k, v in env.items():
+        cmd += ["--setenv", k, v]
+
+    workdir = expand("~/llm-home") if args.no_cwd else cwd
+    cmd += ["--chdir", str(workdir)]
+
+    # --- Program -------------------------------------------------------------
+    if args.shell:
+        cmd += ["/bin/bash", "--norc"]
+    else:
+        cmd += [opencode, *args.opencode_args]
+    return cmd
+
+
+def main():
+    ap = argparse.ArgumentParser(description="Run opencode in a bwrap sandbox.")
+    ap.add_argument("--rw", action="append", default=[], metavar="DIR",
+                    help="extra writable directory (repeatable)")
+    ap.add_argument("--ro", action="append", default=[], metavar="PATH",
+                    help="extra read-only path (repeatable)")
+    ap.add_argument("--no-cwd", action="store_true",
+                    help="don't make the current directory writable; start in ~/llm-home")
+    ap.add_argument("--new-session", action="store_true",
+                    help="pass --new-session to bwrap (stricter, may break the TUI)")
+    ap.add_argument("--shell", action="store_true",
+                    help="start bash instead of opencode, to inspect the sandbox")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="print the bwrap command and exit")
+    ap.add_argument("opencode_args", nargs=argparse.REMAINDER,
+                    help="arguments passed to opencode (put them after --)")
+    args = ap.parse_args()
+    if args.opencode_args and args.opencode_args[0] == "--":
+        args.opencode_args = args.opencode_args[1:]
+
+    cmd = build_command(args)
+    if args.dry_run:
+        print(" \\\n  ".join(shlex.quote(c) for c in cmd))
+        return
+    os.execvp(cmd[0], cmd)
+
+
+if __name__ == "__main__":
+    main()
