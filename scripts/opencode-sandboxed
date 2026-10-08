@@ -53,9 +53,11 @@ HOME_RO = [
     ".gitconfig",
     ".local/bin",
     ".local/share/uv",
+    ".local/share/nvim",
     ".opencode",
     ".pyenv",
     ".rustup",
+    "myconf",
 ]
 
 # Writable paths. Created on the host if missing.

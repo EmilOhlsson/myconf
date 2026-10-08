@@ -53,6 +53,8 @@ split-divider-color = 262626
 # ctrl+shift+pg_up/pg_down -- prev/next tab
 # ctrl+shift+,             -- Reload config
 # ctrl+shift+p             -- Command palette
+# ctrl+alt+arrow           -- Move to split
+# ctrl+shift+arrow         -- prev/next tab
 
 ## macOS
 # super + d                 -- new_split:right

@@ -11,8 +11,10 @@
 ---   <leader>or{motion} - Output Range: Yank range reference only
 ---   <leader>oc (visual) - Output Content: Yank selected content with code block
 ---   <leader>or (visual) - Output Range: Yank selected range reference only
+---   <leader>of - Output File: Yank the file name (path) only
 ---
 --- Output formats:
+---   File name only: `relative/path/file.lua`
 ---   Range only: `relative/path/file.lua:10,25`
 ---   With content:
 ---   ```
@@ -25,28 +27,28 @@
 ---   ```
 ---
 --- Register support:
----   - Default: System clipboard ('+' register)
+---   - Default: Vim's default register (follows 'clipboard', e.g. '+' with unnamedplus)
 ---   - Custom: Use register prefix (e.g., "a<leader>oc5j stores in 'a' register)
 
 local M = {}
 
 --- Smart-yank keymap configuration
----@alias SmartYankKeymaps {output_content?: string, output_range?: string}
+---@alias SmartYankKeymaps {output_content?: string, output_range?: string, output_file?: string}
 
 --- Smart-yank highlight configuration
 ---@alias SmartYankHighlight {enabled?: boolean, higroup?: string, timeout?: number, on_visual?: boolean}
 
 --- Smart-yank setup options
----@alias SmartYankOptions {leader?: string, keymaps?: SmartYankKeymaps, register?: string, highlight?: SmartYankHighlight, relative_path?: boolean}
+---@alias SmartYankOptions {leader?: string, keymaps?: SmartYankKeymaps, highlight?: SmartYankHighlight, relative_path?: boolean}
 
 --- Default configuration options
 local DEFAULT_CONFIG = {
     leader = '<leader>',
     keymaps = {
         output_content = 'oc', -- <leader>oc
-        output_range = 'or'    -- <leader>or
+        output_range = 'or',   -- <leader>or
+        output_file = 'of'     -- <leader>of
     },
-    register = '+',            -- default to system clipboard
     relative_path = false,     -- Use relative paths
     highlight = {
         enabled = true,        -- Enable/disable highlighting
@@ -75,12 +77,10 @@ local function get_range_from_marks(start_mark, end_mark)
     return start_line, end_line
 end
 
---- Get the appropriate register to use
---- @return string register The register to use for yanking
-local function get_register()
-    -- Check if user specified a register (e.g., "a<leader>oc)
-    -- vim.v.register contains the register if one was specified
-    return vim.v.register or config.register
+--- Get the current buffer's file path, honouring the relative_path option
+--- @return string path Empty string if the buffer has no name
+local function get_path()
+    return vim.fn.expand(config.relative_path and '%:p:.' or '%')
 end
 
 --- Format the file reference with line numbers
@@ -88,7 +88,7 @@ end
 --- @param end_line number Ending line number
 --- @return string formatted_reference The markdown-formatted file reference
 local function format_file_reference(start_line, end_line)
-    local path = vim.fn.expand(config.relative_path and '%:p:.' or '%')
+    local path = get_path()
     if start_line == end_line then
         return '`' .. path .. ':' .. start_line .. '`'
     else
@@ -118,8 +118,8 @@ local function smart_yank(include_content, start_mark, end_mark)
         result = result .. '\n' .. format_lines(lines)
     end
 
-    -- Store in appropriate register
-    local register = get_register()
+    -- Store in the register used for a normal yank (honours a typed prefix like "a)
+    local register = vim.v.register
     vim.fn.setreg(register, result)
 
     -- Highlight the yanked region if enabled
@@ -175,6 +175,20 @@ local function yank_range_visual()
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', false)
 end
 
+--- Yank the current file name (path) only - normal mode function for <leader>of
+local function yank_file_name()
+    local path = get_path()
+    if path == '' then
+        vim.notify('smart-yank: buffer has no file name', vim.log.levels.WARN)
+        return
+    end
+
+    local result = '`' .. path .. '`'
+    local register = vim.v.register
+    vim.fn.setreg(register, result)
+    print('Yanked to register ' .. register .. ': ' .. result)
+end
+
 --- Setup function to initialize the smart-yank module
 --- @param opts? SmartYankOptions Optional configuration table
 function M.setup(opts)
@@ -206,6 +220,11 @@ function M.setup(opts)
     end, {
         expr = true,
         desc = 'Output range with movement (e.g., ' .. leader .. keymap.output_range .. 'ip)'
+    })
+
+    -- File name needs no motion
+    vim.keymap.set('n', leader .. keymap.output_file, yank_file_name, {
+        desc = 'Output file name'
     })
 
     -- Set up visual mode keymaps
