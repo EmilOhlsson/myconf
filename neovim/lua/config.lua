@@ -281,4 +281,26 @@ if smart_yank then
     })
 end
 
+local visual_match = utils.try_load('visual-match')
+if visual_match then
+    visual_match.setup()
+end
+
+local git_conflict = utils.try_load('git-conflict')
+if git_conflict then
+    git_conflict.setup()
+    vim.keymap.set('n', ';rp', git_conflict.pick,
+        { desc = 'Resolve conflict: pick section under cursor' 
+    })
+    vim.keymap.set('n', ';rr', git_conflict.view,
+        { desc = 'Resolve conflict: view base/ours/theirs' }
+    )
+    vim.keymap.set('n', ']r', git_conflict.next_pane,
+        { desc = 'Resolve conflict: next view pane' }
+    )
+    vim.keymap.set('n', '[r', git_conflict.prev_pane,
+        { desc = 'Resolve conflict: previous view pane' }
+    )
+end
+
 -- vim: set et ts=4 sw=4 ss=4 tw=100 :

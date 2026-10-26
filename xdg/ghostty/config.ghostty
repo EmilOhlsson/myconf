@@ -44,6 +44,8 @@ unfocused-split-opacity = 0.7
 unfocused-split-fill = c0b99f
 split-divider-color = 262626
 
+font-feature = -calt
+
 # ghostty +list-keybinds --default
 
 ## Linux

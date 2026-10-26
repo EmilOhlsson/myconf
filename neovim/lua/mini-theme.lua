@@ -15,14 +15,18 @@ local M = {}
 -- with a local implementation.
 local convert = require('mini.colors').convert
 
+--- Linear blend of two saturation/lightness property sets
+--- @param a { s: number, l: number }
+--- @param b { s: number, l: number }
+--- @param t? number Weight of `b`, 0-1 (default 0.5)
+--- @return { s: number, l: number }
+local function blend(a, b, t)
+    t = t or 0.5
+    return { s = a.s + (b.s - a.s) * t, l = a.l + (b.l - a.l) * t }
+end
+
 -- Some base values
 local bg_hex = '#fdf6e3'
--- {
---   h = 90,
---   l = 96.91632557906,
---   s = 73.71562509253
--- }
-
 local bg_base = convert(bg_hex, 'okhsl')
 assert(bg_base ~= nil)
 
@@ -46,14 +50,18 @@ local hues = {
     toolbar = 230,
 }
 
+-- Some base properties
+local bg_highlight = { s = bg_base.s + 10, l = bg_base.l - 10 }
+
 -- Properties palette - defines saturation and lightness for different uses
 local props = {
     -- Backgrounds
-    bg = { s = bg_base.s, l = bg_base.l },                     -- Main background
+    bg = bg_base,                                              -- Main background
     bg_emphasis = { s = 2, l = bg_base.l - 2 },                -- Slightly emphasized
     bg_cursor = { s = bg_base.s + 10, l = bg_base.l - 2 },     -- Cursor line
-    bg_highlight = { s = bg_base.s + 10, l = bg_base.l - 10 }, -- Search highlight
+    bg_highlight = bg_highlight,                               -- Search highlight
     bg_context = { s = bg_base.s + 5, l = bg_base.l - 3 },     -- Treesitter context
+    bg_highlight_adj = blend(bg_base, bg_highlight),          -- Items related to highlighted
     bg_ui = { s = 30, l = 40 },                                -- UI background -- maybe merge with cursor and context?
 
     -- Foregrounds
@@ -69,12 +77,13 @@ local props = {
 -- Define all highlights in a simplified table format
 local highlights = {
     -- Basic highlights
-    Normal  = { fg = { h = hues.base + 180, p = props.fg },             bg = { h = hues.base, p = props.bg, } },
-    String  = { fg = { h = hues.orange,     s = 90, l = 40 },           gui = 'italic' },
-    Number  = { fg = { h = hues.purple,     s = 90, l = 40 }, },
-    Title   = { fg = { h = hues.orange,     s = 90, l = 40 },           gui = 'bold' },
-    Comment = { fg = { h = hues.base,       s = 90, l = 50 } },
-    Todo    = { fg = { h = hues.orange,     s = 90, l = 30 },    bg = { h = hues.base, p = props.bg_emphasis, } },
+    Normal      = { fg = { h = hues.base + 180, p = props.fg },   bg = { h = hues.base, p = props.bg, }, },
+    NormalFloat = { fg = { h = hues.base + 180, p = props.fg },   bg = { h = hues.base, s = bg_base.s + 10, l = bg_base.l -5, }, },
+    String      = { fg = { h = hues.orange,     s = 90, l = 40 }, gui = 'italic', },
+    Number      = { fg = { h = hues.purple,     s = 90, l = 40 }, },
+    Title       = { fg = { h = hues.orange,     s = 90, l = 40 }, gui = 'bold', },
+    Comment     = { fg = { h = hues.base,       s = 90, l = 50 }, },
+    Todo        = { fg = { h = hues.orange,     s = 90, l = 30 }, bg = { h = hues.base, p = props.bg_emphasis, } },
 
     -- Statements and identifiers
     Statement                   = { fg = { h = hues.base, p = props.fg_emphasis }, gui = 'bold' },
@@ -100,6 +109,7 @@ local highlights = {
 
     -- UI elements
     Visual                      = { bg = { h = hues.base, s = bg_base.s + 10, l = bg_base.l - 10 } },
+    VisualMatch                 = { bg = { h = hues.base, p = props.bg_highlight_adj } },
     CursorLine                  = { bg = { h = hues.base, p = props.bg_cursor } },
     NonText                     = { fg = { h = hues.base, p = props.fg_subtle }, gui = 'italic' },
     NvimDapVirtualText          = { link = 'NonText' },
@@ -148,6 +158,12 @@ local highlights = {
     Changed                     = { bg = { h = hues.blue, s = 90, l = 85, } },
     Added                       = { bg = { h = hues.green, s = 90, l = 85, } },
     Removed                     = { bg = { h = hues.red, s = 90, l = 85, } },
+
+    -- Whole-line backgrounds use the subtle lightness, DiffText marks the changed part of a line
+    DiffAdd                     = { bg = { h = hues.green, s = 90, l = 95, } },
+    DiffChange                  = { bg = { h = hues.blue,  s = 90, l = 95, } },
+    DiffDelete                  = { bg = { h = hues.red,   s = 90, l = 95, } },
+    DiffText                    = { bg = { h = hues.blue,  s = 90, l = 85, } },
 
     -- -- Litee UI
     -- LTSymbol                    = { fg = { h = hues.orange, p = props.fg_emphasis }, gui = 'bold' },
