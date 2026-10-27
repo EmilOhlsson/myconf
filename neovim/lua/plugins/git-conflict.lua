@@ -8,7 +8,7 @@
 --- otherwise it is looked up in the git index (stage 1) using the surrounding lines as anchors.
 ---
 --- Usage:
----   require('git-conflict').setup({ size = 0.8 })
+---   require('plugins.git-conflict').setup({ size = 0.8 })
 ---   :ConflictView, :ConflictPick
 
 local M = {}

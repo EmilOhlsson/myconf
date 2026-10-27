@@ -1,17 +1,10 @@
-local utils = require('config-utils')
-
-local dap = utils.try_load('dap')
-local dap_widgets = utils.try_load('dap.ui.widgets')
-local dap_ui = utils.try_load('dapui')
+local map = require('core.util').map
 
 local pick_file = function()
-    return vim.fn.input("Pick file: ", vim.fn.getcwd() .. '/', 'file')
+    return vim.fn.input('Pick file: ', vim.fn.getcwd() .. '/', 'file')
 end
 
-local function configure_dap()
-    -- Assume check in setup function
-    assert(dap ~= nil)
-
+local function configure_dap(dap)
     dap.adapters['gdb'] = {
         type = 'executable',
         command = 'gdb',
@@ -54,7 +47,7 @@ local function configure_dap()
             type = 'gdb',
             request = 'launch',
             program = pick_file,
-            cwd = "${workspaceFolder}",
+            cwd = '${workspaceFolder}',
         },
         {
             name = 'Attach to GDB server',
@@ -62,14 +55,14 @@ local function configure_dap()
             request = 'attach',
             target = 'localhost:2345',
             program = pick_file,
-            cwd = "${workspaceFolder}"
+            cwd = '${workspaceFolder}'
         },
         {
             name = 'launch in LLDB',
             type = 'lldb',
             request = 'launch',
             program = pick_file,
-            cwd = "${workspaceFolder}",
+            cwd = '${workspaceFolder}',
         },
     }
     dap.configurations = {
@@ -91,40 +84,34 @@ local function configure_dap()
 end
 
 -- Configure a keyboard shortcut for a given function. Prepend leader key
-local function map_key(key, func)
-    vim.keymap.set('n', ',' .. key, func)
+local function map_key(key, func, description)
+    map('n', ',' .. key, func, 'Debug: ' .. description)
 end
 
-local function set_logging_breakpoint()
-    assert(dap ~= nil)
-    dap.set_breakpoint(nil, nil, vim.fn.input('Log message: '))
-end
+local function configure_dap_keymap(dap)
+    local dap_widgets = require('dap.ui.widgets')
 
-local function set_conditional_breakpoint()
-    assert(dap ~= nil)
-    dap.set_breakpoint(vim.fn.input('Break condition: '), nil, nil)
-end
-
-local function configure_dap_keymap()
-    assert(dap ~= nil)
-    assert(dap_widgets ~= nil)
-
-    map_key(',', dap.step_over)
-    map_key('b', dap.toggle_breakpoint)
-    map_key('B', set_logging_breakpoint)
-    map_key('C', dap.clear_breakpoints)
-    map_key('c', dap.continue)
-    map_key('d', dap.down)
-    map_key('e', set_conditional_breakpoint)
-    map_key('h', dap_widgets.hover)
-    map_key('o', dap.step_out)
-    map_key('r', dap.repl.toggle)
-    map_key('s', dap.step_into)
-    map_key('t', dap.terminate)
-    map_key('u', dap.up)
-    if dap_ui ~= nil then
-        map_key('U', dap_ui.toggle)
+    local function set_logging_breakpoint()
+        dap.set_breakpoint(nil, nil, vim.fn.input('Log message: '))
     end
+
+    local function set_conditional_breakpoint()
+        dap.set_breakpoint(vim.fn.input('Break condition: '), nil, nil)
+    end
+
+    map_key(',', dap.step_over, 'step over')
+    map_key('b', dap.toggle_breakpoint, 'toggle breakpoint')
+    map_key('B', set_logging_breakpoint, 'set logging breakpoint')
+    map_key('C', dap.clear_breakpoints, 'clear all breakpoints')
+    map_key('c', dap.continue, 'continue/start execution')
+    map_key('d', dap.down, 'down one frame')
+    map_key('e', set_conditional_breakpoint, 'set conditional breakpoint')
+    map_key('h', dap_widgets.hover, 'hover expression')
+    map_key('o', dap.step_out, 'step out')
+    map_key('r', dap.repl.toggle, 'toggle REPL')
+    map_key('s', dap.step_into, 'step into')
+    map_key('t', dap.terminate, 'terminate')
+    map_key('u', dap.up, 'up one frame')
 end
 
 local function configure_dap_signs()
@@ -142,31 +129,32 @@ local function configure_dap_signs()
     define('DapStopped', '\u{23f5}')
 end
 
-local M = {
-    setup = function()
-        if dap ~= nil then
-            configure_dap()
-            configure_dap_keymap()
+return {
+    {
+        module = 'dap',
+        setup = function(dap)
+            configure_dap(dap)
+            configure_dap_keymap(dap)
             configure_dap_signs()
-
-            -- Configure virutal text, if possible
-            local dap_virtual_text = utils.try_load('nvim-dap-virtual-text')
-            if dap_virtual_text ~= nil then
-                dap_virtual_text.setup({
-                    enabled = false,            -- Disable by default, can be verbose
-                    commented = true,           -- Use language comment style
-                    enabled_commands = true,    -- Allow toggle using command
-                })
-            end
-
-            -- Configure DAP UI, if available
-            if dap_ui ~= nil then
-                dap_ui.setup()
-            end
-        end
-    end
+        end,
+    },
+    {
+        module = 'nvim-dap-virtual-text',
+        setup = function(dap_virtual_text)
+            dap_virtual_text.setup({
+                enabled = false,            -- Disable by default, can be verbose
+                commented = true,           -- Use language comment style
+                enabled_commands = true,    -- Allow toggle using command
+            })
+        end,
+    },
+    {
+        module = 'dapui',
+        setup = function(dap_ui)
+            dap_ui.setup()
+            map_key('U', dap_ui.toggle, 'toggle UI')
+        end,
+    },
 }
-
-return M
 
 -- vim: set et ts=4 sw=4 ss=4 tw=100 :

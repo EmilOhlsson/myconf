@@ -56,13 +56,13 @@ local bg_highlight = { s = bg_base.s + 10, l = bg_base.l - 10 }
 -- Properties palette - defines saturation and lightness for different uses
 local props = {
     -- Backgrounds
-    bg = bg_base,                                              -- Main background
-    bg_emphasis = { s = 2, l = bg_base.l - 2 },                -- Slightly emphasized
-    bg_cursor = { s = bg_base.s + 10, l = bg_base.l - 2 },     -- Cursor line
-    bg_highlight = bg_highlight,                               -- Search highlight
-    bg_context = { s = bg_base.s + 5, l = bg_base.l - 3 },     -- Treesitter context
-    bg_highlight_adj = blend(bg_base, bg_highlight),          -- Items related to highlighted
-    bg_ui = { s = 30, l = 40 },                                -- UI background -- maybe merge with cursor and context?
+    bg = bg_base,                                          -- Main background
+    bg_emphasis = { s = 2, l = bg_base.l - 2 },            -- Slightly emphasized
+    bg_cursor = { s = bg_base.s + 10, l = bg_base.l - 2 }, -- Cursor line
+    bg_highlight = bg_highlight,                           -- Search highlight
+    bg_context = { s = bg_base.s + 5, l = bg_base.l - 3 }, -- Treesitter context
+    bg_highlight_adj = blend(bg_base, bg_highlight),       -- Items related to highlighted
+    bg_ui = { s = 30, l = 40 },                            -- UI background -- maybe merge with cursor and context?
 
     -- Foregrounds
     fg = { s = 30, l = 40 },                               -- Main text
@@ -165,11 +165,7 @@ local highlights = {
     DiffDelete                  = { bg = { h = hues.red,   s = 90, l = 95, } },
     DiffText                    = { bg = { h = hues.blue,  s = 90, l = 85, } },
 
-    -- -- Litee UI
-    -- LTSymbol                    = { fg = { h = hues.orange, p = props.fg_emphasis }, gui = 'bold' },
-    -- LTSymbolDetail              = { fg = { h = hues.blue, p = props.fg }, gui = 'italic' },
-    --
-    -- -- LSP references
+    -- LSP references
     LspReferenceRead            = { bg = { h = hues.green, s = 90, l = 80, }, gui = 'underline' },
     LspReferenceText            = { bg = { h = hues.blue, s = 90, l = 80, },  gui = 'underline' },
     LspReferenceWrite           = { bg = { h = hues.red, s = 90, l = 80, },   gui = 'underline' },

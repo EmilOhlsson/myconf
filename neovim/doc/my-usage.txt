@@ -10,229 +10,63 @@ Describe things I typically use
 
 :Undotree
 
+:DiffMergeBase [branch]
+	Diff the current file against its merge-base with [branch], `main` by
+	default. Needs gitsigns.
+
 ------------------------------------------------------------------------------
-Local keymaps						*my-commands*
+Keymaps							*my-commands*
 
-dap							*my-dap*
-	All shortcuts are prefixed with `,`
-	`,,`
-		Step over
+Every keymap has a description, so the current list is always available
+through the keymap picker: `<space>fk`. Keymaps use a prefix per area:
 
-	`,b`
-		Toggle breakpoint
+	`<space>`	Pickers
+	`\`		LSP (buffer local), Termdebug `\d*`, smart-yank `\o*`,
+			render-markdown `\rt`, swap parameters `\a`
+	`,`		Debugging (DAP)
+	`;`		Git: gitsigns `;h*`, git-conflict `;r*`
+	`[x` `]x`	Motions: `t` tabs, `h` hunks, `r` conflict panes,
+			`e` errors, `m` functions, `,` parameters
+	`<C-*>`		`<C-b>` explorer, `<C-f>` floating terminal,
+			`<C-h>` highlighter, `<C-j>` :make
 
-	`,B`
-		Set logging breakpoint
-	
-	`,c`
-		Continue/start execution
-
-	`,C`
-		Clear all breakpoints
-
-	`,d`
-		Jump down one frame
-
-	`,h`
-		Show expression hover information
-
-	`,o`
-		Step out
-
-	`,r`
-		Toggle REPL
-
-	`,s`
-		Step into
-
-	`,u`
-		Jump up one frame
-
-Gitsigns						*my-gitsigns*
-	Shortcuts prefixed with `;`
-	`]h`
-		Next hunk
-	
-	`[h`
-		Previous hunk
-	
-	`;hs`
-		Stage hunk
-	
-	`;hr`
-		Reset hunk
-
-	`;hp`
-		Preview hunk
-
-lsp							*my-lsp*
-	All shortcuts are prefixed with `<leader>`
-	Insertion mode commands
-	`<c-k>`
-		Signature help, argument descriptions
-
-	`<c-h>`
-		Hover information
-
-	Normal mode commands
-	`<leader>ca`
-		Perform code action
-
-	`<leader>ds`
-		Jump to document symbol
-
-	`<leader>ee`
-		Open error message in floating window
-
-	`<leader>ih`
-		Toggle inlay hints (since 0.10)
-
-	`<leader>lD`
-		Jump to declaration
-
-	`<leader>ld`
-		Jump to definition
-		
-	`<leader>le`
-		Jump to next error
-
-	`<leader>lF`
-		Format selection/buffer
-
-	`<leader>lh`
-		Hover information
-
-	`<leader>li`
-		Jump to implementation
-
-	`<leader>lI`
-		Check incoming calls
-
-	`<leader>lO`
-		Check outgoing calls
-
-	`<leader>lp`
-		Jump to previous error
-
-	`<leader>lr`
-		Check references
-
-	`<leader>ls`
-		Signature help
-
-	`<leader>rn`
-		Rename symbol
-
-	`<leader>ws`
-		Jump to workspace symbol
-
-Telescope						*my-telescope*
-	All shortcuts are prefixed with `<space>`
-	<space>ff
-			Find files in current directory
-
-	<space>gf
-			Find git files
-
-	<space>lg	
-			Live grep
-
-	<space>fb
-			Find buffer
-
-	<space>fh
-			Search help tags
-
-	<space>qf
-			Search quickfix
-
-	<space>ic
-			List incoming function calls
-
-	<space>lb
-			List builtin telescope functions
-
-Treesitter						*my-treesitter*
-	Text objects
-	`aa`
-			Argument/parameter (outer)
-
-	`ac`
-			Comment (outer)
-	
-	`af`
-			Function (outer)
-
-	`ai`
-			Conditional (outer)
-
-	`al`
-			Loop (outer)
-
-	`ao`
-			Object/Class (outer)
-
-	`ia`		Argument/Parameter (inner)
-
-	`if`
-			Function (inner)
-
-	`io`
-			Object/Class (inner)
-
-	Navigation
-	`]m`
-			Next function
-	
-	`]a`
-			Next argument
-
-	`[m`
-			Previous function
-
-	`[a`
-			Previous argument
-
-	Commands
-	`<leader>tl`
-			List definitions
-
-	`<leader>ta`
-			List definitions TOC
-
-	`<leader>tn`
-			Next usage
-
-	`<leader>tp`
-			Previous uage
-
-	`<leader>td`
-			Go to defintion
-
+Neovim's own defaults are kept for `[q` `[l` `[a` `[d` and friends.
 
 ==============================================================================
 PLUGIN NOTES						*my-plugins*
 
 ------------------------------------------------------------------------------
 lsp setup						*my-lsp-setup*
-This is currently configured in the main lua config file, and mostly
-configures keyboard shortcuts to be `\` followed by some more keys
+
+Server configs live in `lsp/<server>.lua`, and every server with a file there
+(or in `local/lsp/`) is enabled. Keymaps, completion and reference
+highlighting are set up for every server by an |LspAttach| handler in
+`lua/lsp/init.lua`. LSP keymaps are prefixed with `\`.
+
+Project specific settings go in a `.nvim.lua` in the project root, which is
+sourced since 'exrc' is set. Neovim asks once before trusting it, see
+|:trust|. Call |vim.lsp.config()| from it, and the settings are merged on top
+of the shared config: >
+	vim.lsp.config('clangd', {
+	    cmd = { 'clangd', '--compile-commands-dir=build/debug' },
+	})
+<
+An `lsp/clangd.lua` in the project root is not read by itself. It's only read
+if the project directory is on 'runtimepath', for example by adding this to
+`.nvim.lua`: >
+	vim.opt.rtp:prepend(vim.fn.getcwd())
+<
+Tables, like `settings`, are merged key by key, while lists, like `cmd`, are
+replaced. See |lsp-config-merge|.
 
 ------------------------------------------------------------------------------
 Theme							*my-colorscheme-setup*
 
-After a lot of experimentation there are currently two parallel theme
-confiugrations. One of them uses the |lush| plugin, and the other only relies
-on vanilla Neovim. The benefit of the |lush| plugin is that you can configure
-colors based on hue, saturation etc, which makes it convenient to find
-complementary colors and matching suitable background highlights
-
-The lush theme is described in `lua/lush-theme.lua`, which can conveniently be
-edited after running `:Lushify` on the file while editing it. This will
-display all colors live while editing
-
-Otherwise the file `lua/highlights.lua` will be used, that set colors based on
-the background brighness
+The theme is `lua/theme/mini-theme.lua`. It derives the colors from a base
+background and foreground, using `mini.colors` to work with hue, saturation
+and lightness. If mini.nvim isn't installed, `lua/theme/fallback.lua` is used
+instead. It sets a smaller set of highlights based on the background
+brightness, `$BACKGROUND` set to "light" or "dark".
 
 ------------------------------------------------------------------------------
 DAP							*my-dap-setup*
@@ -263,33 +97,66 @@ For example these can look like >
 	    ]
 	}
 <
-The initial configuration is done in `lua/config-dap.lua`
+The configuration is done in `lua/setup/debug.lua`
 
 ==============================================================================
 LUA SETUP  						*my-lua-setup*
 
-`lua/config.lua`
-			This is the main lua configuration file. This in turns
-			call all additional configuration done.
+`init.lua`
+			Entry point. Runs bootstrap, core options, keymaps and
+			autocmds, packages, theme and LSP, and then all plugin
+			specs.
 
-			Most module configuration follow the pattern of >
-			  local lib = utils.try_load('some_lib')
-			  if lib ~= lib then
-			      -- Perform setup
-<			or >
-			  local lib = utils.try_load('some_lib')
-			  _ = lib and lib.setup(...)
-<			Which allows for libraries to be missing without angry
-			error messages. This is useful as not all setups might
-			have all libraries
+`lua/core/`
+			`bootstrap.lua`: paths, local config, dev plugins, `$PROF`
+			and `$BACKGROUND`. `options.lua`, `keymaps.lua` and
+			`autocmds.lua`: setup that doesn't depend on plugins.
+			`pack.lua`: the |vim.pack| package list. `util.lua`:
+			`try_load()` and `map()`.
 
-`lua/config-utils.lua`
-			This is a helper file which contain all useful helper
-			functions used when doing configuration.
+`lua/setup/`
+			Plugin setup, one file per area: `ui.lua`, `language.lua`,
+			`debug.lua` and `git.lua`. Every file in the directory is
+			loaded. Each file returns a list of specs: >
+			  {
+			      module = 'gitsigns',
+			      setup = function(gitsigns) ... end,
+			  }
+<			The module is loaded with `try_load()`, so a missing or
+			broken third party plugin is skipped. Specs for own
+			plugins have no `module`, and their `setup()` is always
+			called, so bugs in own code fail loudly. The keymaps for a
+			plugin live in its spec.
 
-			`try_load(module)`	Like `require(module)` but
-						returns `nil` on failure
-						instead of halting execution
+`lua/plugins/`
+			Own plugins: smart-yank, visual-match and git-conflict.
+
+`lua/theme/`, `lua/lsp/`, `lsp/`
+			See |my-colorscheme-setup| and |my-lsp-setup|.
+
+==============================================================================
+LOCAL CONFIG						*my-local-config*
+
+Machine specific config goes in `local.lua` and `local/`, both gitignored.
+Copy `local.lua.sample` to get started. All keys are optional:
+
+	`packages`	Extra |vim.pack| specs
+	`dev`		Working trees of plugins under development. They're
+			used in place, so edits show up on the next start
+	`after_options`	Hook that runs after core options, before plugins
+	`after_all`	Hook that runs last. Use `packadd!` here, since a
+			plain `packadd` loads the package twice
+
+`local/` is added to 'runtimepath', and is used for:
+
+	`local/lua/setup/`	Plugin specs, loaded like `lua/setup/`
+	`local/lsp/`		Servers for this machine only, enabled
+				automatically
+	`local/after/lsp/`	Changes to a shared server, merged on top of
+				`lsp/<server>.lua`
+	`local/after/ftplugin/`	Filetype changes
+
+Errors in `local.lua`, and `dev` paths that don't exist, stop startup.
 
 ------------------------------------------------------------------------------
 

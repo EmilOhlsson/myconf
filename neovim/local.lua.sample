@@ -1,0 +1,33 @@
+-- Per-machine Neovim config. Copy to local.lua (gitignored) and uncomment what's needed.
+-- Every key is optional. Machine-specific runtime files go in local/ (also gitignored):
+--   local/lua/setup/<name>.lua     Spec files, picked up automatically
+--   local/lsp/<server>.lua         Servers that only exist on this machine, enabled automatically
+--   local/after/lsp/<server>.lua   Tweaks merged on top of a shared lsp/<server>.lua
+--   local/after/ftplugin/<ft>.lua  Filetype tweaks, run after the shared ftplugin
+return {
+    -- Extra vim.pack plugins. Plugins whose spec is already shared (render-markdown, dap-ui) start
+    -- working as soon as they're installed
+    -- packages = {
+    --     { src = 'https://github.com/MeanderingProgrammer/render-markdown.nvim' },
+    --     { src = 'https://github.com/rcarriga/nvim-dap-ui' },
+    --     { src = 'https://github.com/nvim-neotest/nvim-nio' },  -- Required by nvim-dap-ui
+    -- },
+
+    -- Working trees of plugins under development, used in place (no clone, no lock entry)
+    -- dev = {
+    --     '~/src/md-render.nvim',
+    -- },
+
+    -- Runs after core options, keymaps and autocmds, before plugins are set up
+    -- after_options = function()
+    --     vim.g.termdebugger = 'gdb-multiarch'                -- Ubuntu ships a multi-arch gdb
+    -- end,
+
+    -- Runs last in init. Use `packadd!` here: plain `packadd` sources the package once now, and
+    -- once more when Neovim loads plugins after init
+    -- after_all = function()
+    --     vim.cmd('packadd! termdebug')
+    -- end,
+}
+
+-- vim: set et ts=4 sw=4 ss=4 tw=100 :

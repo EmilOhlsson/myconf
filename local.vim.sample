@@ -4,10 +4,6 @@ highlight LspReferenceText cterm=bold gui=bold ctermbg=darkcyan ctermfg=white
 highlight LspReferenceRead cterm=bold gui=bold ctermbg=darkgreen ctermfg=white
 highlight LspReferenceWrite cterm=bold gui=bold ctermbg=darkred ctermfg=white
 
-" Local plugins
-Plug 'Olical/conjure'
-Plug 'Olical/aniseed'
-
 " Ubuntu uses gdb-multiarch for multi-platform gdb
 let termdebugger = "gdb-multiarch"
 let g:rainbow_active = 0

@@ -1,8 +1,8 @@
-local function map(mode, lhs, rhs, description)
-    vim.keymap.set(mode, lhs, rhs, { desc = description })
-end
+local map = require('core.util').map
 
 -- Termdebug
+-- TODO: <leader>ds clashes with the buffer-local LSP <leader>ds (document symbols), which wins
+--       wherever a server is attached
 map('n', '<leader>ds', '<cmd>Step<CR>', 'Debug: step into')
 map('n', '<leader>dn', '<cmd>Over<CR>', 'Debug: step over')
 map('n', '<leader>df', '<cmd>Finish<CR>', 'Debug: finish')
@@ -18,14 +18,6 @@ map('v', '<S-Down>', ":move '>+1<CR>gv=gv", 'Move selection down')
 -- Tab navigation
 map('n', '[t', ':tabprevious<CR>', 'Previous tab')
 map('n', ']t', ':tabnext<CR>', 'Next tab')
-
--- Allow location list stepping
-map('n', '[l', ':lprev<CR>', 'Previous location list entry')
-map('n', ']l', ':lnext<CR>', 'Next location list entry')
-
--- Allow quick fix stepping
-map('n', '[c', ':cprev<CR>', 'Previous quickfix entry')
-map('n', ']c', ':cnext<CR>', 'Next quickfix entry')
 
 -- Autocomplete on ctrl+space
 map('i', '<C-Space>', '<C-x><C-o>', 'Trigger omni-completion')

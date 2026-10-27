@@ -46,4 +46,22 @@ vim.o.foldnestmax = 4
 vim.o.foldlevelstart = 99
 vim.o.foldtext = ''
 
+vim.o.guicursor = 'i-ci:ver30-iCursor-blinkwait300-blinkon200-blinkoff150'
+vim.o.winborder = 'rounded'
+
+if vim.fn.has('nvim-0.12') == 1 then
+    vim.o.diffopt = 'internal,filler,closeoff,inline:word,linematch:40,vertical'
+elseif vim.fn.has('nvim-0.11') == 1 then
+    vim.o.diffopt = 'internal,filler,closeoff,linematch:40,vertical'
+end
+
+-- Use the new UI mode
+if vim.fn.has('nvim-0.12') == 1 then
+   require('vim._core.ui2').enable({})
+end
+
+-- TODO: Enable :packadd nvim.undotree
+--       -> :UndoTree
+-- TODO: make sure that `:packadd nvim.undotree` is always set up
+
 -- vim: set et ts=4 sw=4 ss=4 tw=100 :

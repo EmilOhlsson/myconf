@@ -4,7 +4,7 @@
 --- It supports both operator-pending mode (with text objects/motions) and visual mode selections.
 ---
 --- Usage:
----   require('smart-yank').setup()
+---   require('plugins.smart-yank').setup()
 ---
 --- Keymaps created (default):
 ---   <leader>oc{motion} - Output Content: Yank with code block (e.g., <leader>ocip, <leader>oc5j)

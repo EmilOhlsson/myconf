@@ -1,4 +1,4 @@
-local colors = require('color')
+local colors = require('theme.color')
 
 -- Symbol highlighting
 -- When setting backgrounds, consider looking at HSV color for current background, and only
@@ -25,9 +25,6 @@ local highligts = {
     ['DiffAdd']                 = { light = { bg = 'lightblue' } },
     ['DiffChange']              = { light = { bg = 'LightMagenta' } },
     ['DiffText']                = {},
-    -- Litee UI
-    ['LTSymbol']                = { both = { fg = 'orange', bold = true } },
-    ['LTSymbolDetail']          = { light = { fg = 'lightblue' } },
     -- LSP symbol references
     ['LspReferenceRead']        = { both = { bg = 'green', fg = 'white' } },
     ['LspReferenceText']        = { both = { bg = 'SkyBlue1', fg = 'black' } },

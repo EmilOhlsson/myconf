@@ -1,7 +1,8 @@
 local M = {}
 
-M.setup = function()
-    vim.pack.add({
+--- Install and load packages. `extra` is appended to the shared list (local.lua `packages`)
+M.setup = function(extra)
+    vim.pack.add(vim.list_extend({
         -- TODO: Properly understand the current state of treesitter.
         { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = '4916d6592ede8c07973490d9322f187e07dfefac', },
         { src = 'https://github.com/nvim-treesitter/nvim-treesitter-context', version = 'b311b30818951d01f7b4bf650521b868b3fece16', },
@@ -9,24 +10,23 @@ M.setup = function()
 
         { src = 'https://github.com/lewis6991/gitsigns.nvim', version = 'a462f41' }, -- v2.1.0
 
-	-- Tabularize text, could probably be replaced by something simpler
-	{ src = 'https://github.com/godlygeek/tabular.git', version = '12437cd' },
+        -- Tabularize text, could probably be replaced by something simpler
+        { src = 'https://github.com/godlygeek/tabular.git', version = '12437cd' },
 
-	-- Debug tools
-	{ src = 'https://github.com/mfussenegger/nvim-dap', version = '6a5bba0ddea5d419a783e170c20988046376090d', },
-	{ src = 'https://github.com/theHamsta/nvim-dap-virtual-text', version = 'fbdb48c', },
+        -- Debug tools
+        { src = 'https://github.com/mfussenegger/nvim-dap', version = '6a5bba0ddea5d419a783e170c20988046376090d', },
+        { src = 'https://github.com/theHamsta/nvim-dap-virtual-text', version = 'fbdb48c', },
 
         -- TODO: Clean these up. I don't think these are actually required
-	{ src = 'https://github.com/nvim-lua/plenary.nvim', version = '74b06c6c75e4eeb3108ec01852001636d85a932b', }, -- Useful for Shears, but candidate for removal
+        { src = 'https://github.com/nvim-lua/plenary.nvim', version = '74b06c6c75e4eeb3108ec01852001636d85a932b', }, -- Useful for Shears, but candidate for removal
         { src = 'https://github.com/echasnovski/mini.nvim', version = '1345d191bb3da9c7b0e977f4387c5761f9bff68d', }, -- 0.18 - mini.nvim is a collection of plugins
-	{ src = 'https://github.com/folke/snacks.nvim',     version = 'e6fd58c' }, 					     -- 2.31.1 Pickers etc
+        { src = 'https://github.com/folke/snacks.nvim',     version = 'e6fd58c' },                                   -- 2.31.1 Pickers etc
 
-	-- My own plugins
+        -- My own plugins
         { src = 'https://github.com/EmilOhlsson/Highlighter.nvim', },
         { src = 'https://github.com/EmilOhlsson/FloatTerm.nvim', },
-        { src = 'https://github.com/EmilOhlsson/Highlighter.nvim', },
         { src = 'https://gitlab.com/EmilOhlsson/shears.nvim', },
-    })
+    }, extra or {}))
 
     vim.api.nvim_create_autocmd('PackChanged', {
         callback = function(event)
@@ -45,3 +45,5 @@ end
 
 
 return M
+
+-- vim: set et ts=4 sw=4 ss=4 tw=100 :

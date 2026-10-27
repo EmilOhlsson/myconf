@@ -4,7 +4,7 @@
 --- Only single-line selections are considered, and matching is literal and case-sensitive.
 ---
 --- Usage:
----   require('visual-match').setup({ max_length = 200 })
+---   require('plugins.visual-match').setup({ max_length = 200 })
 
 local M = {}
 
