@@ -100,6 +100,8 @@ local function configure_lsp()
             },
         },
         lua_ls = {
+            filetypes = { 'lua' },
+            cmd = { 'lua-language-server' },
             settings = {
                 Lua = {
                     runtime = {
@@ -127,6 +129,7 @@ local function configure_lsp()
         },
         pylsp = {
             filetypes = { 'python' },
+            cmd = { 'pylsp' },
             settings = {
                 pylsp = {
                     plugins = {

@@ -170,9 +170,9 @@ local highlights = {
     -- LTSymbolDetail              = { fg = { h = hues.blue, p = props.fg }, gui = 'italic' },
     --
     -- -- LSP references
-    LspReferenceRead            = { bg = { h = hues.green, s = 90, l = 95 }, },
-    LspReferenceText            = { bg = { h = hues.blue, s = 90, l = 95 }, },
-    LspReferenceWrite           = { bg = { h = hues.red, s = 90, l = 95 }, },
+    LspReferenceRead            = { bg = { h = hues.green, s = 90, l = 80, }, gui = 'underline' },
+    LspReferenceText            = { bg = { h = hues.blue, s = 90, l = 80, },  gui = 'underline' },
+    LspReferenceWrite           = { bg = { h = hues.red, s = 90, l = 80, },   gui = 'underline' },
     --
     -- Gitsigns
     GitSignsAdd                 = { bg = { h = hues.green, s = 90, l = 85, } },
