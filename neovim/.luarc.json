@@ -8,7 +8,10 @@
       "$VIMRUNTIME/lua",
       "${3rd}/luv/library"
     ],
-    "checkThirdParty": false
+    "checkThirdParty": false,
+    "ignoreDir": [
+      "local"
+    ]
   },
   "diagnostics": {
     "globals": [

@@ -11,6 +11,7 @@ M.paths = {
     pack = vim.fn.stdpath('data') .. '/site/pack/core/opt',     -- Where vim.pack installs plugins
     local_cfg = root .. '/local.lua',                           -- Per-machine config, gitignored
     local_rt = root .. '/local',                                -- Per-machine runtime dir, gitignored
+    local_dev = root .. '/local/dev',                           -- Clones of plugins under development
 }
 
 --- Content of local.lua, see local.lua.sample. Empty if there is no local.lua
@@ -65,12 +66,23 @@ local function load_local_cfg()
     M.local_cfg = dofile(M.paths.local_cfg)
 end
 
---- Use working trees of plugins under development in place
+--- Use working trees of plugins under development in place: every directory in local/dev/, plus the
+--- `dev` entries of local.lua
 local function setup_dev_plugins()
+    local dirs = {}
+    local entries = vim.fn.glob(M.paths.local_dev .. '/*', false, true)
+    for _, entry in ipairs(entries) do
+        if vim.fn.isdirectory(entry) == 1 then
+            dirs[#dirs + 1] = entry
+        end
+    end
     for _, dir in ipairs(M.local_cfg.dev or {}) do
         local path = vim.fn.expand(dir)
         assert(vim.fn.isdirectory(path) ~= 0)
-        add_rtp(path)
+        dirs[#dirs + 1] = path
+    end
+    for _, dir in ipairs(dirs) do
+        add_rtp(dir)
     end
 end
 
