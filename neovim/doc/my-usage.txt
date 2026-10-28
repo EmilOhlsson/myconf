@@ -14,6 +14,15 @@ Describe things I typically use
 	Diff the current file against its merge-base with [branch], `main` by
 	default. Needs gitsigns.
 
+Nested nvim						*my-nested*
+	Running `nvim [files]` in a terminal inside Neovim, for example in
+	FloatTerm, opens the files in a floating window of the outer Neovim
+	instead. The inner `nvim` waits until that window is closed, so
+	`git commit` works. With any other option (`nvim -d`, `nvim +10`), or
+	when the outer Neovim doesn't run this config, nvim starts nested as
+	usual. Don't use `:qa` or `:cq` in the window, since they quit the
+	outer Neovim.
+
 ------------------------------------------------------------------------------
 Keymaps							*my-commands*
 

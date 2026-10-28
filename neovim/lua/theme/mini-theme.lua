@@ -79,6 +79,7 @@ local highlights = {
     -- Basic highlights
     Normal      = { fg = { h = hues.base + 180, p = props.fg },   bg = { h = hues.base, p = props.bg, }, },
     NormalFloat = { fg = { h = hues.base + 180, p = props.fg },   bg = { h = hues.base, s = bg_base.s + 10, l = bg_base.l -5, }, },
+    NestedFloat = { fg = { h = hues.base + 180, p = props.fg },   bg = { h = hues.base, s = bg_base.s + 10, l = bg_base.l -9, }, },
     String      = { fg = { h = hues.orange,     s = 90, l = 40 }, gui = 'italic', },
     Number      = { fg = { h = hues.purple,     s = 90, l = 40 }, },
     Title       = { fg = { h = hues.orange,     s = 90, l = 40 }, gui = 'bold', },

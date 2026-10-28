@@ -8,6 +8,9 @@ The overall structure looks like this
 
 - `init.lua`: Entry point. Runs bootstrap, core setup, packages, theme and LSP, and then loads every
   plugin spec
+- `lua/core/nested.lua`: Runs first. When nvim is started in a `:terminal` of this Neovim, it hands
+  the files to the outer instance, which opens them in a floating window, and waits until it's
+  closed
 - `lua/core/`: `bootstrap.lua` (paths, `local.lua`, dev plugins, `$PROF`, `$BACKGROUND`),
   `options.lua`, `keymaps.lua` and `autocmds.lua` (plugin-independent setup), `pack.lua` (the
   `vim.pack` package list) and `util.lua` (`try_load()` and `map()`)

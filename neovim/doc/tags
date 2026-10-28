@@ -4,5 +4,6 @@ my-dap-setup	my-usage.txt	/*my-dap-setup*
 my-local-config	my-usage.txt	/*my-local-config*
 my-lsp-setup	my-usage.txt	/*my-lsp-setup*
 my-lua-setup	my-usage.txt	/*my-lua-setup*
+my-nested	my-usage.txt	/*my-nested*
 my-plugins	my-usage.txt	/*my-plugins*
 my-usage.txt	my-usage.txt	/*my-usage.txt*

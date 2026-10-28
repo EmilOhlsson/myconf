@@ -1,3 +1,5 @@
+require('core.nested').forward()
+
 local bootstrap = require('core.bootstrap')
 bootstrap.setup()
 local cfg = bootstrap.local_cfg
