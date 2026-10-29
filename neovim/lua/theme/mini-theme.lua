@@ -78,8 +78,8 @@ local props = {
 local highlights = {
     -- Basic highlights
     Normal      = { fg = { h = hues.base + 180, p = props.fg },   bg = { h = hues.base, p = props.bg, }, },
-    NormalFloat = { fg = { h = hues.base + 180, p = props.fg },   bg = { h = hues.base, s = bg_base.s + 10, l = bg_base.l -5, }, },
-    NestedFloat = { fg = { h = hues.base + 180, p = props.fg },   bg = { h = hues.base, s = bg_base.s + 10, l = bg_base.l -9, }, },
+    NormalFloat = { fg = { h = hues.base + 180, p = props.fg },   bg = { h = hues.base, s = bg_base.s + 10, l = bg_base.l -3, }, },
+    NestedFloat = { fg = { h = hues.base + 180, p = props.fg },   bg = { h = hues.base, s = bg_base.s + 10, l = bg_base.l -6, }, },
     String      = { fg = { h = hues.orange,     s = 90, l = 40 }, gui = 'italic', },
     Number      = { fg = { h = hues.purple,     s = 90, l = 40 }, },
     Title       = { fg = { h = hues.orange,     s = 90, l = 40 }, gui = 'bold', },
@@ -109,7 +109,7 @@ local highlights = {
     -- ['@text.todo']              = { link = 'Todo' },
 
     -- UI elements
-    Visual                      = { bg = { h = hues.base, s = bg_base.s + 10, l = bg_base.l - 10 } },
+    Visual                      = { bg = { h = hues.base, s = bg_base.s + 10, l = bg_base.l - 13 } },
     VisualMatch                 = { bg = { h = hues.base, p = props.bg_highlight_adj } },
     CursorLine                  = { bg = { h = hues.base, p = props.bg_cursor } },
     NonText                     = { fg = { h = hues.base, p = props.fg_subtle }, gui = 'italic' },
