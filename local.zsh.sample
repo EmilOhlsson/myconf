@@ -1,0 +1,3 @@
+# Machine-local zsh config, sourced before oh-my-zsh is loaded
+
+plugins+=(...)

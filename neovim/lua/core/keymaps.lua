@@ -19,6 +19,12 @@ map('v', '<S-Down>', ":move '>+1<CR>gv=gv", 'Move selection down')
 map('n', '[t', ':tabprevious<CR>', 'Previous tab')
 map('n', ']t', ':tabnext<CR>', 'Next tab')
 
+-- Window navigation
+map('n', '<M-Left>', '<C-w>h', 'Go to left window')
+map('n', '<M-Down>', '<C-w>j', 'Go to window below')
+map('n', '<M-Up>', '<C-w>k', 'Go to window above')
+map('n', '<M-Right>', '<C-w>l', 'Go to right window')
+
 -- Autocomplete on ctrl+space
 map('i', '<C-Space>', '<C-x><C-o>', 'Trigger omni-completion')
 map('i', '<C-@>', '<C-Space>', 'Trigger omni-completion (terminal Ctrl-Space)')

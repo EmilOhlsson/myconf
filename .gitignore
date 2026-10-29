@@ -3,6 +3,7 @@ vim/bundle/
 vim/.netrwhist
 local.vim
 local.sh
+local.zsh
 plug.vim.old
 neovim/spell
 neovim/local.lua

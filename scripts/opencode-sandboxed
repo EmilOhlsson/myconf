@@ -90,7 +90,7 @@ def build_command(args) -> list[str]:
     cmd = [
         bwrap,
         "--unshare-all",
-        "--share-net",
+        "--unshare-net",
         "--die-with-parent",
         "--hostname", "sandbox",
         "--proc", "/proc",

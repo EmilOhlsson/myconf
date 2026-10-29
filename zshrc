@@ -16,6 +16,8 @@ HIST_STAMPS="yyyy-mm-dd"
 DISABLE_AUTO_TITLE="true"
 plugins=(zsh-autosuggestions zsh-syntax-highlighting direnv timer)
 
+[ -f $HOME/myconf/local.zsh ] && source $HOME/myconf/local.zsh
+
 source $ZSH/oh-my-zsh.sh
 
 source $HOME/myconf/common.sh

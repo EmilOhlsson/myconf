@@ -26,6 +26,7 @@ M.setup = function(extra)
         { src = 'https://github.com/EmilOhlsson/Highlighter.nvim', },
         { src = 'https://github.com/EmilOhlsson/FloatTerm.nvim', },
         { src = 'https://gitlab.com/EmilOhlsson/shears.nvim', },
+        { src = 'https://github.com/EmilOhlsson/mdrender.nvim.git' },
     }, extra or {}))
 
     vim.api.nvim_create_autocmd('PackChanged', {

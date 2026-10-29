@@ -33,11 +33,11 @@ URxvt*font: xft:lime.se:size=8
 In case a recent enough Neovim version isn't available, then it's worth
 building your own, by following [building Neovim](docs/building-neovim.md)
 
-- Set up `local.vim`
+- Set up `neovim/local.lua` for per-machine settings (see `neovim/local.lua.sample`)
 
-Setting things up is described in `:help nvim-from-vim`. In short, content of `~/.local/share/nvim/init.vim` should be the following:
+Link the config directory into place:
 ```
-source ~/myconf/neovim/init.vim
+ln -s ~/myconf/neovim ~/.config/nvim
 ```
 
 ## bat

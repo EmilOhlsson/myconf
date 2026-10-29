@@ -59,7 +59,7 @@ Configs symlinked directly into `$HOME` or `$XDG_CONFIG_HOME`:
 | `common.sh` | shared shell helpers, sourced by `zshrc`/`bashrc` |
 | `gitconfig` | git config |
 | `guile.scm` | `~/.guile` (Guile Scheme REPL) |
-| `init.vim` | `~/.config/nvim/init.vim` |
+| `init.vim` | Old stub that sources `local.vim` and `~/.vimrc`; not used by `neovim/` |
 | `kitty.conf` | `~/.config/kitty/kitty.conf` |
 | `LS_COLORS` | ls colour scheme, sourced by shell |
 | `tmux.conf` | `~/.tmux.conf` |
@@ -80,7 +80,7 @@ Configs symlinked directly into `$HOME` or `$XDG_CONFIG_HOME`:
 | `dotbot/` | Git submodule — dotbot installer tool |
 | `dotbot-omnipkg/` | Git submodule — dotbot plugin for cross-platform package management |
 | `lua/` | Standalone Lua scripts (theme generation, colour utilities) |
-| `neovim/` | Neovim configuration (`after/`, `lua/`, `plugged/`, `templates/`) |
+| `neovim/` | Neovim configuration; `~/.config/nvim` is a symlink to it (see `neovim/CLAUDE.md`) |
 | `oh-my-zsh/` | Git submodule — Oh My Zsh framework |
 | `scripts/` | Shell scripts and automation helpers |
 | `templates/` | Project starter templates (`cpp-cmake`, `nvim-plugin`, `python-util`) |
