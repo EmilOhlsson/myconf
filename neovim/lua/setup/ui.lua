@@ -17,26 +17,16 @@ return {
                 picker = {
                     layout = 'telescope',
                 },
-                notifier = {
-                    -- TODO: make sure there is a command for showing history
-                    enabled = true,
-                    timeout = 10000,
-                    style = 'fancy',
-                }
             })
             map('n', '<space>bd', snacks.picker.diagnostics_buffer, 'Pick: buffer diagnostics')
             map('n', '<space>fb', snacks.picker.buffers, 'Pick: buffers')
             map('n', '<space>fk', snacks.picker.keymaps, 'Pick: keymaps')
-            map('n', '<space>ff', snacks.picker.files, 'Pick: files')
-            map('n', '<space>fp', snacks.picker.projects, 'Pick: projects')
-            map('n', '<space>lg', snacks.picker.grep, 'Pick: grep')
-            map('n', '<space>ll', snacks.picker.loclist, 'Pick: location list')
+            map('n', '<space>ff', snacks.picker.files, 'Pick: file finder')
+            map('n', '<space>lg', snacks.picker.grep, 'Pick: live grep')
+            map('n', '<space>ll', snacks.picker.loclist, 'Pick: loc list')
             map('n', '<space>lr', snacks.picker.lsp_references, 'Pick: LSP references')
             map('n', '<space>pp', snacks.picker.pick, 'Pick: pickers')
             map('n', '<space>qf', snacks.picker.qflist, 'Pick: quickfix list')
-
-            -- File explorer
-            map('n', '<c-b>', snacks.picker.explorer, 'File explorer')
         end,
     },
     {
@@ -68,6 +58,13 @@ return {
         module = 'mini.icons',
         setup = function(mini_icons)
             mini_icons.setup()
+        end,
+    },
+    {
+        module = 'mini.notify',
+        setup = function(mini_notify)
+            mini_notify.setup()
+            map('n', '<space>nh', mini_notify.show_history, 'Notify: show history')
         end,
     },
     {

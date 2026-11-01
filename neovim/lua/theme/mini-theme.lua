@@ -52,16 +52,21 @@ local hues = {
 
 -- Some base properties
 local bg_highlight = { s = bg_base.s + 10, l = bg_base.l - 10 }
+-- NOTE: The cursor line is darker than both float backgrounds, so it shows in floats too. The floats
+-- are kept close to the main background, so the cursor line can stay light
+local bg_cursor = { s = bg_base.s, l = bg_base.l - 5 }
+local bg_visual = { s = bg_base.s + 10, l = bg_base.l - 14 }
 
 -- Properties palette - defines saturation and lightness for different uses
 local props = {
     -- Backgrounds
     bg = bg_base,                                          -- Main background
     bg_emphasis = { s = 2, l = bg_base.l - 2 },            -- Slightly emphasized
-    bg_cursor = { s = bg_base.s + 10, l = bg_base.l - 2 }, -- Cursor line
+    bg_cursor = bg_cursor,                                 -- Cursor line
     bg_highlight = bg_highlight,                           -- Search highlight
     bg_context = { s = bg_base.s + 5, l = bg_base.l - 3 }, -- Treesitter context
-    bg_highlight_adj = blend(bg_base, bg_highlight),       -- Items related to highlighted
+    bg_visual = bg_visual,                                 -- Visual selection
+    bg_visual_match = blend(bg_cursor, bg_visual, 1 / 3),  -- Matches of the visual selection
     bg_ui = { s = 30, l = 40 },                            -- UI background -- maybe merge with cursor and context?
 
     -- Foregrounds
@@ -78,8 +83,8 @@ local props = {
 local highlights = {
     -- Basic highlights
     Normal      = { fg = { h = hues.base + 180, p = props.fg },   bg = { h = hues.base, p = props.bg, }, },
-    NormalFloat = { fg = { h = hues.base + 180, p = props.fg },   bg = { h = hues.base, s = bg_base.s + 10, l = bg_base.l -3, }, },
-    NestedFloat = { fg = { h = hues.base + 180, p = props.fg },   bg = { h = hues.base, s = bg_base.s + 10, l = bg_base.l -6, }, },
+    NormalFloat = { fg = { h = hues.base + 180, p = props.fg },   bg = { h = hues.base, s = bg_base.s + 10, l = bg_base.l -2, }, },
+    NestedFloat = { fg = { h = hues.base + 180, p = props.fg },   bg = { h = hues.base, s = bg_base.s + 10, l = bg_base.l -3.5, }, },
     String      = { fg = { h = hues.orange,     s = 90, l = 40 }, gui = 'italic', },
     Number      = { fg = { h = hues.purple,     s = 90, l = 40 }, },
     Title       = { fg = { h = hues.orange,     s = 90, l = 40 }, gui = 'bold', },
@@ -109,8 +114,8 @@ local highlights = {
     -- ['@text.todo']              = { link = 'Todo' },
 
     -- UI elements
-    Visual                      = { bg = { h = hues.base, s = bg_base.s + 10, l = bg_base.l - 13 } },
-    VisualMatch                 = { bg = { h = hues.base, p = props.bg_highlight_adj } },
+    Visual                      = { bg = { h = hues.base, p = props.bg_visual } },
+    VisualMatch                 = { bg = { h = hues.base, p = props.bg_visual_match } },
     CursorLine                  = { bg = { h = hues.base, p = props.bg_cursor } },
     NonText                     = { fg = { h = hues.base, p = props.fg_subtle }, gui = 'italic' },
     NvimDapVirtualText          = { link = 'NonText' },
