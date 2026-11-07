@@ -39,6 +39,7 @@ gaps inner 10
 
 # Load other specific configurations
 include ~/myconf/xdg/sway/config.d/*
+include ~/myconf/xdg/sway/local.d/*
 include ~/myconf/local-sway.conf
 
 # Red shift at night

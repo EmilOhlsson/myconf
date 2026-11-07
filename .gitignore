@@ -10,3 +10,4 @@ neovim/local.lua
 neovim/local/
 local-kitty.conf
 local-sway.conf
+xdg/sway/local.d/*
